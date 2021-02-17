@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/webstorejs.esm.js"></script>
+    <script nomodule src="/build/webstorejs.js"></script>
+    <script>
+      console.log('script start');
+      const start = new Date().getTime();
+      window.addEventListener('load', async (event) => {
+        console.log('window loaded: ', new Date().getTime() - start);
+        
+        await webstore.loadBundles('myapp');
+        console.log('bundles loaded: ', new Date().getTime() - start);
+        
+        webstore.resolveAppsByData({uri:'file:///myfile.pdf'}).forEach(app => {
+          console.log('app: ', new Date().getTime() - start);
+          debugger
+          console.log(app);
+          app.open();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!--my-component first="Stencil" last="'Don't call me a framework' JS"></my-component--->
+  </body>
+</html>
