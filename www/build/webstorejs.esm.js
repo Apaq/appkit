@@ -1,5 +1,5 @@
 import { B as BUILD, c as consoleDevInfo, p as plt, w as win, H, d as doc, N as NAMESPACE, a as promiseResolve, b as bootstrapLazy } from './index-e7b5eb66.js';
-import { g as globalScripts } from './app-globals-24817fc4.js';
+import { g as globalScripts } from './app-globals-e0e27e0d.js';
 
 /*
  Stencil Client Patch Browser v2.4.0 | MIT Licensed | https://stenciljs.com

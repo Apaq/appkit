@@ -34,9 +34,11 @@ class App {
     // * Full screen modal
     // * Existing element
     // * etc.
-    const dataObj = Data.of(data);
-    if (data || dataObj)
-      return null;
+    if (data) {
+      const dataObj = Data.of(data);
+      if (data || dataObj)
+        return null;
+    }
     const el = this.resolveElement();
     document.body.appendChild(el);
     return Promise.resolve(el);
@@ -57,18 +59,31 @@ class Webstore {
     this.defaultServer = 'https://apaq.github.io/webstore';
     this.bundles = [];
   }
+  getLanguage() {
+    return 'en';
+  }
   buildApp(bundle, component) {
     const app = new App();
     app.id = component.id;
     app.bundleId = bundle.id;
-    app.name = bundle.name; // TODO
+    if (typeof component.name === 'string') {
+      app.name = bundle.name;
+    }
+    else {
+      app.name = bundle.name[this.getLanguage()];
+    }
     return app;
   }
   buildWidget(bundle, component) {
     const widget = new Widget();
     widget.id = component.id;
     widget.bundleId = bundle.id;
-    widget.name = bundle.name; // TODO
+    if (typeof component.name === 'string') {
+      widget.name = bundle.name;
+    }
+    else {
+      widget.name = bundle.name[0];
+    }
     return widget;
   }
   /*
@@ -99,10 +114,30 @@ class Webstore {
     console.log('loading: ', bundleIds);
     const promises = [];
     for (const bundleId of bundleIds) {
-      const url = bundleId.match(/(http|https):\/\/.*/) != null ? `${bundleId}/manifest.json` : `${this.defaultServer}/${bundleId}/manifest.json`;
+      const baseUrl = bundleId.match(/(http|https):\/\/.*/) != null ? bundleId : `${this.defaultServer}/${bundleId}`;
+      const url = `${baseUrl}/manifest.json`;
       const p = fetch(url).then(response => {
         if (response.status === 200) {
-          return response.json().then(bundle => {
+          return response.json().then((bundle) => {
+            const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
+            const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
+            const lang = this.getLanguage();
+            // Adds script
+            let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
+            const scriptEl = document.createElement('script');
+            //scriptEl.setAttribute("type", "module");
+            scriptEl.setAttribute("src", scriptUrl);
+            document.head.appendChild(scriptEl);
+            // Add styles
+            if (cssFile != null) {
+              const styleUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
+              const styleEl = document.createElement('link');
+              styleEl.setAttribute('rel', 'stylesheet');
+              styleEl.setAttribute('type', 'text/css');
+              styleEl.setAttribute('href', styleUrl);
+              document.head.appendChild(styleEl);
+              // <link rel="stylesheet" type="text/css" href="mystyle.css">
+            }
             this.bundles.push(bundle);
           });
         }

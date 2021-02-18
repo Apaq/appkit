@@ -5,20 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/webstorejs.esm.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.esm.js"></script>
+
+    <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script><script type="module" src="/build/webstorejs.esm.js"></script>
     <script nomodule src="/build/webstorejs.js"></script>
+
     <script>
+      window.__previsto__ = {};
       console.log('script start');
       const start = new Date().getTime();
       window.addEventListener('load', async (event) => {
         console.log('window loaded: ', new Date().getTime() - start);
         
-        await webstore.loadBundles('myapp');
+        await webstore.loadBundles('myapp', 'https://webstall.previsto.com');
         console.log('bundles loaded: ', new Date().getTime() - start);
         
         webstore.resolveAppsByData({uri:'file:///myfile.pdf'}).forEach(app => {
           console.log('app: ', new Date().getTime() - start);
-          debugger
           console.log(app);
           app.open();
         });

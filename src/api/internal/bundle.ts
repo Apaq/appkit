@@ -2,15 +2,15 @@ import { IComponent } from "./component";
 
 export interface IBundle {
     id: string;
-    name: string;
+    name: string | {[key: string]: string;};
     version: string;
     description: string;
     keywords: string[];
     homepage: string;
     bugs: {url: string, email?: string},
-    i18n: {lcalized:boolean, defauleLocale: string},
-    mainFile: string,
+    localize: boolean | string[],
+    jsFile: string,
+    cssFile: string,
     components: IComponent[];
-
 }
 

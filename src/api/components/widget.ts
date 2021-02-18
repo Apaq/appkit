@@ -10,7 +10,7 @@ export class Widget implements IUiComponent {
     // The widget version
     version: string;
 
-    public async insert(parentElement: HTMLElement, data?: IData): Promise<HTMLElement> {
+    public async instantiate(parentElement: HTMLElement, data?: IData): Promise<HTMLElement> {
         // TODO: We should have support for inserting into an element
         if (parentElement || data) return null;
         return null;

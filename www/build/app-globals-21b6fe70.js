@@ -34,9 +34,11 @@ class App {
     // * Full screen modal
     // * Existing element
     // * etc.
-    const dataObj = Data.of(data);
-    if (data || dataObj)
-      return null;
+    if (data) {
+      const dataObj = Data.of(data);
+      if (data || dataObj)
+        return null;
+    }
     const el = this.resolveElement();
     document.body.appendChild(el);
     return Promise.resolve(el);
@@ -71,12 +73,13 @@ class Webstore {
     widget.name = bundle.name; // TODO
     return widget;
   }
-  buildExtension(bundle, component) {
-    // TODO: Figure out how to handle extensions
-    if (bundle || component)
-      return null;
-    return null;
-  }
+  /*
+      private buildExtension(bundle: IBundle, component: IComponent): Extension {
+          // TODO: Figure out how to handle extensions
+          if (bundle || component) return null;
+          return null;
+      }
+  */
   resolveComponentsByType(type) {
     const components = [];
     this.bundles.forEach(bundle => {
@@ -98,10 +101,12 @@ class Webstore {
     console.log('loading: ', bundleIds);
     const promises = [];
     for (const bundleId of bundleIds) {
-      const url = bundleId.match(/(http|https):\/\/.*/) != null ? `${bundleId}/manifest.json` : `${this.defaultServer}/${bundleId}/manifest.json`;
+      const baseUrl = bundleId.match(/(http|https):\/\/.*/) != null ? bundleId : `${this.defaultServer}/${bundleId}`;
+      const url = `${baseUrl}/manifest.json`;
       const p = fetch(url).then(response => {
         if (response.status === 200) {
           return response.json().then(bundle => {
+            import(`${baseUrl}/en/webstall.js`);
             this.bundles.push(bundle);
           });
         }
