@@ -10,4 +10,4 @@ This opens up for the possibility of sharing UI components with others via a cen
 
 * Isolation
 * App bundle dependencies
-* ContentProvider / ContentResolver
+* Move core to seperate library

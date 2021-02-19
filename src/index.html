@@ -19,10 +19,10 @@
       window.addEventListener('load', async (event) => {
         console.log('window loaded: ', new Date().getTime() - start);
         
-        await webstore.loadBundles('myapp', 'https://webstall.previsto.com');
+        await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
         console.log('bundles loaded: ', new Date().getTime() - start);
         
-        webstore.resolveAppsByData({uri:'file:///myfile.pdf'}).forEach(app => {
+        __webstore__.bundles.resolveAppsByData({uri:'file:///myfile.pdf'}).forEach(app => {
           console.log('app: ', new Date().getTime() - start);
           console.log(app);
           app.open();

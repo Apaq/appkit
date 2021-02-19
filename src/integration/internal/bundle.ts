@@ -1,6 +1,7 @@
 import { IComponent } from "./component";
+import { Dependency } from "./dependency";
 
-export interface IBundle {
+export interface Bundle {
     id: string;
     name: string | {[key: string]: string;};
     version: string;
@@ -12,5 +13,6 @@ export interface IBundle {
     jsFile: string,
     cssFile: string,
     components: IComponent[];
+    dependencies: Dependency[];
 }
 

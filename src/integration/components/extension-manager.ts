@@ -1,16 +1,15 @@
-import { IComponent } from "./component";
-import { IData } from "./data";
+import { Bundle } from "../internal/bundle";
+import { ComponentManager } from "./component-manager";
+import { IData } from "../../core/data";
 
-export class Extension implements IComponent {
-    bundleId:string;
+export class ExtensionManager implements ComponentManager {
+    bundle: Bundle;
     id: string;
     // The localized extension name
     name: string;
 
     // The extension version
     version: string;
-
-
 
     public async call(data: IData) {
         // TODO: Figure out how to handle extensions
