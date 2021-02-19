@@ -1,6 +1,6 @@
 {
-  "name": "webstorejs",
-  "version": "0.0.1",
+  "name": "@webstore/integration",
+  "version": "1.0.0-alpha.0",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",

@@ -1,4 +1,4 @@
-import { IData } from "../../core/data";
+import { IData } from "@webstore/core";
 import { UiComponentManager } from "./ui-component-manager";
 
 export class WidgetManager extends UiComponentManager {

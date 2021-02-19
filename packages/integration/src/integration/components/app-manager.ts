@@ -1,4 +1,4 @@
-import { Data, IData } from "../../core/data";
+import { Data, IData } from "@webstore/core";
 import { UiElement } from "../internal/ui-element";
 import { UiComponentManager } from "./ui-component-manager";
 
@@ -27,6 +27,5 @@ export class AppManager extends UiComponentManager {
         
         return Promise.resolve(null);
     }
-
 
 }

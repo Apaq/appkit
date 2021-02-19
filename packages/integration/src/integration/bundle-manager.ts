@@ -1,5 +1,5 @@
 import { AppManager } from "./components/app-manager";
-import { Data, IData } from "../core/data";
+import { Data, IData } from "@webstore/core";
 import { ExtensionManager } from "./components/extension-manager";
 import { WidgetManager } from "./components/widget-manager";
 import { IAcceptFilter } from "./internal/acceptfilter";

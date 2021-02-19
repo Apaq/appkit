@@ -1,6 +1,6 @@
 import { Bundle } from "../internal/bundle";
 import { ComponentManager } from "./component-manager";
-import { IData } from "../../core/data";
+import { IData } from "@webstore/core";
 
 export class ExtensionManager implements ComponentManager {
     bundle: Bundle;

@@ -9,7 +9,7 @@ export interface Context {
 export class ContextImpl implements Context {
     private _receivers: ((data: IData) => void)[] = [];
 
-    constructor(private contentResolver) {}
+    constructor(private contentResolver: ContentResolver) {}
     
 
     public getContentResolver(): ContentResolver{
