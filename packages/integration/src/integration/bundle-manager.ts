@@ -127,13 +127,13 @@ export class BundleManager {
     }
 
     private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
+        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
         const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
         return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
     private buildWidget(baseUrl: string, bundle: Bundle, component: IComponent): WidgetManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
+        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
         const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
         return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }

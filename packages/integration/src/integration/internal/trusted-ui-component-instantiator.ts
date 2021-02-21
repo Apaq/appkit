@@ -1,4 +1,3 @@
-import { Logger, createContext } from "@webstore/core";
 import { Bundle } from "./bundle";
 import { Language } from "./language";
 import { TrustedUiElement } from "./trusted-ui-element";

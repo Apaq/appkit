@@ -1,4 +1,3 @@
-import { Data, IData } from "@webstore/core";
 import { Bundle } from "../internal/bundle";
 import { UiComponentInstantiator } from "../internal/ui-component-instantiator";
 import { UiElement } from "../internal/ui-element";
