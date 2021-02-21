@@ -1,4 +1,4 @@
-import { D as Data, L as Logger, C as ContextManager } from './index.es-4d257e3d.js';
+import { D as Data, L as Logger, C as ContextManager, e as ContentProviderRegistry } from './index.es-90f5fc74.js';
 
 class UiComponentManager {
   constructor(instantiator, baseUrl, bundle, id, name, version) {
@@ -44,6 +44,8 @@ class Language {
   }
 }
 
+function webstore() { return window.__webstore__; }
+
 class TrustedUiElement {
   constructor(nativeElement) {
     this.nativeElement = nativeElement;
@@ -62,7 +64,7 @@ class TrustedUiElement {
       const interval = setInterval(() => {
         const id = this.nativeElement.getAttribute('context-id');
         if (id != null) {
-          const ctx = __webstore__.contexts.get(id);
+          const ctx = webstore().contexts.get(id);
           if (ctx != null) {
             Logger.info('Context found');
             this._context = ctx;
@@ -276,10 +278,11 @@ class BundleManager {
 }
 
 if (!__webstore__) {
-  __webstore__ = { bundles: null, contexts: null, content: null };
+  __webstore__ = { bundles: null, contexts: null, content: null, contentProvider: null };
 }
 __webstore__.bundles = new BundleManager();
 __webstore__.contexts = new ContextManager();
+__webstore__.contentProvider = new ContentProviderRegistry();
 const globalFn = () => { };
 
 const globalScripts = globalFn;

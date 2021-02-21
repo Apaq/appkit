@@ -2867,6 +2867,9 @@ class Logger {
 Logger.enabled = true;
 
 class ContentProviderRegistry {
+    constructor() {
+        this._registry = {};
+    }
     get(authority) {
         return this._registry[authority];
     }
@@ -2878,22 +2881,15 @@ class ContentProviderRegistry {
     }
 }
 
+function webstore() { return window.__webstore__; }
+
 class ContentResolver {
-    constructor() {
-        this.contentProviderRegistry = new ContentProviderRegistry();
-    }
     resolve(uri) {
-        if (uri)
+        var _a;
+        if (uri == null || !uri.startsWith('content://'))
             return null;
-        let uriObj;
-        if (typeof uri === 'string') {
-            uriObj = new URL(uri);
-        }
-        else {
-            uriObj = uri;
-        }
-        const authority = uriObj.host;
-        const provider = this.contentProviderRegistry.get(authority);
+        const authority = uri.substring(10, uri.indexOf('/', 10));
+        const provider = (_a = webstore().contentProvider) === null || _a === void 0 ? void 0 : _a.get(authority);
         return new ContentProviderClient(provider);
     }
 }
@@ -2913,9 +2909,6 @@ class ContextImpl {
     }
 }
 
-if (typeof window.__webstore__ === 'undefined') {
-    window.__webstore__ = { contexts: null, content: new ContentResolver() };
-}
 class ContextManager {
     constructor() {
         // The list of registered contexts.
@@ -2927,7 +2920,7 @@ class ContextManager {
     // Create a new context.
     create(contextId) {
         Logger.info(`Creating context: ${contextId}`);
-        const context = new ContextImpl(window.__webstore__.content);
+        const context = new ContextImpl(webstore().content);
         this._contexts[contextId] = context;
         return context;
     }
@@ -2935,9 +2928,9 @@ class ContextManager {
 // Default function for creating a new context
 function createContext(el) {
     var _a;
-    if (window.__webstore__.contexts == null) {
+    if (webstore().contexts == null) {
         Logger.warn('Creating a context manager because no one else did.');
-        window.__webstore__.contexts = new ContextManager();
+        webstore().contexts = new ContextManager();
     }
     let contextId = null;
     if (customElements.get(el.tagName.toLowerCase()) != null) {
@@ -2952,7 +2945,7 @@ function createContext(el) {
     }
     contextId += '-' + Date.now();
     el.setAttribute('context-id', contextId);
-    return window.__webstore__.contexts.create(contextId);
+    return webstore().contexts.create(contextId);
 }
 
 class Data {
@@ -2967,4 +2960,8 @@ class Data {
     }
 }
 
-export { BUILD as B, ContextManager as C, Data as D, H, Logger as L, NAMESPACE as N, promiseResolve as a, bootstrapLazy as b, consoleDevInfo as c, doc as d, CSS as e, createContext as f, getElement as g, h, plt as p, registerInstance as r, win as w };
+if (typeof window.__webstore__ === 'undefined') {
+    window.__webstore__ = { contexts: null, content: new ContentResolver(), contentProvider: null };
+}
+
+export { BUILD as B, ContextManager as C, Data as D, H, Logger as L, NAMESPACE as N, promiseResolve as a, bootstrapLazy as b, consoleDevInfo as c, doc as d, ContentProviderRegistry as e, CSS as f, createContext as g, h, getElement as i, plt as p, registerInstance as r, win as w };

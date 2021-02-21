@@ -1,20 +1,14 @@
 import { ContentProviderClient } from "./content-provider-client";
-import { ContentProviderRegistry } from "./content-provider-registry";
+import { webstore } from "./global";
 
 export class ContentResolver {
-    private contentProviderRegistry = new ContentProviderRegistry()
+    
 
-    resolve<TYPE, ID>(uri: string | URL): ContentProviderClient<TYPE, ID> {
-        if(uri) return null;
-
-        let uriObj: URL;
-        if(typeof uri === 'string') {
-            uriObj = new URL(uri);
-        } else {
-            uriObj = uri as URL;
-        }
-        const authority = uriObj.host;
-        const provider = this.contentProviderRegistry.get(authority);
+    resolve<TYPE, ID>(uri: string): ContentProviderClient<TYPE, ID> {
+        if(uri == null || !uri.startsWith('content://')) return null;
+        
+        const authority = uri.substring(10, uri.indexOf('/', 10));
+        const provider = webstore().contentProvider?.get(authority);
         return new ContentProviderClient<TYPE, ID>(provider);
     }
 }

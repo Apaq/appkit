@@ -4,13 +4,24 @@
     window.addEventListener('load', ev => {
       //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
       //await __webstore__.bundles.load('https://webstall.previsto.com');
+
+      __webstore__.contentProvider.register('contact', {
+        query: () => {
+          return Promise.resolve([]);
+        },
+        get: (id) => {
+          return null;
+        }
+      });
     
     });
     document.getElementById('btn').addEventListener('click', async (event) => {
       const app = __webstore__.bundles.resolveAppManagerById('my', 'component');
-      app.open({uri: 'file:///myfile.pdf'});
-
+      const el = await app.open();
+      el.transmit({uri: 'content://contact/123'});
     });
+
+    
   </script> <script>
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   // auto-unregister service worker during dev mode

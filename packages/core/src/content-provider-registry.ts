@@ -2,7 +2,7 @@ import { ContentProvider } from "./content-provider";
 import { Logger } from "./logger";
 
 export class ContentProviderRegistry {
-    private _registry: {[key: string]: ContentProvider<any, any>;};
+    private _registry: {[key: string]: ContentProvider<any, any>;} = {};
 
     get(authority: string) {
         return this._registry[authority];

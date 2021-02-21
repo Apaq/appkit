@@ -29,6 +29,11 @@ export class MyComponent {
     this.context = createContext(this.el);
     this.context.receiver = (data: IData) => {
       console.log('Please load: ', data);
+      const client = this.context.getContentResolver().resolve(data.uri);
+      client.query().then(result => {
+        console.log(result);
+      });
+      
     }
   }
 
