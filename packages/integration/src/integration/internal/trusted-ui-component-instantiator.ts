@@ -1,6 +1,5 @@
 import { Logger, createContext } from "@webstore/core";
 import { Bundle } from "./bundle";
-import { Config } from "./config";
 import { Language } from "./language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { UiComponentInstantiator } from "./ui-component-instantiator";
@@ -8,23 +7,23 @@ import { UiElement } from "./ui-element";
 
 export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
-    constructor(config: Config) {
-        Logger.info('woog' + config);
+    constructor() {
     }
 
-    async instantiate(baseUrl: string, bundle: Bundle, id: string): Promise<UiElement> {
+    async instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
         if(baseUrl != null) {
             await this.insertScript(baseUrl, bundle);    
         }
-        const el = await this.insertComponent(bundle, id);
+        const tagName = `${bundle.id}-${id}`;
+        const existingTags = document.getElementsByTagName(tagName);
+        let el: HTMLElement;
+        if(singleElement && existingTags.length > 0) {
+            el = existingTags[0] as HTMLElement;
+        } else {
+            el = document.createElement(tagName);;
+        }
 
         return Promise.resolve(new TrustedUiElement(el));
-    }
-
-    private insertComponent(bundle: Bundle, id: string): Promise<HTMLElement> {
-        const tagName = `${bundle.id}-${id}`;
-        const el = document.createElement(tagName);
-        return Promise.resolve(el);
     }
 
     private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {

@@ -29,8 +29,8 @@
     });
     document.getElementById('btn').addEventListener('click', async (event) => {
       const app = __webstore__.bundles.resolveAppManagerById('my', 'component');
-      app.open({uri: 'file:///myfile.pdf'});
-
+      const el = await app.open();
+      el.transmit({uri: 'file:///myfile.pdf'});
     });
   </script>
 </html>

@@ -1,4 +1,4 @@
-import { Context, Logger } from "@webstore/core";
+import { Context, Data, IData, Logger } from "@webstore/core";
 import { IntegrationManagerReference } from "./integration-manager-reference";
 import { UiElement } from "./ui-element";
 
@@ -9,6 +9,15 @@ export class TrustedUiElement implements UiElement {
     private _context: Context;
     
     constructor(public nativeElement: HTMLElement) { }
+
+    async transmit(data: IData): Promise<void> {
+        const context = await this.whenInitialized();
+
+        if (data && context.receiver != null) {
+            const dataObj = Data.of(data);
+            context.receiver(dataObj);
+        }
+    }
     
     async whenInitialized(): Promise<Context> {
         await customElements.whenDefined(this.nativeElement.tagName.toLowerCase());

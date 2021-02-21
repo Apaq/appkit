@@ -5,18 +5,18 @@ import { UiElement } from "../internal/ui-element";
 import { UiComponentManager } from "./ui-component-manager";
 
 export class AppManager extends UiComponentManager {
-    
+
     constructor(
-        instantiator: UiComponentInstantiator, 
+        instantiator: UiComponentInstantiator,
         baseUrl: string,
-        bundle: Bundle, 
-        id: string, 
-        name: string, 
+        bundle: Bundle,
+        id: string,
+        name: string,
         version: string) {
         super(instantiator, baseUrl, bundle, id, name, version);
     }
 
-    public async open(data?: IData): Promise<UiElement> {
+    public async open(): Promise<UiElement> {
         // TODO: Open app in overlay.
         // There should be a way to select the type of overlay: 
         // * Dialog
@@ -25,17 +25,12 @@ export class AppManager extends UiComponentManager {
         // * Existing element
         // * etc.
 
-    const uiElement = await this.instantiator.instantiate(this. baseUrl, this.bundle, this.id);
+        const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
         document.body.appendChild(uiElement.nativeElement)
-        const context = await uiElement.whenInitialized();
 
-        if(data && context.receiver != null) {
-            const dataObj = Data.of(data);
-            context.receiver(dataObj);
-        }
         return Promise.resolve(uiElement);
     }
 
-    
+
 
 }

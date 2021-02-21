@@ -96,7 +96,8 @@ class TrustedUiComponentInstantiator {
   }
   insertComponent(bundle, id) {
     const tagName = `${bundle.id}-${id}`;
-    const el = document.createElement(tagName);
+    const existing = document.getElementsByTagName(tagName);
+    const el = existing.length === 0 ? document.createElement(tagName) : existing[0];
     return Promise.resolve(el);
   }
   insertScript(baseUrl, bundle) {
