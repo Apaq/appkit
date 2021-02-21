@@ -73,27 +73,58 @@ class ContentResolver {
 class ContextImpl {
     constructor(contentResolver) {
         this.contentResolver = contentResolver;
-        this._receivers = [];
     }
     getContentResolver() {
         return this.contentResolver;
     }
-    registerReceiver(receiver) {
-        this._receivers.push(receiver);
+    set receiver(receiver) {
+        this._receiver = receiver;
+    }
+    get receiver() {
+        return this._receiver;
     }
 }
 
-if (window.__webstore__ == null) {
+if (typeof window.__webstore__ === 'undefined') {
     window.__webstore__ = { contexts: null, content: new ContentResolver() };
 }
 class ContextManager {
+    constructor() {
+        // The list of registered contexts.
+        this._contexts = {};
+    }
+    get(contextId) {
+        return this._contexts[contextId];
+    }
     // Create a new context.
-    createContext(key) {
-        Logger.warn(`Creating context: ${key}`);
+    create(contextId) {
+        Logger.warn(`Creating context: ${contextId}`);
         const context = new ContextImpl(window.__webstore__.content);
-        this._contexts[key] = context;
+        this._contexts[contextId] = context;
         return context;
     }
+}
+// Default function for creating a new context
+function createContext(el) {
+    var _a;
+    if (window.__webstore__.contexts == null) {
+        Logger.warn('Creating a context manager because no one else did.');
+        window.__webstore__.contexts = new ContextManager();
+    }
+    let contextId = null;
+    if (customElements.get(el.tagName.toLowerCase()) != null) {
+        contextId = el.tagName;
+    }
+    else if (customElements.get((_a = el.parentElement) === null || _a === void 0 ? void 0 : _a.tagName.toLowerCase()) != null) {
+        // Some frameworks has the parent element registered instead.
+        contextId = el.parentElement.tagName;
+    }
+    else {
+        throw 'Element is not defined as a custom element.';
+    }
+    contextId += '-' + Date.now();
+    el.setAttribute('context-id', contextId);
+    return window.__webstore__.contexts.create(contextId);
 }
 
 class Data {
@@ -137,7 +168,9 @@ class AppManager extends UiComponentManager {
         return null;
     }
     // TODO: Move instantiation to instantiator
-    const uiElement = this.instantiator.instantiate(this.baseUrl, this.bundle, this.id);
+    const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id);
+    document.body.appendChild(uiElement.nativeElement);
+    await uiElement.whenInitialized();
     return Promise.resolve(uiElement);
   }
 }
@@ -161,43 +194,80 @@ class TrustedUiElement {
   constructor(nativeElement) {
     this.nativeElement = nativeElement;
   }
+  async whenInitialized() {
+    await customElements.whenDefined(this.nativeElement.tagName.toLowerCase());
+    return new Promise((resolve, reject) => {
+      const start = Date.now();
+      const interval = setInterval(() => {
+        const id = this.nativeElement.getAttribute('context-id');
+        if (id != null) {
+          const ctx = __webstore__.contexts.get(id);
+          if (ctx != null) {
+            this._context = ctx;
+            clearInterval(interval);
+            resolve(ctx);
+            return;
+          }
+        }
+        if (Date.now() - start > 5000) {
+          clearInterval(interval);
+          reject('Not initialized within timeout period.');
+          return;
+        }
+        // keep on waiting
+      }, 10);
+    });
+  }
+  get context() {
+    return this._context;
+  }
 }
 
 class TrustedUiComponentInstantiator {
   constructor(config) {
     Logger.info('woog' + config);
   }
-  instantiate(baseUrl, bundle, id) {
-    this.insertScript(baseUrl, bundle);
-    const el = this.resolveElement(bundle, id);
-    document.body.appendChild(el);
-    return new TrustedUiElement(el);
+  async instantiate(baseUrl, bundle, id) {
+    await this.insertScript(baseUrl, bundle);
+    const el = await this.insertComponent(bundle, id);
+    // TODO Do this in an app
+    createContext(el);
+    return Promise.resolve(new TrustedUiElement(el));
   }
-  resolveElement(bundle, id) {
+  insertComponent(bundle, id) {
     const tagName = `${bundle.id}-${id}`;
     const el = document.createElement(tagName);
-    return el;
+    return Promise.resolve(el);
   }
   insertScript(baseUrl, bundle) {
-    // TODO Check if script was already inserted
-    const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
-    const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
-    const lang = Language.resolveLanguage();
-    // Adds script
-    let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
-    const scriptEl = document.createElement('script');
-    //scriptEl.setAttribute("type", "module");
-    scriptEl.setAttribute("src", scriptUrl);
-    document.head.appendChild(scriptEl);
-    // Add styles
-    if (cssFile != null) {
-      const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
-      const styleEl = document.createElement('link');
-      styleEl.setAttribute('rel', 'stylesheet');
-      styleEl.setAttribute('type', 'text/css');
-      styleEl.setAttribute('href', styleUrl);
-      document.head.appendChild(styleEl);
-    }
+    return new Promise((resolve, reject) => {
+      // Do not insert if already inserted
+      const scriptId = `bundle-${bundle.id}`;
+      if (document.getElementById(scriptId) != null)
+        resolve(null);
+      const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
+      const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
+      const lang = Language.resolveLanguage();
+      // Adds script
+      let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
+      const scriptEl = document.createElement('script');
+      document.head.appendChild(scriptEl);
+      scriptEl.onerror = (error) => reject(error);
+      scriptEl.onload = () => resolve(null);
+      // TODO: How to know whether to load as module or not?
+      //scriptEl.setAttribute("type", "module");
+      scriptEl.setAttribute("src", scriptUrl);
+      scriptEl.setAttribute('id', scriptId);
+      // Add styles
+      if (cssFile != null) {
+        const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
+        const styleEl = document.createElement('link');
+        styleEl.setAttribute('rel', 'stylesheet');
+        styleEl.setAttribute('type', 'text/css');
+        styleEl.setAttribute('href', styleUrl);
+        document.head.appendChild(styleEl);
+      }
+    });
   }
 }
 
@@ -327,9 +397,8 @@ class BundleManager {
   }
 }
 
-debugger;
 if (!__webstore__) {
-  __webstore__ = { bundles: null, contexts: null };
+  __webstore__ = { bundles: null, contexts: null, content: null };
 }
 __webstore__.bundles = new BundleManager();
 __webstore__.contexts = new ContextManager();

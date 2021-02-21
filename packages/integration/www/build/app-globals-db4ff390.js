@@ -73,27 +73,58 @@ class ContentResolver {
 class ContextImpl {
     constructor(contentResolver) {
         this.contentResolver = contentResolver;
-        this._receivers = [];
     }
     getContentResolver() {
         return this.contentResolver;
     }
-    registerReceiver(receiver) {
-        this._receivers.push(receiver);
+    set receiver(receiver) {
+        this._receiver = receiver;
+    }
+    get receiver() {
+        return this._receiver;
     }
 }
 
-if (window.__webstore__ == null) {
+if (typeof window.__webstore__ === 'undefined') {
     window.__webstore__ = { contexts: null, content: new ContentResolver() };
 }
 class ContextManager {
+    constructor() {
+        // The list of registered contexts.
+        this._contexts = {};
+    }
+    get(contextId) {
+        return this._contexts[contextId];
+    }
     // Create a new context.
-    createContext(key) {
-        Logger.warn(`Creating context: ${key}`);
+    create(contextId) {
+        Logger.warn(`Creating context: ${contextId}`);
         const context = new ContextImpl(window.__webstore__.content);
-        this._contexts[key] = context;
+        this._contexts[contextId] = context;
         return context;
     }
+}
+// Default function for creating a new context
+function createContext(el) {
+    var _a;
+    if (window.__webstore__.contexts == null) {
+        Logger.warn('Creating a context manager because no one else did.');
+        window.__webstore__.contexts = new ContextManager();
+    }
+    let contextId = null;
+    if (customElements.get(el.tagName.toLowerCase()) != null) {
+        contextId = el.tagName;
+    }
+    else if (customElements.get((_a = el.parentElement) === null || _a === void 0 ? void 0 : _a.tagName.toLowerCase()) != null) {
+        // Some frameworks has the parent element registered instead.
+        contextId = el.parentElement.tagName;
+    }
+    else {
+        throw 'Element is not defined as a custom element.';
+    }
+    contextId += '-' + Date.now();
+    el.setAttribute('context-id', contextId);
+    return window.__webstore__.contexts.create(contextId);
 }
 
 class Data {
@@ -109,8 +140,9 @@ class Data {
 }
 
 class UiComponentManager {
-  constructor(instantiator, bundle, id, name, version) {
+  constructor(instantiator, baseUrl, bundle, id, name, version) {
     this.instantiator = instantiator;
+    this.baseUrl = baseUrl;
     this.bundle = bundle;
     this.id = id;
     this.name = name;
@@ -119,8 +151,8 @@ class UiComponentManager {
 }
 
 class AppManager extends UiComponentManager {
-  constructor(instantiator, bundle, id, name, version) {
-    super(instantiator, bundle, id, name, version);
+  constructor(instantiator, baseUrl, bundle, id, name, version) {
+    super(instantiator, baseUrl, bundle, id, name, version);
   }
   async open(data) {
     // TODO: Open app in overlay.
@@ -130,13 +162,13 @@ class AppManager extends UiComponentManager {
     // * Full screen modal
     // * Existing element
     // * etc.
+    const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id);
+    document.body.appendChild(uiElement.nativeElement);
+    const context = await uiElement.whenInitialized();
     if (data) {
       const dataObj = Data.of(data);
-      if (data || dataObj)
-        return null;
+      context.receiver(dataObj);
     }
-    // TODO: Move instantiation to instantiator
-    const uiElement = this.instantiator.instantiate(this.bundle, this.id);
     return Promise.resolve(uiElement);
   }
 }
@@ -160,50 +192,86 @@ class TrustedUiElement {
   constructor(nativeElement) {
     this.nativeElement = nativeElement;
   }
+  async whenInitialized() {
+    await customElements.whenDefined(this.nativeElement.tagName.toLowerCase());
+    return new Promise((resolve, reject) => {
+      const start = Date.now();
+      const interval = setInterval(() => {
+        const id = this.nativeElement.getAttribute('context-id');
+        if (id != null) {
+          const ctx = __webstore__.contexts.get(id);
+          if (ctx != null) {
+            this._context = ctx;
+            clearInterval(interval);
+            resolve(ctx);
+            return;
+          }
+        }
+        if (Date.now() - start > 5000) {
+          clearInterval(interval);
+          reject('Not initialized within timeout period.');
+          return;
+        }
+        // keep on waiting
+      }, 10);
+    });
+  }
+  get context() {
+    return this._context;
+  }
 }
 
 class TrustedUiComponentInstantiator {
   constructor(config) {
-    this.config = config;
+    Logger.info('woog' + config);
   }
-  instantiate(bundle, id) {
-    this.insertScript(bundle);
-    const el = this.resolveElement(bundle, id);
-    document.body.appendChild(el);
-    return new TrustedUiElement(el);
+  async instantiate(baseUrl, bundle, id) {
+    await this.insertScript(baseUrl, bundle);
+    const el = await this.insertComponent(bundle, id);
+    // TODO Do this in an app
+    createContext(el);
+    return Promise.resolve(new TrustedUiElement(el));
   }
-  resolveElement(bundle, id) {
+  insertComponent(bundle, id) {
     const tagName = `${bundle.id}-${id}`;
     const el = document.createElement(tagName);
-    return el;
+    return Promise.resolve(el);
   }
-  insertScript(bundle) {
-    // TODO Check if script was already inserted
-    const baseUrl = BundleManager.resolveBundleBaseUrl(this.config.defaultRepository, bundle.id);
-    const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
-    const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
-    const lang = Language.resolveLanguage();
-    // Adds script
-    let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
-    const scriptEl = document.createElement('script');
-    //scriptEl.setAttribute("type", "module");
-    scriptEl.setAttribute("src", scriptUrl);
-    document.head.appendChild(scriptEl);
-    // Add styles
-    if (cssFile != null) {
-      const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
-      const styleEl = document.createElement('link');
-      styleEl.setAttribute('rel', 'stylesheet');
-      styleEl.setAttribute('type', 'text/css');
-      styleEl.setAttribute('href', styleUrl);
-      document.head.appendChild(styleEl);
-    }
+  insertScript(baseUrl, bundle) {
+    return new Promise((resolve, reject) => {
+      // Do not insert if already inserted
+      const scriptId = `bundle-${bundle.id}`;
+      if (document.getElementById(scriptId) != null)
+        resolve(null);
+      const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
+      const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
+      const lang = Language.resolveLanguage();
+      // Adds script
+      let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
+      const scriptEl = document.createElement('script');
+      document.head.appendChild(scriptEl);
+      scriptEl.onerror = (error) => reject(error);
+      scriptEl.onload = () => resolve(null);
+      // TODO: How to know whether to load as module or not?
+      //scriptEl.setAttribute("type", "module");
+      scriptEl.setAttribute("src", scriptUrl);
+      scriptEl.setAttribute('id', scriptId);
+      // Add styles
+      if (cssFile != null) {
+        const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
+        const styleEl = document.createElement('link');
+        styleEl.setAttribute('rel', 'stylesheet');
+        styleEl.setAttribute('type', 'text/css');
+        styleEl.setAttribute('href', styleUrl);
+        document.head.appendChild(styleEl);
+      }
+    });
   }
 }
 
 class UntrustedUiComponentInstantiator {
-  instantiate(bundle, id) {
-    throw new Error("Method not implemented." + bundle + id);
+  instantiate(baseUrl, bundle, id) {
+    throw new Error("Method not implemented." + baseUrl + bundle + id);
   }
 }
 
@@ -229,15 +297,15 @@ class BundleManager {
     }
     return false;
   }
-  buildApp(bundle, component) {
+  buildApp(baseUrl, bundle, component) {
     const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
     const name = typeof component.name === 'string' ? bundle.name : bundle.name[Language.resolveLanguage()];
-    return new AppManager(instantiator, bundle, component.id, name, bundle.version);
+    return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
   }
-  buildWidget(bundle, component) {
+  buildWidget(baseUrl, bundle, component) {
     const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
     const name = typeof component.name === 'string' ? bundle.name : bundle.name[Language.resolveLanguage()];
-    return new WidgetManager(instantiator, bundle, component.id, name, bundle.version);
+    return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
   }
   /*
       private buildExtension(bundle: IBundle, component: IComponent): Extension {
@@ -251,10 +319,10 @@ class BundleManager {
   }
   resolveComponentsByType(type) {
     const components = [];
-    this.bundles.forEach(bundle => {
-      bundle.components.forEach(component => {
+    this.bundles.forEach(entry => {
+      entry.bundle.components.forEach(component => {
         if (component.type === type) {
-          components.push({ bundle, component });
+          components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
         }
       });
     });
@@ -266,7 +334,7 @@ class BundleManager {
       return true;
     return true;
   }
-  async loadBundles(...bundleIds) {
+  async load(...bundleIds) {
     console.log('loading: ', bundleIds);
     const promises = [];
     for (const bundleId of bundleIds) {
@@ -275,7 +343,7 @@ class BundleManager {
       const p = fetch(url).then(response => {
         if (response.status === 200) {
           return response.json().then((bundle) => {
-            this.bundles.push(bundle);
+            this.bundles.push({ baseUrl, bundle: bundle });
           });
         }
       });
@@ -287,7 +355,7 @@ class BundleManager {
     let app = null;
     this.resolveComponentsByType('App').forEach(e => {
       if (e.bundle.id === bundleId && e.component.id === appId) {
-        app = this.buildApp(e.bundle, e.component);
+        app = this.buildApp(e.baseUrl, e.bundle, e.component);
       }
     });
     return app;
@@ -296,7 +364,7 @@ class BundleManager {
     let apps = [];
     this.resolveComponentsByType('App').forEach(e => {
       if (this.filterMatches(data, ...e.component.accepts)) {
-        apps.push(this.buildApp(e.bundle, e.component));
+        apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
       }
     });
     return apps;
@@ -305,7 +373,7 @@ class BundleManager {
     let widget = null;
     this.resolveComponentsByType('Widget').forEach(e => {
       if (e.bundle.id === bundleId && e.component.id === widgetId) {
-        widget = this.buildWidget(e.bundle, e.component);
+        widget = this.buildWidget(e.baseUrl, e.bundle, e.component);
       }
     });
     return widget;
@@ -314,7 +382,7 @@ class BundleManager {
     let widgets = [];
     this.resolveComponentsByType('App').forEach(e => {
       if (this.filterMatches(data, ...e.component.accepts)) {
-        widgets.push(this.buildWidget(e.bundle, e.component));
+        widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
       }
     });
     return widgets;
@@ -327,9 +395,8 @@ class BundleManager {
   }
 }
 
-debugger;
 if (!__webstore__) {
-  __webstore__ = { bundles: null, contexts: null };
+  __webstore__ = { bundles: null, contexts: null, content: null };
 }
 __webstore__.bundles = new BundleManager();
 __webstore__.contexts = new ContextManager();

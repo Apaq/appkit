@@ -4,14 +4,16 @@
       const start = new Date().getTime();
       window.addEventListener('load', async (event) => {
         console.log('window loaded: ', new Date().getTime() - start);
-        debugger
-        await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
+        await __webstore__.bundles.load('https://webstall.previsto.com');
+        //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
         console.log('bundles loaded: ', new Date().getTime() - start);
         
         __webstore__.bundles.resolveAppManagersByData({uri:'file:///myfile.pdf'}).forEach(app => {
           console.log('app: ', new Date().getTime() - start);
           console.log(app);
-          app.open();
+          app.open().then(element => {
+            console.log(element);
+          });
         });
       });
     </script> </head> <body> <!--my-component first="Stencil" last="'Don't call me a framework' JS"></my-component---> <script>

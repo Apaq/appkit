@@ -3,7 +3,7 @@ import { UiComponentInstantiator } from "./ui-component-instantiator";
 import { UiElement } from "./ui-element";
 
 export class UntrustedUiComponentInstantiator implements UiComponentInstantiator {
-    instantiate(baseUrl: string, bundle: Bundle, id: string): UiElement {
+    instantiate(baseUrl: string, bundle: Bundle, id: string): Promise<UiElement> {
         throw new Error("Method not implemented." + baseUrl +  bundle + id);
     }
 

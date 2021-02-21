@@ -1,9 +1,9 @@
 import { ContextManager } from "@webstore/core";
 import { BundleManager } from "./bundle-manager";
-debugger
-declare var __webstore__: { bundles: BundleManager, contexts: ContextManager }
+import { IntegrationManagerReference } from "./internal/integration-manager-reference";
+declare var __webstore__: IntegrationManagerReference
 if(!__webstore__) {
-    __webstore__ = {bundles: null, contexts: null}
+    __webstore__ = {bundles: null, contexts: null, content: null}
 }
 __webstore__.bundles = new BundleManager();
 __webstore__.contexts = new ContextManager();

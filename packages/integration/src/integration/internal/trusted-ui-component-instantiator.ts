@@ -1,4 +1,4 @@
-import { Logger } from "@webstore/core";
+import { Logger, createContext } from "@webstore/core";
 import { Bundle } from "./bundle";
 import { Config } from "./config";
 import { Language } from "./language";
@@ -12,41 +12,55 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         Logger.info('woog' + config);
     }
 
-    instantiate(baseUrl: string, bundle: Bundle, id: string): UiElement {
-        this.insertScript(baseUrl, bundle);
-        const el = this.resolveElement(bundle, id);
-        document.body.appendChild(el);
-        return new TrustedUiElement(el);
+    async instantiate(baseUrl: string, bundle: Bundle, id: string): Promise<UiElement> {
+        await this.insertScript(baseUrl, bundle);
+        const el = await this.insertComponent(bundle, id);
+
+        // TODO Do this in an app
+        createContext(el);
+        return Promise.resolve(new TrustedUiElement(el));
     }
 
-    private resolveElement(bundle: Bundle, id: string): HTMLElement {
+    private insertComponent(bundle: Bundle, id: string): Promise<HTMLElement> {
         const tagName = `${bundle.id}-${id}`;
         const el = document.createElement(tagName);
-        return el;
+        return Promise.resolve(el);
     }
 
-    private insertScript(baseUrl: string, bundle: Bundle) {
-        // TODO Check if script was already inserted
-        const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
-        const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
-        const lang = Language.resolveLanguage();
+    private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {
+        return new Promise((resolve, reject) => {
+            // Do not insert if already inserted
+            const scriptId = `bundle-${bundle.id}`;
+            if (document.getElementById(scriptId) != null) resolve(null);
 
-        // Adds script
-        let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
-        const scriptEl = document.createElement('script');
-        //scriptEl.setAttribute("type", "module");
-        scriptEl.setAttribute("src", scriptUrl);
-        document.head.appendChild(scriptEl);
+            const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
+            const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
+            const lang = Language.resolveLanguage();
+        
 
-        // Add styles
-        if (cssFile != null) {
-            const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
-            const styleEl = document.createElement('link');
-            styleEl.setAttribute('rel', 'stylesheet');
-            styleEl.setAttribute('type', 'text/css');
-            styleEl.setAttribute('href', styleUrl);
-            document.head.appendChild(styleEl);
-        }
+            // Adds script
+            let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
+            const scriptEl = document.createElement('script');
+            document.head.appendChild(scriptEl);
+
+            scriptEl.onerror = (error) => reject(error);
+            scriptEl.onload = () => resolve(null);
+            // TODO: How to know whether to load as module or not?
+            //scriptEl.setAttribute("type", "module");
+            scriptEl.setAttribute("src", scriptUrl);
+            scriptEl.setAttribute('id', scriptId);
+
+            // Add styles
+            if (cssFile != null) {
+                const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}` : `${baseUrl}/${lang}/${cssFile}`;
+                const styleEl = document.createElement('link');
+                styleEl.setAttribute('rel', 'stylesheet');
+                styleEl.setAttribute('type', 'text/css');
+                styleEl.setAttribute('href', styleUrl);
+                document.head.appendChild(styleEl);
+            }
+        });
+
 
     }
 }

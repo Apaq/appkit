@@ -3,11 +3,11 @@ import { IData } from "./data";
 
 export interface Context {
     getContentResolver(): ContentResolver;
-    registerReceiver(receiver: (data: IData) => void): void 
+    receiver: (data: IData) => void
 }
 
 export class ContextImpl implements Context {
-    private _receivers: ((data: IData) => void)[] = [];
+    private _receiver: ((data: IData) => void);
 
     constructor(private contentResolver: ContentResolver) {}
     
@@ -16,7 +16,11 @@ export class ContextImpl implements Context {
         return this.contentResolver;
     }
 
-    public registerReceiver(receiver: (data: IData) => void): void {
-        this._receivers.push(receiver);
+    public set receiver(receiver: (data: IData) => void) {
+        this._receiver = receiver;
+    }
+
+    public get receiver(): (data: IData) => void {
+        return this._receiver;
     }
 }
