@@ -107,7 +107,7 @@ export class BundleManager {
         return Promise.all(promises);
     }
 
-    public resolveAppById(bundleId: string, appId: string): AppManager {
+    public resolveAppManagerById(bundleId: string, appId: string): AppManager {
         let app: AppManager = null;
         this.resolveComponentsByType('App').forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === appId) {
@@ -117,7 +117,7 @@ export class BundleManager {
         return app;
     }
 
-    public resolveAppsByData(data: IData): AppManager[] {
+    public resolveAppManagersByData(data: IData): AppManager[] {
         let apps: AppManager[] = [];
         this.resolveComponentsByType('App').forEach(e => {
 
@@ -128,7 +128,7 @@ export class BundleManager {
         return apps;
     }
 
-    public resolveWidgetById(bundleId: string, widgetId: string): WidgetManager {
+    public resolveWidgetManagerById(bundleId: string, widgetId: string): WidgetManager {
         let widget: WidgetManager = null;
         this.resolveComponentsByType('Widget').forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === widgetId) {
@@ -138,7 +138,7 @@ export class BundleManager {
         return widget;
     }
 
-    public resolveWidgetsByData(data: IData): WidgetManager[] {
+    public resolveWidgetManagersByData(data: IData): WidgetManager[] {
         let widgets: WidgetManager[] = [];
         this.resolveComponentsByType('App').forEach(e => {
             if (this.filterMatches(data, ...e.component.accepts)) {
