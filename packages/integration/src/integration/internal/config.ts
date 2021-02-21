@@ -1,3 +1,4 @@
 export class Config {
-    public defaultServer: string;
+    public defaultRepository: string;
+    public trustedRepositories: string[];
 }

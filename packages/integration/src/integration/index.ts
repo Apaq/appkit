@@ -1,9 +1,9 @@
-import { ContextManager } from "../core/context-manager";
+import { ContextManager } from "@webstore/core";
 import { BundleManager } from "./bundle-manager";
-
-declare var window: { webstore: { bundles: BundleManager, contexts: ContextManager }}
-if(!window.webstore) {
-    window.webstore = {bundles: null, contexts: null}
+debugger
+declare var __webstore__: { bundles: BundleManager, contexts: ContextManager }
+if(!__webstore__) {
+    __webstore__ = {bundles: null, contexts: null}
 }
-window.webstore.bundles = new BundleManager();
-window.webstore.contexts = new ContextManager();
+__webstore__.bundles = new BundleManager();
+__webstore__.contexts = new ContextManager();

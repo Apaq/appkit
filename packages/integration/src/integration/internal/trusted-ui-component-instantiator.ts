@@ -1,4 +1,4 @@
-import { BundleManager } from "../bundle-manager";
+import { Logger } from "@webstore/core";
 import { Bundle } from "./bundle";
 import { Config } from "./config";
 import { Language } from "./language";
@@ -8,10 +8,12 @@ import { UiElement } from "./ui-element";
 
 export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
-    constructor(private config: Config) {}
+    constructor(config: Config) {
+        Logger.info('woog' + config);
+    }
 
-    instantiate(bundle: Bundle, id: string): UiElement {
-        this.insertScript(bundle);
+    instantiate(baseUrl: string, bundle: Bundle, id: string): UiElement {
+        this.insertScript(baseUrl, bundle);
         const el = this.resolveElement(bundle, id);
         document.body.appendChild(el);
         return new TrustedUiElement(el);
@@ -23,10 +25,8 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         return el;
     }
 
-    private insertScript(bundle: Bundle) {
+    private insertScript(baseUrl: string, bundle: Bundle) {
         // TODO Check if script was already inserted
-        const baseUrl = BundleManager.resolveBundleBaseUrl(this.config.defaultServer, bundle.id)
-            
         const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
         const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
         const lang = Language.resolveLanguage();

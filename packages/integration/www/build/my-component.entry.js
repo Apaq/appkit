@@ -1,9 +1,5 @@
 import { r as registerInstance, h } from './index-e7b5eb66.js';
 
-function format(first, middle, last) {
-  return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
-}
-
 const myComponentCss = ":host{display:block}";
 
 const MyComponent = class {
@@ -11,7 +7,7 @@ const MyComponent = class {
     registerInstance(this, hostRef);
   }
   getText() {
-    return format(this.first, this.middle, this.last);
+    return 'Hello world';
   }
   render() {
     return h("div", null, "Hello, World! I'm ", this.getText());

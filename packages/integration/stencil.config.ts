@@ -2,7 +2,7 @@ import { Config } from '@stencil/core';
 
 export const config: Config = {
   namespace: 'webstorejs',
-  globalScript: 'src/api/index.ts',
+  globalScript: 'src/integration/index.ts',
   preamble: 'Built with webstore',
   outputTargets: [
     {
