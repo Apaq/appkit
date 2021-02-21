@@ -12,27 +12,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script><script type="module" src="/build/webstorejs.esm.js"></script>
     <script nomodule src="/build/webstorejs.js"></script>
 
-    <script>
-      window.__previsto__ = {};
-      console.log('script start');
-      const start = new Date().getTime();
-      window.addEventListener('load', async (event) => {
-        console.log('window loaded: ', new Date().getTime() - start);
-        await __webstore__.bundles.load('https://webstall.previsto.com');
-        //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
-        console.log('bundles loaded: ', new Date().getTime() - start);
-        
-        __webstore__.bundles.resolveAppManagersByData({uri:'file:///myfile.pdf'}).forEach(app => {
-          console.log('app: ', new Date().getTime() - start);
-          console.log(app);
-          app.open().then(element => {
-            console.log(element);
-          });
-        });
-      });
-    </script>
   </head>
   <body>
+    <button id="btn">Show</button>
     <!--my-component first="Stencil" last="'Don't call me a framework' JS"></my-component--->
   </body>
+
+
+  <script>
+    window.__previsto__ = {};
+    
+    window.addEventListener('load', ev => {
+      //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
+      //await __webstore__.bundles.load('https://webstall.previsto.com');
+    
+    });
+    document.getElementById('btn').addEventListener('click', async (event) => {
+      const app = __webstore__.bundles.resolveAppManagerById('my', 'component');
+      app.open({uri: 'file:///myfile.pdf'});
+
+    });
+  </script>
 </html>

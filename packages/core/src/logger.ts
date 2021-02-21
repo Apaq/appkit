@@ -1,5 +1,5 @@
 export class Logger {
-    public static enabled = false;
+    public static enabled = true;
 
     public static info(message: string) {
         if(!this.enabled) return;

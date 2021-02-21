@@ -1,4 +1,5 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, h, Element } from '@stencil/core';
+import { Context, createContext, IData } from '@webstore/core';
 
 @Component({
   tag: 'my-component',
@@ -6,6 +7,9 @@ import { Component, Prop, h } from '@stencil/core';
   shadow: true,
 })
 export class MyComponent {
+  @Element() el: HTMLElement;
+  context: Context;
+
   /**
    * The first name
    */
@@ -20,6 +24,13 @@ export class MyComponent {
    * The last name
    */
   @Prop() last: string;
+
+  componentDidRender() {
+    this.context = createContext(this.el);
+    this.context.receiver = (data: IData) => {
+      console.log('Please load: ', data);
+    }
+  }
 
   private getText(): string {
     return 'Hello world'

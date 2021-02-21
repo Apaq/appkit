@@ -1,5 +1,5 @@
 const NAMESPACE = 'webstorejs';
-const BUILD = /* webstorejs */ { allRenderFn: true, appendChildSlotFix: false, asyncLoading: true, asyncQueue: false, attachStyles: true, cloneNodeFix: false, cmpDidLoad: false, cmpDidRender: false, cmpDidUnload: false, cmpDidUpdate: false, cmpShouldUpdate: false, cmpWillLoad: false, cmpWillRender: false, cmpWillUpdate: false, connectedCallback: false, constructableCSS: false, cssAnnotations: true, cssVarShim: false, devTools: true, disconnectedCallback: false, dynamicImportShim: false, element: false, event: false, hasRenderFn: true, hostListener: false, hostListenerTarget: false, hostListenerTargetBody: false, hostListenerTargetDocument: false, hostListenerTargetParent: false, hostListenerTargetWindow: false, hotModuleReplacement: true, hydrateClientSide: false, hydrateServerSide: false, hydratedAttribute: false, hydratedClass: true, initializeNextTick: false, isDebug: false, isDev: true, isTesting: false, lazyLoad: true, lifecycle: false, lifecycleDOMEvents: false, member: true, method: false, mode: false, observeAttribute: true, profile: true, prop: true, propBoolean: false, propMutable: false, propNumber: false, propString: true, reflect: false, safari10: false, scoped: false, scriptDataOpts: false, shadowDelegatesFocus: false, shadowDom: true, shadowDomShim: false, slot: false, slotChildNodesFix: false, slotRelocation: false, state: false, style: true, svg: false, taskQueue: true, transformTagName: false, updatable: true, vdomAttribute: false, vdomClass: false, vdomFunctional: false, vdomKey: false, vdomListener: false, vdomPropOrAttr: false, vdomRef: false, vdomRender: true, vdomStyle: false, vdomText: true, vdomXlink: false, watchCallback: false };
+const BUILD = /* webstorejs */ { allRenderFn: true, appendChildSlotFix: false, asyncLoading: true, asyncQueue: false, attachStyles: true, cloneNodeFix: false, cmpDidLoad: false, cmpDidRender: true, cmpDidUnload: false, cmpDidUpdate: false, cmpShouldUpdate: false, cmpWillLoad: false, cmpWillRender: false, cmpWillUpdate: false, connectedCallback: false, constructableCSS: false, cssAnnotations: true, cssVarShim: false, devTools: true, disconnectedCallback: false, dynamicImportShim: false, element: false, event: false, hasRenderFn: true, hostListener: false, hostListenerTarget: false, hostListenerTargetBody: false, hostListenerTargetDocument: false, hostListenerTargetParent: false, hostListenerTargetWindow: false, hotModuleReplacement: true, hydrateClientSide: false, hydrateServerSide: false, hydratedAttribute: false, hydratedClass: true, initializeNextTick: false, isDebug: false, isDev: true, isTesting: false, lazyLoad: true, lifecycle: true, lifecycleDOMEvents: false, member: true, method: false, mode: false, observeAttribute: true, profile: true, prop: true, propBoolean: false, propMutable: false, propNumber: false, propString: true, reflect: false, safari10: false, scoped: false, scriptDataOpts: false, shadowDelegatesFocus: false, shadowDom: true, shadowDomShim: false, slot: false, slotChildNodesFix: false, slotRelocation: false, state: false, style: true, svg: false, taskQueue: true, transformTagName: false, updatable: true, vdomAttribute: false, vdomClass: false, vdomFunctional: false, vdomKey: false, vdomListener: false, vdomPropOrAttr: false, vdomRef: false, vdomRender: true, vdomStyle: false, vdomText: true, vdomXlink: false, watchCallback: false };
 const Env = /* webstorejs */ {};
 
 let scopeId;
@@ -2826,4 +2826,145 @@ const Build = {
     isTesting: BUILD.isTesting ? true : false,
 };
 
-export { BUILD as B, CSS as C, H, NAMESPACE as N, promiseResolve as a, bootstrapLazy as b, consoleDevInfo as c, doc as d, h, plt as p, registerInstance as r, win as w };
+class ContentProviderClient {
+    constructor(contentProvider) {
+        this.contentProvider = contentProvider;
+    }
+    // TODO Should be some paging stuff
+    async query() {
+        return this.contentProvider.query();
+    }
+    async get(id) {
+        return this.contentProvider.get(id);
+    }
+    async save(entity) {
+        return this.contentProvider.save(entity);
+    }
+    async delete(id) {
+        return this.contentProvider.delete(id);
+    }
+    close() {
+    }
+}
+
+class Logger {
+    static info(message) {
+        if (!this.enabled)
+            return;
+        console.info(message);
+    }
+    static warn(message) {
+        if (!this.enabled)
+            return;
+        console.warn(message);
+    }
+    static error(message) {
+        if (!this.enabled)
+            return;
+        console.error(message);
+    }
+}
+Logger.enabled = true;
+
+class ContentProviderRegistry {
+    get(authority) {
+        return this._registry[authority];
+    }
+    register(authority, contentProvider) {
+        Logger.info(`Registering content provider: ${authority}`);
+        if (this._registry[authority] == null) {
+            this._registry[authority] = contentProvider;
+        }
+    }
+}
+
+class ContentResolver {
+    constructor() {
+        this.contentProviderRegistry = new ContentProviderRegistry();
+    }
+    resolve(uri) {
+        if (uri)
+            return null;
+        let uriObj;
+        if (typeof uri === 'string') {
+            uriObj = new URL(uri);
+        }
+        else {
+            uriObj = uri;
+        }
+        const authority = uriObj.host;
+        const provider = this.contentProviderRegistry.get(authority);
+        return new ContentProviderClient(provider);
+    }
+}
+
+class ContextImpl {
+    constructor(contentResolver) {
+        this.contentResolver = contentResolver;
+    }
+    getContentResolver() {
+        return this.contentResolver;
+    }
+    set receiver(receiver) {
+        this._receiver = receiver;
+    }
+    get receiver() {
+        return this._receiver;
+    }
+}
+
+if (typeof window.__webstore__ === 'undefined') {
+    window.__webstore__ = { contexts: null, content: new ContentResolver() };
+}
+class ContextManager {
+    constructor() {
+        // The list of registered contexts.
+        this._contexts = {};
+    }
+    get(contextId) {
+        return this._contexts[contextId];
+    }
+    // Create a new context.
+    create(contextId) {
+        Logger.info(`Creating context: ${contextId}`);
+        const context = new ContextImpl(window.__webstore__.content);
+        this._contexts[contextId] = context;
+        return context;
+    }
+}
+// Default function for creating a new context
+function createContext(el) {
+    var _a;
+    if (window.__webstore__.contexts == null) {
+        Logger.warn('Creating a context manager because no one else did.');
+        window.__webstore__.contexts = new ContextManager();
+    }
+    let contextId = null;
+    if (customElements.get(el.tagName.toLowerCase()) != null) {
+        contextId = el.tagName;
+    }
+    else if (customElements.get((_a = el.parentElement) === null || _a === void 0 ? void 0 : _a.tagName.toLowerCase()) != null) {
+        // Some frameworks has the parent element registered instead.
+        contextId = el.parentElement.tagName;
+    }
+    else {
+        throw 'Element is not defined as a custom element.';
+    }
+    contextId += '-' + Date.now();
+    el.setAttribute('context-id', contextId);
+    return window.__webstore__.contexts.create(contextId);
+}
+
+class Data {
+    constructor(uri, type) {
+        this.uri = uri;
+        if (this.type != null) {
+            this.type = type;
+        }
+    }
+    static of(data) {
+        return new Data(data.uri, data.type);
+    }
+}
+
+export { BUILD as B, ContextManager as C, Data as D, H, Logger as L, NAMESPACE as N, promiseResolve as a, bootstrapLazy as b, consoleDevInfo as c, doc as d, createContext as e, CSS as f, getElement as g, h, plt as p, registerInstance as r, win as w };

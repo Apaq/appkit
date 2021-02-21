@@ -18,63 +18,30 @@ export class BundleManager {
         trustedRepositories: []
     };
 
-    private bundles: {baseUrl: string, bundle: Bundle}[] = [];
+    private bundles: { baseUrl: string, bundle: Bundle }[] = [];
 
-    private isTrusted(bundle: Bundle) {
-        if(bundle.id.match(PATTERN_URL) == null) {
-            // If loaded from default, then it is trusted.
-            return true;
-        }
 
-        for(let repo of this.config.trustedRepositories) {
-            // If bundle points to a trusted repo, then it is trusted.
-            if(bundle.id.startsWith(repo)) {
-                return true;
-            }
-        }
-        return false;
+    constructor() {
+        this.bundles.push({
+            baseUrl: null,
+            bundle: {
+                id: 'my',
+                name: 'My Component',
+                components: [
+                    {
+                        id: 'component',
+                        type: 'App'
+                    }
+                ],
+
+            } as Bundle
+        })
     }
-
-    private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
-        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
-        return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
-    }
-
-    private buildWidget(baseUrl: string, bundle: Bundle, component: IComponent): WidgetManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
-        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
-        return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
-    }
-    /*
-        private buildExtension(bundle: IBundle, component: IComponent): Extension {
-            // TODO: Figure out how to handle extensions
-            if (bundle || component) return null;
-            return null;
-        }
-    */
 
     public static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
         return bundleId.match(PATTERN_URL) != null ? bundleId : `${defaultServer}/${bundleId}`;
     }
 
-    private resolveComponentsByType(type: 'App' | 'Widget'): { baseUrl: string, bundle: Bundle, component: IComponent }[] {
-        const components: { baseUrl: string, bundle: Bundle, component: IComponent }[] = [];
-        this.bundles.forEach(entry => {
-            entry.bundle.components.forEach(component => {
-                if (component.type === type) {
-                    components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
-                }
-            })
-        });
-        return components;
-    }
-
-    private filterMatches(data: IData, ...filter: IAcceptFilter[]): boolean {
-        // TODO: Handle filter
-        if (filter || data) return true;
-        return true;
-    }
 
 
     public async load(...bundleIds: string[]): Promise<void[]> {
@@ -86,7 +53,7 @@ export class BundleManager {
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
                     return response.json().then((bundle: Bundle) => {
-                        this.bundles.push({baseUrl, bundle: bundle as Bundle});
+                        this.bundles.push({ baseUrl, bundle: bundle as Bundle });
                     });
                 }
             });
@@ -141,6 +108,60 @@ export class BundleManager {
         // TODO: Figure out how to handle extensions
         if (data) return null;
         return null;
+    }
+
+
+    private isTrusted(bundle: Bundle) {
+        if (bundle.id.match(PATTERN_URL) == null) {
+            // If loaded from default, then it is trusted.
+            return true;
+        }
+
+        for (let repo of this.config.trustedRepositories) {
+            // If bundle points to a trusted repo, then it is trusted.
+            if (bundle.id.startsWith(repo)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
+        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
+        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
+        return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+    }
+
+    private buildWidget(baseUrl: string, bundle: Bundle, component: IComponent): WidgetManager {
+        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator(this.config) : new UntrustedUiComponentInstantiator();
+        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
+        return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+    }
+    /*
+        private buildExtension(bundle: IBundle, component: IComponent): Extension {
+            // TODO: Figure out how to handle extensions
+            if (bundle || component) return null;
+            return null;
+        }
+    */
+
+
+    private resolveComponentsByType(type: 'App' | 'Widget'): { baseUrl: string, bundle: Bundle, component: IComponent }[] {
+        const components: { baseUrl: string, bundle: Bundle, component: IComponent }[] = [];
+        this.bundles.forEach(entry => {
+            entry.bundle.components.forEach(component => {
+                if (component.type === type) {
+                    components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
+                }
+            })
+        });
+        return components;
+    }
+
+    private filterMatches(data: IData, ...filter: IAcceptFilter[]): boolean {
+        // TODO: Handle filter
+        if (filter || data) return true;
+        return true;
     }
 }
 

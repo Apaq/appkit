@@ -13,11 +13,11 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
     }
 
     async instantiate(baseUrl: string, bundle: Bundle, id: string): Promise<UiElement> {
-        await this.insertScript(baseUrl, bundle);
+        if(baseUrl != null) {
+            await this.insertScript(baseUrl, bundle);    
+        }
         const el = await this.insertComponent(bundle, id);
 
-        // TODO Do this in an app
-        createContext(el);
         return Promise.resolve(new TrustedUiElement(el));
     }
 

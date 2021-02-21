@@ -25,11 +25,11 @@ export class AppManager extends UiComponentManager {
         // * Existing element
         // * etc.
 
-        const uiElement = await this.instantiator.instantiate(this. baseUrl, this.bundle, this.id);
+    const uiElement = await this.instantiator.instantiate(this. baseUrl, this.bundle, this.id);
         document.body.appendChild(uiElement.nativeElement)
         const context = await uiElement.whenInitialized();
 
-        if(data) {
+        if(data && context.receiver != null) {
             const dataObj = Data.of(data);
             context.receiver(dataObj);
         }

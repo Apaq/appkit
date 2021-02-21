@@ -19,7 +19,7 @@ export class ContextManager {
 
     // Create a new context.
     public create(contextId: string): Context {
-        Logger.warn(`Creating context: ${contextId}`);
+        Logger.info(`Creating context: ${contextId}`);
         const context = new ContextImpl(window.__webstore__.content);
         this._contexts[contextId] = context;
         return context;

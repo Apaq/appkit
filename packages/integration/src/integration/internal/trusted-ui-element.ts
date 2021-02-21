@@ -1,4 +1,4 @@
-import { Context } from "@webstore/core";
+import { Context, Logger } from "@webstore/core";
 import { IntegrationManagerReference } from "./integration-manager-reference";
 import { UiElement } from "./ui-element";
 
@@ -20,6 +20,7 @@ export class TrustedUiElement implements UiElement {
                 if(id != null) {
                     const ctx = __webstore__.contexts.get(id);
                     if(ctx != null) {
+                        Logger.info('Context found');
                         this._context = ctx;
                         clearInterval(interval);
                         resolve(ctx);
