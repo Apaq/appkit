@@ -5,27 +5,28 @@ import { WidgetManager } from "./components/widget-manager";
 import { IAcceptFilter } from "./internal/acceptfilter";
 import { Bundle } from "./internal/bundle";
 import { IComponent } from "./internal/component";
+import { Config } from "./internal/config";
+import { Language } from "./internal/language";
 
 export class BundleManager {
 
-    public defaultServer: string = 'https://apaq.github.io/webstore'
-    private bundles: Bundle[] = [];
+    public config: Config = {
+        defaultServer: 'https://apaq.github.io/webstore'
+    };
 
-    private getLanguage(): string {
-        return 'en';
-    }
+    private bundles: Bundle[] = [];
 
     private buildApp(bundle: Bundle, component: IComponent): AppManager {
         const app = new AppManager();
         app.id = component.id;
         app.bundle = bundle;
 
-        if(typeof component.name === 'string') {
+        if (typeof component.name === 'string') {
             app.name = bundle.name as string;
         } else {
-            app.name = bundle.name[this.getLanguage()];
+            app.name = bundle.name[Language.resolveLanguage()];
         }
-        
+
         return app;
     }
 
@@ -33,20 +34,25 @@ export class BundleManager {
         const widget = new WidgetManager();
         widget.id = component.id;
         widget.bundle = bundle;
-        if(typeof component.name === 'string') {
+        if (typeof component.name === 'string') {
             widget.name = bundle.name as string;
         } else {
             widget.name = bundle.name[0];
         }
         return widget;
     }
-/*
-    private buildExtension(bundle: IBundle, component: IComponent): Extension {
-        // TODO: Figure out how to handle extensions
-        if (bundle || component) return null;
-        return null;
+    /*
+        private buildExtension(bundle: IBundle, component: IComponent): Extension {
+            // TODO: Figure out how to handle extensions
+            if (bundle || component) return null;
+            return null;
+        }
+    */
+
+    public static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
+        return bundleId.match(/(http|https):\/\/.*/) != null ? bundleId : `${defaultServer}/${bundleId}`;
     }
-*/
+
     private resolveComponentsByType(type: 'App' | 'Widget'): { bundle: Bundle, component: IComponent }[] {
         const components: { bundle: Bundle, component: IComponent }[] = [];
         this.bundles.forEach(bundle => {
@@ -70,33 +76,11 @@ export class BundleManager {
         console.log('loading: ', bundleIds);
         const promises: Promise<void>[] = [];
         for (const bundleId of bundleIds) {
-            const baseUrl = bundleId.match(/(http|https):\/\/.*/) != null ? bundleId : `${this.defaultServer}/${bundleId}`
+            const baseUrl = BundleManager.resolveBundleBaseUrl(this.config.defaultServer, bundleId)
             const url = `${baseUrl}/manifest.json`
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
                     return response.json().then((bundle: Bundle) => {
-                        // TODO: Should be moved to instantiator
-                        const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
-                        const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
-                        const lang = this.getLanguage();
-                        
-                        // Adds script
-                        let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}`: `${baseUrl}/${lang}/${jsFile}`;
-                        const scriptEl = document.createElement('script');
-                        //scriptEl.setAttribute("type", "module");
-                        scriptEl.setAttribute("src", scriptUrl);
-                        document.head.appendChild(scriptEl);
-
-                        // Add styles
-                        if(cssFile != null) {
-                            const styleUrl = !bundle.localize ? `${baseUrl}/${cssFile}`: `${baseUrl}/${lang}/${cssFile}`;
-                            const styleEl = document.createElement('link');
-                            styleEl.setAttribute('rel', 'stylesheet');
-                            styleEl.setAttribute('type', 'text/css');
-                            styleEl.setAttribute('href', styleUrl);
-                            document.head.appendChild(styleEl);
-                        }
-
                         this.bundles.push(bundle as Bundle);
                     });
                 }
