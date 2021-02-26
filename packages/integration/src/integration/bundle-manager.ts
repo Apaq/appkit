@@ -3,7 +3,7 @@ import { Data, IData } from "@webstore/core";
 import { ExtensionManager } from "./components/extension-manager";
 import { WidgetManager } from "./components/widget-manager";
 import { IAcceptFilter } from "./internal/acceptfilter";
-import { Bundle } from "./internal/bundle";
+import { Bundle } from "./bundle/bundle";
 import { IComponent } from "./internal/component";
 import { Config } from "./internal/config";
 import { Language } from "./internal/language";

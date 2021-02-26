@@ -1,4 +1,4 @@
-import { Bundle } from "./bundle";
+import { Bundle } from "../bundle/bundle";
 import { Language } from "./language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { UiComponentInstantiator } from "./ui-component-instantiator";
@@ -35,7 +35,6 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
             const lang = Language.resolveLanguage();
         
-
             // Adds script
             let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
             const scriptEl = document.createElement('script');

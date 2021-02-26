@@ -1,7 +1,7 @@
 {
-  "name": "@webstore/core",
+  "name": "@webstore/integration",
   "version": "1.0.0-alpha.0",
-  "description": "Webstore - the core framework",
+  "description": "Webstore - the integration framework",
   "author": "webstore",
   "license": "MIT",
   "main": "dist/index.js",

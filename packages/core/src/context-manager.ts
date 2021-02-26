@@ -1,4 +1,3 @@
-import { ContentResolver } from "./content-resolver";
 import { Context, ContextImpl } from "./context";
 import { Logger } from "./logger";
 import { webstore } from "./global";

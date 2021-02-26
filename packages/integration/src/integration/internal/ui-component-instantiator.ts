@@ -1,4 +1,4 @@
-import { Bundle } from './bundle';
+import { Bundle } from '../bundle/bundle';
 import { UiElement } from './ui-element';
 
 export interface UiComponentInstantiator {

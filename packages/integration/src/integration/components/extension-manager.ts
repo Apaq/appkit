@@ -1,4 +1,4 @@
-import { Bundle } from "../internal/bundle";
+import { Bundle } from "../bundle/bundle";
 import { ComponentManager } from "./component-manager";
 import { IData } from "@webstore/core";
 

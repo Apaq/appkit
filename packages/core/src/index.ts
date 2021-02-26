@@ -1,5 +1,3 @@
-import { Webstore } from './webstore';
-
 export * from './content-provider';
 export * from './content-provider-client';
 export * from './content-provider-registry';

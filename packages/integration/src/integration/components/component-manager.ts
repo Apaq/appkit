@@ -1,4 +1,4 @@
-import { Bundle } from "../internal/bundle";
+import { Bundle } from "../bundle/bundle";
 
 export interface ComponentManager {
     // The bundle this component belongs to
