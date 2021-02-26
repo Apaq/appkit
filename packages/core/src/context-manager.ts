@@ -1,12 +1,8 @@
 import { ContentResolver } from "./content-resolver";
 import { Context, ContextImpl } from "./context";
 import { Logger } from "./logger";
-import { ManagerReference } from "./manager-reference";
+import { webstore } from "./global";
 
-declare var window: {__webstore__: ManagerReference};
-if(typeof window.__webstore__ === 'undefined') {
-    window.__webstore__ = {contexts: null, content: new ContentResolver()};
-}
 
 export class ContextManager {
     
@@ -20,7 +16,7 @@ export class ContextManager {
     // Create a new context.
     public create(contextId: string): Context {
         Logger.info(`Creating context: ${contextId}`);
-        const context = new ContextImpl(window.__webstore__.content);
+        const context = new ContextImpl(webstore().content);
         this._contexts[contextId] = context;
         return context;
     }
@@ -28,9 +24,9 @@ export class ContextManager {
 
 // Default function for creating a new context
 export function createContext(el: HTMLElement): Context {
-    if(window.__webstore__.contexts == null) {
+    if(webstore().contexts == null) {
         Logger.warn('Creating a context manager because no one else did.');
-        window.__webstore__.contexts = new ContextManager();
+        webstore().contexts = new ContextManager();
     }
 
     let contextId = null;
@@ -45,5 +41,5 @@ export function createContext(el: HTMLElement): Context {
 
     contextId += '-' + Date.now();
     el.setAttribute('context-id', contextId);
-    return window.__webstore__.contexts.create(contextId);
+    return webstore().contexts.create(contextId);
 }
