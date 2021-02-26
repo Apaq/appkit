@@ -1,14 +1,14 @@
-import { AppManager } from "./components/app-manager";
+import { AppManager } from "../components/app-manager";
 import { Data, IData } from "@webstore/core";
-import { ExtensionManager } from "./components/extension-manager";
-import { WidgetManager } from "./components/widget-manager";
+import { ExtensionManager } from "../components/extension-manager";
+import { WidgetManager } from "../components/widget-manager";
 import { IAcceptFilter } from "./internal/acceptfilter";
-import { Bundle } from "./bundle/bundle";
+import { Bundle } from "./bundle";
 import { IComponent } from "./internal/component";
-import { Config } from "./internal/config";
-import { Language } from "./internal/language";
-import { TrustedUiComponentInstantiator } from "./internal/trusted-ui-component-instantiator";
-import { UntrustedUiComponentInstantiator } from "./internal/untrusted-ui-component-instantiator";
+import { Config } from "../internal/config";
+import { Language } from "../internal/language";
+import { TrustedUiComponentInstantiator } from "../internal/trusted-ui-component-instantiator";
+import { UntrustedUiComponentInstantiator } from "../internal/untrusted-ui-component-instantiator";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
 export class BundleManager {

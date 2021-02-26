@@ -1,5 +1,5 @@
 export class Language {
-    public static resolveLanguage() {
+    public static resolveLanguage(): string {
         return 'en';
     }
 }

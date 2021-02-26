@@ -1,5 +1,5 @@
 import { ContentProviderRegistry, ContextManager } from "@webstore/core";
-import { BundleManager } from "./bundle-manager";
+import { BundleManager } from "./bundle/bundle-manager";
 import { WebstoreIntegration } from "./internal/webstore-integation";
 
 declare var __webstore__: WebstoreIntegration
