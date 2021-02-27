@@ -11,7 +11,7 @@ export class ExtensionManager implements ComponentManager {
     // The extension version
     version: string;
 
-    public async call(data: IData) {
+    public async call(data: IData): Promise<any> {
         // TODO: Figure out how to handle extensions
         if (data) return null;
     }

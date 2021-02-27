@@ -1,4 +1,6 @@
 import typescript from 'rollup-plugin-typescript2'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 import pkg from './package.json'
 export default {
   input: 'src/index.ts',
@@ -17,7 +19,9 @@ export default {
     ...Object.keys(pkg.peerDependencies || {}),
   ],
 plugins: [
-    typescript({
+  nodeResolve(),
+  nodePolyfills(),
+  typescript({
       typescript: require('typescript'),
     }),
   ],

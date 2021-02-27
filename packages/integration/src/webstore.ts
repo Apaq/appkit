@@ -1,17 +1,17 @@
-import { AppManager } from "../components/app-manager";
-import { Data, IData } from "@webstore/core";
-import { ExtensionManager } from "../components/extension-manager";
-import { WidgetManager } from "../components/widget-manager";
-import { IAcceptFilter } from "./internal/acceptfilter";
-import { Bundle } from "./bundle";
-import { IComponent } from "./internal/component";
-import { Config } from "../internal/config";
-import { Language } from "../internal/language";
-import { TrustedUiComponentInstantiator } from "../internal/trusted-ui-component-instantiator";
-import { UntrustedUiComponentInstantiator } from "../internal/untrusted-ui-component-instantiator";
+import { AppManager } from "./managers/app-manager";
+import { ContentProvider, Data, IData } from "@webstore/core";
+import { ExtensionManager } from "./managers/extension-manager";
+import { WidgetManager } from "./managers/widget-manager";
+import { IAcceptFilter } from "./bundle/acceptfilter";
+import { Bundle } from "./bundle/bundle";
+import { IComponent } from "./bundle/component";
+import { Config } from "./bundle/config";
+import { Language } from "./i18n/language";
+import { InstantiatorResolver } from "./dom/instantiator-resolver";
+import { webstore } from "./webstore-integation";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
-export class BundleManager {
+export class Webstore {
 
     public config: Config = {
         defaultRepository: 'https://apaq.github.io/webstore',
@@ -21,7 +21,7 @@ export class BundleManager {
     private bundles: { baseUrl: string, bundle: Bundle }[] = [];
 
 
-    constructor() {
+    constructor(private instantiatorResolver: InstantiatorResolver) {
         this.bundles.push({
             baseUrl: null,
             bundle: {
@@ -38,17 +38,20 @@ export class BundleManager {
         })
     }
 
-    public static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
+    private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
         return bundleId.match(PATTERN_URL) != null ? bundleId : `${defaultServer}/${bundleId}`;
     }
 
 
+    public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
+        webstore().contentProvider.register(authority, contentProvider);
+    }
 
     public async load(...bundleIds: string[]): Promise<void[]> {
         console.log('loading: ', bundleIds);
         const promises: Promise<void>[] = [];
         for (const bundleId of bundleIds) {
-            const baseUrl = BundleManager.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
+            const baseUrl = Webstore.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
             const url = `${baseUrl}/manifest.json`
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
@@ -127,14 +130,14 @@ export class BundleManager {
     }
 
     private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
-        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
+        const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
+        const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
         return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
     private buildWidget(baseUrl: string, bundle: Bundle, component: IComponent): WidgetManager {
-        const instantiator = this.isTrusted(bundle) ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
-        const name = typeof component.name === 'string' ? bundle.name as string : bundle.name[Language.resolveLanguage()];
+        const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
+        const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
         return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
     /*

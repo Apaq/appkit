@@ -1,5 +1,5 @@
 import { Bundle } from "../bundle/bundle";
-import { UiComponentInstantiator } from "../internal/ui-component-instantiator";
+import { UiComponentInstantiator } from "../dom/ui-component-instantiator";
 import { ComponentManager } from "./component-manager";
 
 export interface UiComponentManager extends ComponentManager {}

@@ -22,22 +22,18 @@
   <script>
     window.__previsto__ = {};
     
-    window.addEventListener('load', ev => {
-      //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
-      //await __webstore__.bundles.load('https://webstall.previsto.com');
-
-      __webstore__.contentProvider.register('contact', {
+    let webstore = Webstore();
+    webstore.registerProvider('contact', {
         query: () => {
           return Promise.resolve([]);
         },
         get: (id) => {
           return null;
         }
-      });
-    
     });
+
     document.getElementById('btn').addEventListener('click', async (event) => {
-      const app = __webstore__.bundles.resolveAppManagerById('my', 'component');
+      const app = webstore.resolveAppManagerById('my', 'component');
       const el = await app.open();
       el.transmit({uri: 'content://contact/123'});
     });
