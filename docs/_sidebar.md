@@ -5,24 +5,14 @@
   - [Usage](/getting-started/usage.md)
   - [Customizing](/getting-started/customizing.md)
 
-- Components
+- Apps
+  - [Creating an App](/apps/creating.md)
 
-  - [Alert](/components/alert.md)
-  - [Autocomplete](/components/autocomplete.md)
-  - [Button](/components/button.md)
-  - [Dropdown](/components/dropdown.md)
-  - [FiscalCalendar](/components/fiscal-calendar.md)
-  - [FiscalDatepicker](/components/fiscal-datepicker.md)
-  - [Input](/components/input.md)
-  - [Label](/components/label.md)
-  - [List](/components/list.md)
-  - [Menu](/components/menu.md)
-  - [Menu Divider](/components/menu-divider.md)
-  - [Menu Item](/components/menu-item.md)
-  - [Menu Label](/components/menu-label.md)
-  - [Modal](/components/modal.md)
-  - [Panel](/components/panel.md)
-  - [Popover](/components/popover.md)
+- Widgets
+  - [Creating a Widget](/widgets/creating.md)
+
+- Extensions
+  - [Creating an Extension](/extensions/creating.md)
 
 - Design Tokens
   - [Typography](/tokens/typography.md)

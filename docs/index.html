@@ -20,18 +20,18 @@
       content="Xena Design System provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ds.xena.biz/" />
-    <meta property="og:image" content="https://ds.xena.biz/assets/images/og-image.png" />
+    <meta property="og:url" content="https://webstore.apaq.dk/" />
+    <meta property="og:image" content="https://webstore.apaq.dk/assets/images/og-image.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@XenaBizDk" />
-    <meta name="twitter:creator" content="@XenaBizDk" />
-    <meta name="twitter:title" content="Xena Design System" />
+    <meta name="twitter:site" content="@Apaq" />
+    <meta name="twitter:creator" content="@Apaq" />
+    <meta name="twitter:title" content="Webstore" />
     <meta
       name="twitter:description"
-      content="Xena Design System provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
+      content="Webstore is an app sore for the web."
     />
-    <meta name="twitter:image" content="https://ds.xena.biz/assets/images/twitter-card.png" />
+    <meta name="twitter:image" content="https://webstore.apaq.dk/assets/images/twitter-card.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/themes/pure.css" />
     <link rel="stylesheet" href="/assets/styles/docs.css" />
@@ -42,16 +42,38 @@
     <link rel="icon" href="/assets/images/touch-icon.png" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/touch-icon.png" />
 
-    <!-- Import XenaDS -->
-    <!--link href="https://my.xena.biz/Content/css/xena-plugin.css" rel="stylesheet" /-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="/dist/xenads/xenads.css" />
-    <script type="module" src="/dist/xenads/xenads.esm.js"></script>
+    <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script><script type="module" src="/build/webstorejs.esm.js"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/themes/base.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/all.shoelace.js"></script>
+
+  
+    <script type="module">
+      import { Webstore } from './integration/index.es.js';
+
+      window.__previsto__ = {
+        apiUrl: 'https://api.previsto.io'
+      }      
+      
+
+      const webstore = Webstore();
+      webstore.registerProvider('contact', {
+          query: () => {
+            return Promise.resolve([]);
+          },
+          get: (id) => {
+            return null;
+          }
+      });
+
+      webstore.load('https://webstall.previsto.com').then(async () => {
+        const app = webstore.resolveAppManagerById('ws', 'dashboard');
+        const el = await app.open();
+        el.transmit({uri: 'content://contact/123'});
+      });
+    </script>
+
   </head>
   <body>
     <div id="app"></div>
@@ -74,7 +96,7 @@
         logo: '/assets/images/logo.png',
         maxLevel: 3,
         subMaxLevel: 2,
-        name: 'XenaDS',
+        name: 'Webstore',
         notFoundPage: '404.md',
         pagination: {
           previousText: 'Previous',
@@ -93,6 +115,10 @@
         },
         themeColor: '#049dff'
       };
+
+
+
+      
     </script>
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
@@ -101,8 +127,8 @@
     <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-bash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-jsx.min.js"></script>
-    <script src="/assets/plugins/code-block/code-block.js"></script>
-    <script src="/assets/plugins/metadata/metadata.js"></script>
+    <!--script src="/assets/plugins/code-block/code-block.js"></script-->
+    <!--script src="/assets/plugins/metadata/metadata.js"></script-->
     <script src="/assets/plugins/sidebar/sidebar.js"></script>
     <script src="/assets/plugins/theme/theme.js"></script>
   </body>

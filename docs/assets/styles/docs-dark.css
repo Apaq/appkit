@@ -1,44 +1,44 @@
 .xena-theme-dark {
-  background: var(--xena-color-gray-10);
-  color: var(--xena-color-gray-80);
+  background: var(--sl-color-gray-10);
+  color: var(--sl-color-gray-80);
 }
 
 /* Sidebar **/
 .xena-theme-dark .sidebar {
-  background: var(--xena-color-gray-10);
-  border-right-color: var(--xena-color-gray-15);
+  background: var(--sl-color-gray-10);
+  border-right-color: var(--sl-color-gray-15);
 }
 
 .xena-theme-dark .sidebar li > p {
-  color: var(--xena-color-white);
-  border-bottom-color: var(--xena-color-gray-20);
+  color: var(--sl-color-white);
+  border-bottom-color: var(--sl-color-gray-20);
 }
 
 .xena-theme-dark .sidebar-toggle {
-  background-color: hsla(var(--xena-color-gray-hue), var(--xena-color-gray-saturation), 10%, 0.8);
+  background-color: hsla(var(--sl-color-gray-hue), var(--sl-color-gray-saturation), 10%, 0.8);
 }
 
 .xena-theme-dark .docsify-pagination-container {
-  border-top-color: var(--xena-color-gray-20) !important;
+  border-top-color: var(--sl-color-gray-20) !important;
 }
 
 /* Search */
 .xena-theme-dark .sidebar .search input[type='search'] {
-  background: var(--xena-input-background-color);
-  border-color: var(--xena-input-border-color);
-  color: var(--xena-input-color);
+  background: var(--sl-input-background-color);
+  border-color: var(--sl-input-border-color);
+  color: var(--sl-input-color);
 }
 
 .xena-theme-dark .sidebar .search input[type='search']:hover {
-  border-color: var(--xena-input-border-color-hover);
+  border-color: var(--sl-input-border-color-hover);
 }
 
 .xena-theme-dark .sidebar .search input[type='search']:focus {
-  border-color: var(--xena-input-border-color-focus);
+  border-color: var(--sl-input-border-color-focus);
 }
 
 .xena-theme-dark .sidebar .clear-button {
-  color: var(--xena-color-gray-30);
+  color: var(--sl-color-gray-30);
 }
 
 .xena-theme-dark .sidebar .clear-button svg circle {
@@ -47,81 +47,81 @@
 
 /* Content */
 .xena-theme-dark .component-header {
-  border-bottom-color: var(--xena-color-gray-20);
+  border-bottom-color: var(--sl-color-gray-20);
 }
 
 .xena-theme-dark .anchor span {
-  color: var(--xena-color-white);
+  color: var(--sl-color-white);
 }
 
 .xena-theme-dark .markdown-section h2 {
-  border-bottom-color: var(--xena-color-gray-20);
+  border-bottom-color: var(--sl-color-gray-20);
 }
 
 .xena-theme-dark .markdown-section blockquote {
-  border-left-color: var(--xena-color-gray-20);
+  border-left-color: var(--sl-color-gray-20);
 }
 
 .xena-theme-dark .markdown-section kbd {
-  border-color: var(--xena-color-gray-20);
+  border-color: var(--sl-color-gray-20);
 }
 
 /* Tables */
 .xena-theme-dark .markdown-section tr:nth-child(2n) {
-  background: hsl(var(--xena-color-gray-hue), var(--xena-color-gray-saturation), 13%);
+  background: hsl(var(--sl-color-gray-hue), var(--sl-color-gray-saturation), 13%);
 }
 
 .xena-theme-dark .markdown-section td {
-  border-top-color: var(--xena-color-gray-20);
-  border-bottom-color: var(--xena-color-gray-20);
+  border-top-color: var(--sl-color-gray-20);
+  border-bottom-color: var(--sl-color-gray-20);
 }
 
 .xena-theme-dark .markdown-section table .attribute-tooltip {
-  border-bottom-color: var(--xena-color-gray-30);
+  border-bottom-color: var(--sl-color-gray-30);
 }
 
 /* Tips & warnings */
 .xena-theme-dark .markdown-section p.tip,
 .xena-theme-dark .markdown-section p.warn {
-  background-color: hsl(var(--xena-color-gray-hue), var(--xena-color-gray-saturation), 13%);
+  background-color: hsl(var(--sl-color-gray-hue), var(--sl-color-gray-saturation), 13%);
 }
 
 .xena-theme-dark .markdown-section p.tip::before,
 .xena-theme-dark .markdown-section p.warn::before {
-  color: var(--xena-color-gray-10);
+  color: var(--sl-color-gray-10);
 }
 
 .xena-theme-dark .markdown-section p.tip code,
 .xena-theme-dark .markdown-section p.warn code {
-  background-color: var(--xena-color-gray-15);
+  background-color: var(--sl-color-gray-15);
 }
 
 /* Code blocks */
 .xena-theme-dark .markdown-section pre,
 .xena-theme-dark .code-block__source {
-  background-color: hsl(var(--xena-color-gray-hue), var(--xena-color-gray-saturation), 13%);
+  background-color: hsl(var(--sl-color-gray-hue), var(--sl-color-gray-saturation), 13%);
 }
 
 .xena-theme-dark .markdown-section pre > code {
-  color: var(--xena-color-gray-80);
+  color: var(--sl-color-gray-80);
 }
 
 .xena-theme-dark .markdown-section pre .token.comment {
-  color: var(--xena-color-gray-40);
+  color: var(--sl-color-gray-40);
 }
 
 .xena-theme-dark .markdown-section pre .token.prolog,
 .xena-theme-dark .markdown-section pre .token.doctype,
 .xena-theme-dark .markdown-section pre .token.cdata,
 .xena-theme-dark .markdown-section pre .token.operator {
-  color: var(--xena-color-gray-70);
+  color: var(--sl-color-gray-70);
 }
 
 .xena-theme-dark .markdown-section pre .token.property,
 .xena-theme-dark .markdown-section pre .token.keyword,
 .xena-theme-dark .markdown-section pre .token.tag,
 .xena-theme-dark .markdown-section pre .token.url {
-  color: var(--xena-color-primary-65);
+  color: var(--sl-color-primary-65);
 }
 
 .xena-theme-dark .markdown-section pre .token.symbol,
@@ -137,7 +137,7 @@
 .xena-theme-dark .markdown-section pre .token.char,
 .xena-theme-dark .markdown-section pre .token.builtin,
 .xena-theme-dark .markdown-section pre .token.inserted {
-  color: var(--xena-color-success-60);
+  color: var(--sl-color-success-60);
 }
 
 .xena-theme-dark .markdown-section pre .token.atrule,
@@ -162,20 +162,20 @@
 
 /* Repo buttons */
 .xena-theme-dark .repo-button {
-  background-color: var(--xena-color-gray-10);
-  border-color: var(--xena-color-gray-25);
-  color: var(--xena-color-gray-80);
+  background-color: var(--sl-color-gray-10);
+  border-color: var(--sl-color-gray-25);
+  color: var(--sl-color-gray-80);
 }
 
 .xena-theme-dark .repo-button--github xena-icon {
-  color: var(--xena-color-white);
+  color: var(--sl-color-white);
 }
 
 .xena-theme-dark .repo-button:hover {
-  background-color: var(--xena-color-gray-15);
-  border: solid 1px var(--xena-color-gray-30);
+  background-color: var(--sl-color-gray-15);
+  border: solid 1px var(--sl-color-gray-30);
 }
 
 .xena-theme-dark .repo-button:focus {
-  border-color: var(--xena-color-primary-50);
+  border-color: var(--sl-color-primary-50);
 }

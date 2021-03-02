@@ -15,8 +15,8 @@ To customize a design token, simply override it in your stylesheet using a `:roo
 ```css
 :root {
   /* Changes the primary color to a shade of orange at 90% saturation */
-  --xena-color-primary-hue: 30;
-  --xena-color-primary-saturation: 90%;
+  --sl-color-primary-hue: 30;
+  --sl-color-primary-saturation: 90%;
 }
 ```
 
@@ -73,7 +73,7 @@ Most (but not all) components expose parts. You can find them in each component'
 
 ## Custom Properties
 
-For convenience, some components expose CSS custom properties you can override. These are not design tokens, nor do they have the same `--xena-` prefix since they're scoped to a component.
+For convenience, some components expose CSS custom properties you can override. These are not design tokens, nor do they have the same `--sl-` prefix since they're scoped to a component.
 
 You can set custom properties on a component in your stylesheet.
 

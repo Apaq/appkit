@@ -1,5 +1,5 @@
 //
-// The Xenads dev server! 🥾
+// The Webstore dev server! 🥾
 //
 // This is an Express + Browsersync script that:
 //
@@ -47,14 +47,15 @@ app.use(/^\/$/, async (req, res, next) => {
     );
   res.type('html').send(index);
 });
-app.use('/dist', express.static('./dist'));
+app.use('/core', express.static('./packages/core/dist'));
+app.use('/integration', express.static('./packages/integration/dist'));
 //app.use('/themes', express.static('./themes'));
 app.use('/', express.static('./docs'));
 app.listen(proxyPort);
 
 // Give Stencil's dev server a few seconds to spin up, then launch the browser
 setTimeout(() => {
-  console.log(chalk.cyan(`\nLaunching the Xenads dev server at http://localhost:${browserPort}! 🥾\n`));
+  console.log(chalk.cyan(`\nLaunching the Webstore dev server at http://localhost:${browserPort}! 🥾\n`));
 
   bs.init({
     startPath: '/',

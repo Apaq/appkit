@@ -131,7 +131,12 @@ export class Webstore {
 
     private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
-        const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
+        let name;
+        if(typeof component.name === 'string') {
+            name = component.name as string;
+         } else if (typeof component.name === 'object') {
+            name = component.name[Language.resolveLanguage()];
+         }
         return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 

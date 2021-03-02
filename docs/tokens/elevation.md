@@ -4,8 +4,8 @@ Elevation tokens are used to give elements the appearance of being raised off th
 
 | Token                   | Example                                                                            |
 | ----------------------- | ---------------------------------------------------------------------------------- |
-| `--xena-shadow-x-small` | <div class="elevation-demo" style="box-shadow: var(--xena-shadow-x-small);"></div> |
-| `--xena-shadow-small`   | <div class="elevation-demo" style="box-shadow: var(--xena-shadow-small);"></div>   |
-| `--xena-shadow-medium`  | <div class="elevation-demo" style="box-shadow: var(--xena-shadow-medium);"></div>  |
-| `--xena-shadow-large`   | <div class="elevation-demo" style="box-shadow: var(--xena-shadow-large);"></div>   |
-| `--xena-shadow-x-large` | <div class="elevation-demo" style="box-shadow: var(--xena-shadow-x-large);"></div> |
+| `--sl-shadow-x-small` | <div class="elevation-demo" style="box-shadow: var(--sl-shadow-x-small);"></div> |
+| `--sl-shadow-small`   | <div class="elevation-demo" style="box-shadow: var(--sl-shadow-small);"></div>   |
+| `--sl-shadow-medium`  | <div class="elevation-demo" style="box-shadow: var(--sl-shadow-medium);"></div>  |
+| `--sl-shadow-large`   | <div class="elevation-demo" style="box-shadow: var(--sl-shadow-large);"></div>   |
+| `--sl-shadow-x-large` | <div class="elevation-demo" style="box-shadow: var(--sl-shadow-x-large);"></div> |
