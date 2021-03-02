@@ -1,5 +1,5 @@
 {
-  "name": "@webstore/integration",
+  "name": "@webstore/elements",
   "version": "1.0.0-alpha.0",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "build": "stencil build --docs",
-    "start": "stencil build --dev --watch --serve",
+    "start": "stencil build --dev --docs --watch --serve --port 4001 --no-open",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate"

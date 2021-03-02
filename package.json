@@ -21,7 +21,7 @@
   "scripts": {
     "build-stencil": "cd packages/elements && stencil build --docs --docs-readme",
     "build": "npm run build-stencil",
-    "dev": "stencil build --dev --docs --watch --serve --port 4001 --no-open",
+    "dev": "cd packages/elements && npm start",
     "lint": "eslint src/**/*{.ts,.tsx}",
     "prettier": "prettier --write --loglevel warn .",
     "prebuild": "npm run prettier && npm run lint",

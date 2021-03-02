@@ -10,6 +10,7 @@ export interface Bundle {
     homepage: string;
     bugs: {url: string, email?: string},
     localize: boolean | string[],
+    type: 'application/javascript' | 'module',
     jsFile: string,
     cssFile: string,
     components: IComponent[];

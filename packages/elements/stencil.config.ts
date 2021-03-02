@@ -1,13 +1,15 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-  namespace: 'webstorejs',
-  globalScript: 'src/integration/index.ts',
+  namespace: 'webstore-elements',
   preamble: 'Built with webstore',
   outputTargets: [
     {
       type: 'dist',
       esmLoaderPath: '../loader',
+      copy: [
+        { src: 'manifest.json' }
+      ]
     },
     {
       type: 'dist-custom-elements-bundle',

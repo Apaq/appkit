@@ -43,7 +43,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             scriptEl.onerror = (error) => reject(error);
             scriptEl.onload = () => resolve(null);
             // TODO: How to know whether to load as module or not?
-            //scriptEl.setAttribute("type", "module");
+            scriptEl.setAttribute("type", bundle.type ?? 'application/javascript');
             scriptEl.setAttribute("src", scriptUrl);
             scriptEl.setAttribute('id', scriptId);
 

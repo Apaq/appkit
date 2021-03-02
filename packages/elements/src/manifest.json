@@ -1,0 +1,24 @@
+{
+    "id": "ws",
+    "name": "Webstore Core Component Elements",
+    "version": "1.0.0",
+    "description": "The Webstore elements",
+    "keywords": [
+        "webstore",
+        "apaq"
+    ],
+    "homepage": "https://webstore.apaq.dk",
+    "bugs": {
+        "url": "https://webstore.apaq.dk",
+        "email": "webstore@apaq.dk"
+    },
+    "type": "module",
+    "jsFile": "webstore-elements.esm.js",
+    "components": [
+        {
+            "id": "helloworld",
+            "type": "App",
+            "accepts": []
+        }
+    ]
+}

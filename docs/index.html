@@ -43,12 +43,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/touch-icon.png" />
 
     <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script><script type="module" src="/build/webstorejs.esm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/themes/base.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/all.shoelace.js"></script>
-
-  
+    
     <script type="module">
       import { Webstore } from './integration/index.es.js';
 
@@ -67,11 +66,16 @@
           }
       });
 
-      webstore.load('https://webstall.previsto.com').then(async () => {
-        const app = webstore.resolveAppManagerById('ws', 'dashboard');
+      webstore.load('http://localhost:4000/elements/webstore-elements').then(async() => {
+        const app = webstore.resolveAppManagerById('ws', 'helloworld');
         const el = await app.open();
         el.transmit({uri: 'content://contact/123'});
       });
+      /**webstore.load('https://webstall.previsto.com').then(async () => {
+        const app = webstore.resolveAppManagerById('ws', 'dashboard');
+        const el = await app.open();
+        el.transmit({uri: 'content://contact/123'});
+      });*/
     </script>
 
   </head>

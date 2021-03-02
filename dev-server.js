@@ -49,6 +49,7 @@ app.use(/^\/$/, async (req, res, next) => {
 });
 app.use('/core', express.static('./packages/core/dist'));
 app.use('/integration', express.static('./packages/integration/dist'));
+app.use('/elements', express.static('./packages/elements/dist'));
 //app.use('/themes', express.static('./themes'));
 app.use('/', express.static('./docs'));
 app.listen(proxyPort);

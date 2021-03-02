@@ -2,11 +2,11 @@ import { Component, Prop, h, Element } from '@stencil/core';
 import { Context, createContext, IData } from '@webstore/core';
 
 @Component({
-  tag: 'my-component',
-  styleUrl: 'my-component.css',
+  tag: 'ws-helloworld',
+  styleUrl: 'helloworld.css',
   shadow: true,
 })
-export class MyComponent {
+export class HelloWorld {
   @Element() el: HTMLElement;
   context: Context;
 
@@ -26,6 +26,7 @@ export class MyComponent {
   @Prop() last: string;
 
   componentDidRender() {
+    console.log('rendered');
     this.context = createContext(this.el);
     this.context.receiver = (data: IData) => {
       console.log('Please load: ', data);

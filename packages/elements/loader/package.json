@@ -1,5 +1,5 @@
 {
-  "name": "webstorejs-loader",
+  "name": "webstore-elements-loader",
   "typings": "./index.d.ts",
   "module": "./index.js",
   "main": "./index.cjs.js",

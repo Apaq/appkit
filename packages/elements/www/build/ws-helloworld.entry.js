@@ -1,4 +1,4 @@
-import { r as registerInstance, h, g as getElement } from './index-c07ed19a.js';
+import { r as registerInstance, h, g as getElement } from './index-1729149b.js';
 
 class ContentProviderClient {
     constructor(contentProvider) {
@@ -134,20 +134,24 @@ class Data {
     }
 }
 
-if (!__webstore__) {
-    __webstore__ = { contexts: null, content: null, contentProvider: null };
+if (typeof window.__webstore__ === 'undefined') {
+    window.__webstore__ = { contexts: null, content: null, contentProvider: null };
 }
-__webstore__.contexts = new ContextManager();
-__webstore__.contentProvider = new ContentProviderRegistry();
+window.__webstore__.contexts = new ContextManager();
+window.__webstore__.contentProvider = new ContentProviderRegistry();
+/**
+ * This exports the global webstore variable for other files to import.
+ */
 function webstore$1() { return window.__webstore__; }
 
-const myComponentCss = ":host{display:block}";
+const helloworldCss = ":host{display:block}";
 
-const MyComponent = class {
+const HelloWorld = class {
   constructor(hostRef) {
     registerInstance(this, hostRef);
   }
   componentDidRender() {
+    console.log('rendered');
     this.context = createContext(this.el);
     this.context.receiver = (data) => {
       console.log('Please load: ', data);
@@ -165,6 +169,6 @@ const MyComponent = class {
   }
   get el() { return getElement(this); }
 };
-MyComponent.style = myComponentCss;
+HelloWorld.style = helloworldCss;
 
-export { MyComponent as my_component };
+export { HelloWorld as ws_helloworld };
