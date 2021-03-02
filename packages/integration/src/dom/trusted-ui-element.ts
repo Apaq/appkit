@@ -1,5 +1,4 @@
-import { Context, Data, IData, Logger } from "@webstore/core";
-import { webstore } from "../webstore-integation";
+import { Context, Data, IData, Logger, webstore } from "@webstore/core";
 import { UiElement } from "./ui-element";
 
 export class TrustedUiElement implements UiElement {

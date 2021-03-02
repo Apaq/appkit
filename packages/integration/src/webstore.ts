@@ -1,5 +1,6 @@
 import { AppManager } from "./managers/app-manager";
 import { ContentProvider, Data, IData } from "@webstore/core";
+import { webstore } from "@webstore/core";
 import { ExtensionManager } from "./managers/extension-manager";
 import { WidgetManager } from "./managers/widget-manager";
 import { IAcceptFilter } from "./bundle/acceptfilter";
@@ -8,7 +9,6 @@ import { IComponent } from "./bundle/component";
 import { Config } from "./bundle/config";
 import { Language } from "./i18n/language";
 import { InstantiatorResolver } from "./dom/instantiator-resolver";
-import { webstore } from "./webstore-integation";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
 export class Webstore {

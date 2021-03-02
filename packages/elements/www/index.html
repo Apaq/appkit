@@ -1,22 +1,18 @@
 <!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.css"> <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.esm.js"></script> <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script><script type="module" src="/build/webstorejs.esm.js" data-stencil></script> <script nomodule="" src="/build/webstorejs.js" data-stencil></script> </head> <body> <button id="btn">Show</button> <!--my-component first="Stencil" last="'Don't call me a framework' JS"></my-component---> <script>
     window.__previsto__ = {};
     
-    window.addEventListener('load', ev => {
-      //await __webstore__.bundles.load('myapp', 'https://webstall.previsto.com');
-      //await __webstore__.bundles.load('https://webstall.previsto.com');
-
-      __webstore__.contentProvider.register('contact', {
+    let webstore = Webstore();
+    webstore.registerProvider('contact', {
         query: () => {
           return Promise.resolve([]);
         },
         get: (id) => {
           return null;
         }
-      });
-    
     });
+
     document.getElementById('btn').addEventListener('click', async (event) => {
-      const app = __webstore__.bundles.resolveAppManagerById('my', 'component');
+      const app = webstore.resolveAppManagerById('my', 'component');
       const el = await app.open();
       el.transmit({uri: 'content://contact/123'});
     });
