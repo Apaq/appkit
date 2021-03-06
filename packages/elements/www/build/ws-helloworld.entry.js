@@ -8,16 +8,17 @@ const HelloWorld = class {
     this.text = 'Hello World!';
   }
   componentDidRender() {
-    console.log('rendered');
     this.context = createAppContext(this.el);
-    this.context.receiver = (data) => {
-      console.log('Please load: ', data);
-      const client = this.context.getContentResolver().resolve(data.uri);
-      client.query().then(result => {
-        console.log(result);
-        this.text += ' I Just loaded some data';
-      });
-    };
+    this.context.receiver = (data) => this.onData(data);
+  }
+  onData(data) {
+    // Data received. Get content client.
+    const client = this.context.getContentResolver().resolve(data.uri);
+    // Load data from client
+    client.query().then(result => {
+      console.log(result);
+      this.text += ' I Just loaded some data';
+    });
   }
   render() {
     return h("div", null, this.text);

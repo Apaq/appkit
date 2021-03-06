@@ -17,17 +17,18 @@ export class HelloWorld {
 
 
   componentDidRender() {
-    console.log('rendered');
     this.context = createAppContext(this.el);
-    this.context.receiver = (data: IData) => {
-      console.log('Please load: ', data);
-      const client = this.context.getContentResolver().resolve(data.uri);
+    this.context.receiver = (data: IData) => this.onData(data);
+  }
+
+  onData(data: IData) {
+    // Data received. Get content client.
+    const client = this.context.getContentResolver().resolve(data.uri);
+      // Load data from client
       client.query().then(result => {
         console.log(result);
         this.text += ' I Just loaded some data';
       });
-      
-    }
   }
 
   render() {
