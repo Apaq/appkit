@@ -1,5 +1,10 @@
 import { ContentProvider } from "./content-provider";
 
+/**
+ * A client for retreiving content.
+ * 
+ * Multiple clients will be instantiated for the same content provider.
+ */
 export class ContentProviderClient<TYPE, IDTYPE> {
 
     constructor(private contentProvider: ContentProvider<TYPE, IDTYPE>) { }

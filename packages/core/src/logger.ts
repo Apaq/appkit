@@ -1,3 +1,6 @@
+/**
+ * Simple logger system used by WebstoreJS
+ */
 export class Logger {
     public static enabled = true;
 

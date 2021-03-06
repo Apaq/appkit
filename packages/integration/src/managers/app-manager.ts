@@ -15,7 +15,7 @@ export class AppManager extends UiComponentManager {
         super(instantiator, baseUrl, bundle, id, name, version);
     }
 
-    public async open(): Promise<UiElement> {
+    public async open(parentElement?: HTMLElement): Promise<UiElement> {
         // TODO: Open app in overlay.
         // There should be a way to select the type of overlay: 
         // * Dialog
@@ -24,8 +24,12 @@ export class AppManager extends UiComponentManager {
         // * Existing element
         // * etc.
 
+        if(!parentElement) {
+            parentElement = document.body;
+        }
+
         const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
-        document.body.appendChild(uiElement.nativeElement)
+        parentElement.appendChild(uiElement.nativeElement)
 
         return Promise.resolve(uiElement);
     }

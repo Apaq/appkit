@@ -2,7 +2,11 @@ import { Context, ContextImpl } from "./context";
 import { Logger } from "./logger";
 import { webstore } from "./global";
 
-
+/**
+ * Manager for app contexts.
+ * 
+ * Ensures that eacah app get's its unique context.
+ */
 export class ContextManager {
     
     // The list of registered contexts.

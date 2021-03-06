@@ -1,6 +1,9 @@
 import { ContentProvider } from "./content-provider";
 import { Logger } from "./logger";
 
+/**
+ * A registry for the avaiable content providers.
+ */
 export class ContentProviderRegistry {
     private _registry: {[key: string]: ContentProvider<any, any>;} = {};
 

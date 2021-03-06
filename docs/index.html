@@ -67,8 +67,9 @@
       });
 
       webstore.load('http://localhost:4000/elements/webstore-elements').then(async() => {
+        const parent = document.getElementById('webstore');
         const app = webstore.resolveAppManagerById('ws', 'helloworld');
-        const el = await app.open();
+        const el = await app.open(parent);
         el.transmit({uri: 'content://contact/123'});
       });
       /**webstore.load('https://webstall.previsto.com').then(async () => {
@@ -80,6 +81,7 @@
 
   </head>
   <body>
+    <div id="webstore" style="position:absolute; left:400px; height:100px"></div>
     <div id="app"></div>
     <script>
       window.$docsify = {

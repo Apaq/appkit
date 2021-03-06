@@ -1,8 +1,15 @@
+
+/**
+ * Interface for transporting data from and to apps.
+ */
 export interface IData {
     uri: string;
     type?: string;
 }
 
+/**
+ * Default implementation for the IData interface.
+ */
 export class Data implements IData {
     type: string | null;
     constructor(public uri: string, type?: string) {
