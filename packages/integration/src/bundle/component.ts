@@ -1,6 +1,9 @@
 import { IAcceptFilter } from "./acceptfilter";
 
-export interface IComponent {
+/**
+ * Defines a component in a bundle
+ */
+export interface Component {
     id:string;
     type: 'App' | 'Widget';
     accepts: IAcceptFilter[];

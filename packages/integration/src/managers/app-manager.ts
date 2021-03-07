@@ -3,6 +3,17 @@ import { UiComponentInstantiator } from "../dom/ui-component-instantiator";
 import { UiElement } from "../dom/ui-element";
 import { UiComponentManager } from "./ui-component-manager";
 
+/**
+ * A Manager for a specific app.
+ * 
+ * In order to open an app, an AppManager has to be retrieved from Webstore.
+ * Having the AppManager allows to open the app by either:
+ * - opening it in a dialog
+ * - opening it in a fullscreen overlay
+ * - opening it in a popover
+ * - injecting it in an existing parent element.
+ * 
+ */
 export class AppManager extends UiComponentManager {
 
     constructor(

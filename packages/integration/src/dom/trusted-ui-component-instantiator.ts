@@ -4,6 +4,16 @@ import { TrustedUiElement } from "./trusted-ui-element";
 import { UiComponentInstantiator } from "./ui-component-instantiator";
 import { UiElement } from "./ui-element";
 
+/**
+ * A trusted UiComponentInstantiator.
+ * 
+ * This instantiator handles trusted instantiation of UiComponents (Apps and Widgets, 
+ * but not extensions). It does so by adding the script to the app bundle to the 
+ * <head> of the current page. The script for a bundle will only be added once even
+ * if the same app is instantiated multiple times.
+ * 
+ * If specified, styles for the app is also added to the header.
+ */
 export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
     constructor() {

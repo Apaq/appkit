@@ -5,12 +5,30 @@ import { ExtensionManager } from "./managers/extension-manager";
 import { WidgetManager } from "./managers/widget-manager";
 import { IAcceptFilter } from "./bundle/acceptfilter";
 import { Bundle } from "./bundle/bundle";
-import { IComponent } from "./bundle/component";
-import { Config } from "./bundle/config";
+import { Component } from "./bundle/component";
+import { Config } from "./config";
 import { Language } from "./i18n/language";
 import { InstantiatorResolver } from "./dom/instantiator-resolver";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
+
+/**
+ * A Webstore.
+ * 
+ * This holds details about all bundles loaded and available for use in the system.
+ * It allows for resolving specific Components via bundleid and app id or by listing
+ * all components that can open a specific datatype.
+ * 
+ * A simple sample usage could be like this:
+ * const webstore = Webstore();
+ * webstore.load('https://my.app.store/super-app-bundle').then(async() => {
+ *     const parent = document.body;
+ *     const app = webstore.resolveAppManagerById('my', 'app');
+ *     const el = await app.open(parent);
+ *     el.transmit({uri: 'content://contact/123'});
+ * });
+ * 
+ */
 export class Webstore {
 
     public config: Config = {
@@ -129,7 +147,7 @@ export class Webstore {
         return false;
     }
 
-    private buildApp(baseUrl: string, bundle: Bundle, component: IComponent): AppManager {
+    private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppManager {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
         let name;
         if(typeof component.name === 'string') {
@@ -140,7 +158,7 @@ export class Webstore {
         return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
-    private buildWidget(baseUrl: string, bundle: Bundle, component: IComponent): WidgetManager {
+    private buildWidget(baseUrl: string, bundle: Bundle, component: Component): WidgetManager {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
         const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
         return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
@@ -154,8 +172,8 @@ export class Webstore {
     */
 
 
-    private resolveComponentsByType(type: 'App' | 'Widget'): { baseUrl: string, bundle: Bundle, component: IComponent }[] {
-        const components: { baseUrl: string, bundle: Bundle, component: IComponent }[] = [];
+    private resolveComponentsByType(type: 'App' | 'Widget'): { baseUrl: string, bundle: Bundle, component: Component }[] {
+        const components: { baseUrl: string, bundle: Bundle, component: Component }[] = [];
         this.bundles.forEach(entry => {
             entry.bundle.components.forEach(component => {
                 if (component.type === type) {

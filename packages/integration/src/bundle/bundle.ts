@@ -1,6 +1,11 @@
-import { IComponent } from "./component";
+import { Component } from "./component";
 import { Dependency } from "./dependency";
 
+/**
+ * Defines an app bundle. 
+ * 
+ * The contents of manifest.json of an app bundle is read as a Bundle.
+ */
 export interface Bundle {
     id: string;
     name: string | {[key: string]: string;};
@@ -13,7 +18,7 @@ export interface Bundle {
     type: 'application/javascript' | 'module',
     jsFile: string,
     cssFile: string,
-    components: IComponent[];
+    components: Component[];
     dependencies: Dependency[];
 }
 
