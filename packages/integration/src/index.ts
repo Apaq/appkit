@@ -20,3 +20,6 @@ class Singleton {
 export function Webstore(): WebstoreImpl {
     return Singleton.getWebstore();
 }
+
+declare var window: {Webstore: () => WebstoreImpl};
+window.Webstore = () => Singleton.getWebstore();
