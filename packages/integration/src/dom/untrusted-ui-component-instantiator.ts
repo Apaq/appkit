@@ -10,7 +10,7 @@ import { UiElement } from "./ui-element";
  * app bundle to the <head> of the iframe. It then handles controlled communication
  * between the main DOM and the iframe via postMessage.
  * 
- * The developer of an app has the same webstore API available as for trusted components,
+ * The developer of an app has the same appkit API available as for trusted components,
  * but the will not have direct access to the main DOM.
  * 
  * If specified, styles for the app is also added to the header.

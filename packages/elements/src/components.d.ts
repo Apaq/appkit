@@ -6,32 +6,32 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface WsHelloworld {
+    interface AppkitHelloworld {
     }
 }
 declare global {
-    interface HTMLWsHelloworldElement extends Components.WsHelloworld, HTMLStencilElement {
+    interface HTMLAppkitHelloworldElement extends Components.AppkitHelloworld, HTMLStencilElement {
     }
-    var HTMLWsHelloworldElement: {
-        prototype: HTMLWsHelloworldElement;
-        new (): HTMLWsHelloworldElement;
+    var HTMLAppkitHelloworldElement: {
+        prototype: HTMLAppkitHelloworldElement;
+        new (): HTMLAppkitHelloworldElement;
     };
     interface HTMLElementTagNameMap {
-        "ws-helloworld": HTMLWsHelloworldElement;
+        "appkit-helloworld": HTMLAppkitHelloworldElement;
     }
 }
 declare namespace LocalJSX {
-    interface WsHelloworld {
+    interface AppkitHelloworld {
     }
     interface IntrinsicElements {
-        "ws-helloworld": WsHelloworld;
+        "appkit-helloworld": AppkitHelloworld;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ws-helloworld": LocalJSX.WsHelloworld & JSXBase.HTMLAttributes<HTMLWsHelloworldElement>;
+            "appkit-helloworld": LocalJSX.AppkitHelloworld & JSXBase.HTMLAttributes<HTMLAppkitHelloworldElement>;
         }
     }
 }

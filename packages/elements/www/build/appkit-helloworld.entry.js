@@ -1,4 +1,4 @@
-import { r as registerInstance, h, g as getElement } from './index-3c0c31c0.js';
+import { r as registerInstance, h, g as getElement } from './index-f3e33d6a.js';
 
 const helloworldCss = ":host{display:block}";
 
@@ -27,4 +27,4 @@ const HelloWorld = class {
 };
 HelloWorld.style = helloworldCss;
 
-export { HelloWorld as ws_helloworld };
+export { HelloWorld as appkit_helloworld };

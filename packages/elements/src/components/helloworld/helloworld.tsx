@@ -1,10 +1,10 @@
 import { Component, h, Element, State } from '@stencil/core';
-import { Context, IData } from '@webstore/core';
+import { Context, IData } from '@appkit/core';
 
 declare function createAppContext(el: HTMLElement): Context;
 
 @Component({
-  tag: 'ws-helloworld',
+  tag: 'appkit-helloworld',
   styleUrl: 'helloworld.css',
   shadow: true,
 })

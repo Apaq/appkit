@@ -11,8 +11,8 @@
     <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script>
     
-    <script type="module" src="/build/webstore-elements.esm.js"></script>
-    <script nomodule src="/build/webstore-elements.js"></script>
+    <script type="module" src="/build/appkit-elements.esm.js"></script>
+    <script nomodule src="/build/appkit-elements.js"></script>
 
   </head>
   <body>
@@ -23,8 +23,8 @@
   <script>
     window.__previsto__ = {};
     
-    let webstore = Webstore();
-    webstore.registerProvider('contact', {
+    let appkit = Appkit();
+    appkit.registerProvider('contact', {
         query: () => {
           return Promise.resolve([]);
         },
@@ -34,7 +34,7 @@
     });
 
     document.getElementById('btn').addEventListener('click', async (event) => {
-      const app = webstore.resolveAppManagerById('my', 'component');
+      const app = appkit.resolveAppManagerById('my', 'component');
       const el = await app.open();
       el.transmit({uri: 'content://contact/123'});
     });

@@ -1,5 +1,5 @@
 /**
- * Simple logger system used by WebstoreJS
+ * Simple logger system used by Appkit
  */
 export class Logger {
     public static enabled = true;

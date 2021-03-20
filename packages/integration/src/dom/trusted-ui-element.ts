@@ -1,4 +1,4 @@
-import { Context, Data, IData, Logger, webstore } from "@webstore/core";
+import { Context, Data, IData, Logger, appkit } from "@appkit/core";
 import { UiElement } from "./ui-element";
 
 /**
@@ -31,7 +31,7 @@ export class TrustedUiElement implements UiElement {
             const interval = setInterval(() => {
                 const id = this.nativeElement.getAttribute('context-id');
                 if(id != null) {
-                    const ctx = webstore().contexts.get(id);
+                    const ctx = appkit().contexts.get(id);
                     if(ctx != null) {
                         Logger.info('Context found');
                         this._context = ctx;

@@ -1,4 +1,4 @@
-import { ContentResolver } from "./content-resolver";
+import { ContentResolver } from "./content/content-resolver";
 import { IData } from "./data";
 
 /**
@@ -12,7 +12,7 @@ export interface Context {
 }
 
 /**
- * Default implementatsion for the Context.
+ * Default implementatsion for the Context.s
  */
 export class ContextImpl implements Context {
     private _receiver: ((data: IData) => void);
@@ -32,3 +32,4 @@ export class ContextImpl implements Context {
         return this._receiver;
     }
 }
+

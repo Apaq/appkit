@@ -2,7 +2,7 @@ import { Config } from '@stencil/core';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 export const config: Config = {
-  namespace: 'webstore-elements',
+  namespace: 'appkit-elements',
   preamble: 'Built by Apaq',
   rollupPlugins: {
     before: [

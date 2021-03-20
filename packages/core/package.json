@@ -1,8 +1,8 @@
 {
-  "name": "@webstore/core",
+  "name": "@appkit/core",
   "version": "1.0.0-alpha.0",
-  "description": "Webstore - the core framework",
-  "author": "webstore",
+  "description": "Appkit - the core framework",
+  "author": "Apaq",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

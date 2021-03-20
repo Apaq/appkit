@@ -1,5 +1,5 @@
 {
-  "name": "@webstore/elements",
+  "name": "@appkit/elements",
   "version": "1.0.0-alpha.0",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
@@ -9,7 +9,7 @@
   "types": "dist/custom-elements/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/webstorejs/webstorejs.esm.js",
+  "unpkg": "dist/appkit/appkit.esm.js",
   "files": [
     "dist/",
     "loader/"

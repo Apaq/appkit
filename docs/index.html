@@ -20,18 +20,18 @@
       content="Xena Design System provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://webstore.apaq.dk/" />
-    <meta property="og:image" content="https://webstore.apaq.dk/assets/images/og-image.png" />
+    <meta property="og:url" content="https://appkit.apaq.dk/" />
+    <meta property="og:image" content="https://appkit.apaq.dk/assets/images/og-image.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Apaq" />
     <meta name="twitter:creator" content="@Apaq" />
-    <meta name="twitter:title" content="Webstore" />
+    <meta name="twitter:title" content="Appkit" />
     <meta
       name="twitter:description"
-      content="Webstore is an app sore for the web."
+      content="Appkit is an app framework for the web."
     />
-    <meta name="twitter:image" content="https://webstore.apaq.dk/assets/images/twitter-card.png" />
+    <meta name="twitter:image" content="https://appkit.apaq.dk/assets/images/twitter-card.png" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify/themes/pure.css" />
     <link rel="stylesheet" href="/assets/styles/docs.css" />
@@ -49,15 +49,15 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/all.shoelace.js"></script>
     <script type="module" src="./integration/index.es.js"></script>
     <script type="module">
-      //import { Webstore } from './integration/index.es.js';
+      //import { Appkit } from './integration/index.es.js';
 
       window.__previsto__ = {
         apiUrl: 'https://api.previsto.io'
       }      
       
 /*
-      const webstore = Webstore();
-      webstore.registerProvider('contact', {
+      const appkit = Appkit();
+      appkit.registerProvider('contact', {
           query: () => {
             return Promise.resolve([]);
           },
@@ -66,14 +66,14 @@
           }
       });
 
-      webstore.load('http://localhost:4000/elements/webstore-elements').then(async() => {
-        const parent = document.getElementById('webstore');
-        const app = webstore.resolveAppManagerById('ws', 'helloworld');
+      appkit.load('http://localhost:4000/elements/appkit-elements').then(async() => {
+        const parent = document.getElementById('appkit');
+        const app = appkit.resolveAppManagerById('ws', 'helloworld');
         const el = await app.open(parent);
         el.transmit({uri: 'content://contact/123'});
       });*/
-      /**webstore.load('https://webstall.previsto.com').then(async () => {
-        const app = webstore.resolveAppManagerById('ws', 'dashboard');
+      /**appkit.load('https://webstall.previsto.com').then(async () => {
+        const app = appkit.resolveAppManagerById('ws', 'dashboard');
         const el = await app.open();
         el.transmit({uri: 'content://contact/123'});
       });*/
@@ -101,7 +101,7 @@
         logo: '/assets/images/logo.png',
         maxLevel: 3,
         subMaxLevel: 2,
-        name: 'Webstore',
+        name: 'Appkit',
         notFoundPage: '404.md',
         pagination: {
           previousText: 'Previous',

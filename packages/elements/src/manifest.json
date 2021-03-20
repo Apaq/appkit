@@ -1,19 +1,19 @@
 {
-    "id": "ws",
-    "name": "Webstore Core Component Elements",
+    "id": "appkit",
+    "name": "Appkit Core Component Elements",
     "version": "1.0.0",
-    "description": "The Webstore elements",
+    "description": "The Appkit elements",
     "keywords": [
-        "webstore",
+        "appkit",
         "apaq"
     ],
-    "homepage": "https://webstore.apaq.dk",
+    "homepage": "https://appkit.apaq.dk",
     "bugs": {
-        "url": "https://webstore.apaq.dk",
-        "email": "webstore@apaq.dk"
+        "url": "https://appkit.apaq.dk",
+        "email": "appkit@apaq.dk"
     },
     "type": "module",
-    "jsFile": "webstore-elements.esm.js",
+    "jsFile": "appkit-elements.esm.js",
     "components": [
         {
             "id": "helloworld",

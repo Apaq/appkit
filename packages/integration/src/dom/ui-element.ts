@@ -1,4 +1,4 @@
-import { Context, IData } from "@webstore/core";
+import { Context, IData } from "@appkit/core";
 
 /**
  * A Ui Element reference (App or Widgets).

@@ -1,8 +1,8 @@
 {
-  "name": "@webstore/integration",
+  "name": "@appkit/integration",
   "version": "1.0.0-alpha.0",
-  "description": "Webstore - the integration framework",
-  "author": "webstore",
+  "description": "Appkit - the integration framework",
+  "author": "Apaq",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

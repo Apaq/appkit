@@ -1,6 +1,6 @@
 import { AppManager } from "./managers/app-manager";
-import { ContentProvider, Data, IData } from "@webstore/core";
-import { webstore } from "@webstore/core";
+import { ContentProvider, Data, IData } from "@appkit/core";
+import { appkit } from "@appkit/core";
 import { ExtensionManager } from "./managers/extension-manager";
 import { WidgetManager } from "./managers/widget-manager";
 import { IAcceptFilter } from "./bundle/acceptfilter";
@@ -13,26 +13,26 @@ import { InstantiatorResolver } from "./dom/instantiator-resolver";
 const PATTERN_URL = /(http|https):\/\/.*/;
 
 /**
- * A Webstore.
+ * An appkit registry.
  * 
  * This holds details about all bundles loaded and available for use in the system.
  * It allows for resolving specific Components via bundleid and app id or by listing
  * all components that can open a specific datatype.
  * 
  * A simple sample usage could be like this:
- * const webstore = Webstore();
- * webstore.load('https://my.app.store/super-app-bundle').then(async() => {
+ * const appkit = Appkit();
+ * appkit.load('https://my.app.store/super-app-bundle').then(async() => {
  *     const parent = document.body;
- *     const app = webstore.resolveAppManagerById('my', 'app');
+ *     const app = appkit.resolveAppManagerById('my', 'app');
  *     const el = await app.open(parent);
  *     el.transmit({uri: 'content://contact/123'});
  * });
  * 
  */
-export class Webstore {
+export class Appkit {
 
     public config: Config = {
-        defaultRepository: 'https://apaq.github.io/webstore',
+        defaultRepository: 'https://apaq.github.io/appkit',
         trustedRepositories: []
     };
 
@@ -62,14 +62,14 @@ export class Webstore {
 
 
     public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
-        webstore().contentProvider.register(authority, contentProvider);
+        appkit().contentProvider.register(authority, contentProvider);
     }
 
     public async load(...bundleIds: string[]): Promise<void[]> {
         console.log('loading: ', bundleIds);
         const promises: Promise<void>[] = [];
         for (const bundleId of bundleIds) {
-            const baseUrl = Webstore.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
+            const baseUrl = Appkit.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
             const url = `${baseUrl}/manifest.json`
             const p = fetch(url).then(response => {
                 if (response.status === 200) {

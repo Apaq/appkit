@@ -1,7 +1,7 @@
 {
-  "name": "@webstore/dev",
+  "name": "@appkit/dev",
   "version": "0.0.1",
-  "description": "Webstore - Apps for web",
+  "description": "Appkit - Apps for web",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.mjs",
@@ -9,14 +9,14 @@
   "types": "dist/custom-elements/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/xenads/xenads.js",
+  "unpkg": "dist/appkit/appkit.js",
   "files": [
     "dist/",
     "loader/"
   ],
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:apaq/webstorejs.git"
+    "url": "ssh://git@github.com:apaq/appkit.git"
   },
   "scripts": {
     "build-stencil": "cd packages/elements && stencil build --docs --docs-readme",

@@ -1,7 +1,7 @@
 <div class="splash">
   <div class="splash-start">
-    <img class="splash-logo" src="/assets/images/logo.png" alt="WebstoreJs">
-    <p><strong>A webstore for the web</strong></p>
+    <img class="splash-logo" src="/assets/images/logo.png" alt="Appkit">
+    <p><strong>Apps for the web</strong></p>
     <ul>
       <li>Works with all frameworks and Vanilla JS</li>
       <li>Builtin app isolation for security</li>
@@ -18,7 +18,7 @@
 
 TBD
 
-See the [installation instructions](getting-started/installation.md) for more details and other ways to use WebstoreJs.
+See the [installation instructions](getting-started/installation.md) for more details and other ways to use Appkit.
 
 ## What Problem Does This Solve?
 
@@ -26,7 +26,7 @@ TBD
 
 ## Browser Support
 
-WebstoreJS is tested in the latest two versions of the following browsers.
+Appkit is tested in the latest two versions of the following browsers.
 
 <img src="/assets/images/chrome.png" alt="Chrome" width="64" height="64">
 <img src="/assets/images/edge.png" alt="Edge" width="64" height="64">
@@ -36,7 +36,7 @@ WebstoreJS is tested in the latest two versions of the following browsers.
 
 Critical bug fixes in earlier versions will be addressed based on their severity and impact.
 
-If you need to support IE11 or pre-Chromium Edge, this library isn't for you. Although web components can (to some degree) be polyfilled for legacy browsers, supporting them is outside the scope of this project. If you're using XenaDS in such a browser, you're gonna have a bad time. ⛷
+If you need to support IE11 or pre-Chromium Edge, this library isn't for you. Although web components can (to some degree) be polyfilled for legacy browsers, supporting them is outside the scope of this project. If you're using Appkit in such a browser, you're gonna have a bad time. ⛷
 
 
 ## License

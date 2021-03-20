@@ -1,5 +1,5 @@
 import { ContentProvider } from "./content-provider";
-import { Logger } from "./logger";
+import { Logger } from "../logger";
 
 /**
  * A registry for the avaiable content providers.

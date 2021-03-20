@@ -1,13 +1,13 @@
-import { Webstore as WebstoreImpl } from './webstore';
+import { Appkit as AppkitDef } from './appkit';
 import { TrustedUiComponentInstantiator } from './dom/trusted-ui-component-instantiator';
 import { UntrustedUiComponentInstantiator } from './dom/untrusted-ui-component-instantiator';
 
 class Singleton {
-    private static singleton: WebstoreImpl = null;
+    private static singleton: AppkitDef = null;
 
-    public static getWebstore(): WebstoreImpl {
+    public static getAppkit(): AppkitDef {
         if(this.singleton == null) {
-            this.singleton = new WebstoreImpl({
+            this.singleton = new AppkitDef({
                 resolve: (trusted) => {
                     return trusted ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
                 }
@@ -17,9 +17,5 @@ class Singleton {
     }
 }
 
-export function Webstore(): WebstoreImpl {
-    return Singleton.getWebstore();
-}
-
-declare var window: {Webstore: () => WebstoreImpl};
-window.Webstore = () => Singleton.getWebstore();
+declare var window: {Appkit: () => AppkitDef};
+window.Appkit = () => Singleton.getAppkit();
