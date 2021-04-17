@@ -1,4 +1,5 @@
 import { ContentProvider } from "./content-provider";
+import { Page } from "./page";
 
 /**
  * A client for retreiving content.
@@ -9,8 +10,7 @@ export class ContentProviderClient<TYPE, IDTYPE> {
 
     constructor(private contentProvider: ContentProvider<TYPE, IDTYPE>) { }
 
-    // TODO Should be some paging stuff
-    public async query(): Promise<TYPE[]> {
+    public async query(): Promise<Page<TYPE>> {
         return this.contentProvider.query();
     } 
 
