@@ -14,12 +14,12 @@ export class TrustedUiElement implements UiElement {
     
     constructor(public nativeElement: HTMLElement) { }
 
-    async transmit(data: IData): Promise<void> {
+    async callExtension(type: string, data: IData): Promise<void> {
         const context = await this.whenInitialized();
 
-        if (data && context.receiver != null) {
+        if (data && context.extensionHandler != null) {
             const dataObj = Data.of(data);
-            context.receiver(dataObj);
+            context.extensionHandler(type, dataObj);
         }
     }
     

@@ -21,8 +21,6 @@ export class Data implements IData {
             // 2: If scheme is http(s)://, then do an options request to get the type
             // 3: If scheme is content:// then resolve from content type registry
         }
-
-
     }
     
     static of(data: IData) {

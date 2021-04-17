@@ -3,33 +3,32 @@ import { IData } from "./data";
 
 /**
  * The context that each app can work within.
- * 
  * Provides ability to communicate with other apps.
  */
 export interface Context {
+    readonly id: string;
     getContentResolver(): ContentResolver;
-    receiver: (data: IData) => void
+    extensionHandler: (type: string, data: IData) => void
 }
 
 /**
  * Default implementatsion for the Context.s
  */
 export class ContextImpl implements Context {
-    private _receiver: ((data: IData) => void);
+    private _extensionHandler: ((type: string, data: IData) => void | IData);
 
-    constructor(private contentResolver: ContentResolver) {}
-    
+    constructor(public readonly id: string, private contentResolver: ContentResolver) {}
 
     public getContentResolver(): ContentResolver {
         return this.contentResolver;
     }
 
-    public set receiver(receiver: (data: IData) => void) {
-        this._receiver = receiver;
+    public set extensionHandler(receiver: (type: string, data: IData) => void) {
+        this._extensionHandler = receiver;
     }
 
-    public get receiver(): (data: IData) => void {
-        return this._receiver;
+    public get extensionHandler(): (type: string, data: IData) => void {
+        return this._extensionHandler;
     }
 }
 

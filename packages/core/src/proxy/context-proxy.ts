@@ -11,6 +11,6 @@ export class ContextProxy implements Context {
     }
 
 
-    receiver: (data: IData) => void;
-
+    extensionHandler: (type: string, data: IData) => void;
+    
 }
