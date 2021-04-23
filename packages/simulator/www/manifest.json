@@ -1,24 +1,13 @@
 {
-    "id": "appkit",
-    "name": "Appkit Core Component Elements",
-    "version": "1.0.0",
-    "description": "The Appkit elements",
-    "keywords": [
-        "appkit",
-        "apaq"
-    ],
-    "homepage": "https://appkit.apaq.dk",
-    "bugs": {
-        "url": "https://appkit.apaq.dk",
-        "email": "appkit@apaq.dk"
-    },
-    "type": "module",
-    "jsFile": "appkit-elements.esm.js",
-    "components": [
-        {
-            "id": "helloworld",
-            "type": "App",
-            "accepts": []
-        }
-    ]
+  "name": "Stencil Starter",
+  "short_name": "Stencil",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/icon/icon.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#16161d",
+  "theme_color": "#16161d"
 }

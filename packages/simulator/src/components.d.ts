@@ -5,33 +5,114 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { MatchResults } from "@stencil/router";
 export namespace Components {
-    interface AppkitHelloworld {
+    interface AkTopbar {
+    }
+    interface AppHome {
+    }
+    interface AppProfile {
+        "match": MatchResults;
+    }
+    interface AppRoot {
+    }
+    interface NavMenu {
+    }
+    interface NavMenuItem {
+    }
+    interface NavSidebar {
     }
 }
 declare global {
-    interface HTMLAppkitHelloworldElement extends Components.AppkitHelloworld, HTMLStencilElement {
+    interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
-    var HTMLAppkitHelloworldElement: {
-        prototype: HTMLAppkitHelloworldElement;
-        new (): HTMLAppkitHelloworldElement;
+    var HTMLAkTopbarElement: {
+        prototype: HTMLAkTopbarElement;
+        new (): HTMLAkTopbarElement;
+    };
+    interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
+    }
+    var HTMLAppHomeElement: {
+        prototype: HTMLAppHomeElement;
+        new (): HTMLAppHomeElement;
+    };
+    interface HTMLAppProfileElement extends Components.AppProfile, HTMLStencilElement {
+    }
+    var HTMLAppProfileElement: {
+        prototype: HTMLAppProfileElement;
+        new (): HTMLAppProfileElement;
+    };
+    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
+    }
+    var HTMLAppRootElement: {
+        prototype: HTMLAppRootElement;
+        new (): HTMLAppRootElement;
+    };
+    interface HTMLNavMenuElement extends Components.NavMenu, HTMLStencilElement {
+    }
+    var HTMLNavMenuElement: {
+        prototype: HTMLNavMenuElement;
+        new (): HTMLNavMenuElement;
+    };
+    interface HTMLNavMenuItemElement extends Components.NavMenuItem, HTMLStencilElement {
+    }
+    var HTMLNavMenuItemElement: {
+        prototype: HTMLNavMenuItemElement;
+        new (): HTMLNavMenuItemElement;
+    };
+    interface HTMLNavSidebarElement extends Components.NavSidebar, HTMLStencilElement {
+    }
+    var HTMLNavSidebarElement: {
+        prototype: HTMLNavSidebarElement;
+        new (): HTMLNavSidebarElement;
     };
     interface HTMLElementTagNameMap {
-        "appkit-helloworld": HTMLAppkitHelloworldElement;
+        "ak-topbar": HTMLAkTopbarElement;
+        "app-home": HTMLAppHomeElement;
+        "app-profile": HTMLAppProfileElement;
+        "app-root": HTMLAppRootElement;
+        "nav-menu": HTMLNavMenuElement;
+        "nav-menu-item": HTMLNavMenuItemElement;
+        "nav-sidebar": HTMLNavSidebarElement;
     }
 }
 declare namespace LocalJSX {
-    interface AppkitHelloworld {
+    interface AkTopbar {
+    }
+    interface AppHome {
+    }
+    interface AppProfile {
+        "match"?: MatchResults;
+    }
+    interface AppRoot {
+    }
+    interface NavMenu {
+    }
+    interface NavMenuItem {
+    }
+    interface NavSidebar {
     }
     interface IntrinsicElements {
-        "appkit-helloworld": AppkitHelloworld;
+        "ak-topbar": AkTopbar;
+        "app-home": AppHome;
+        "app-profile": AppProfile;
+        "app-root": AppRoot;
+        "nav-menu": NavMenu;
+        "nav-menu-item": NavMenuItem;
+        "nav-sidebar": NavSidebar;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "appkit-helloworld": LocalJSX.AppkitHelloworld & JSXBase.HTMLAttributes<HTMLAppkitHelloworldElement>;
+            "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
+            "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
+            "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
+            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "nav-menu": LocalJSX.NavMenu & JSXBase.HTMLAttributes<HTMLNavMenuElement>;
+            "nav-menu-item": LocalJSX.NavMenuItem & JSXBase.HTMLAttributes<HTMLNavMenuItemElement>;
+            "nav-sidebar": LocalJSX.NavSidebar & JSXBase.HTMLAttributes<HTMLNavSidebarElement>;
         }
     }
 }

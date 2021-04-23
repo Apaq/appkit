@@ -1,31 +1,38 @@
 import { Config } from '@stencil/core';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import { postcss } from "@stencil/postcss";
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
+import cssnano from "cssnano";
+import purgecss from "@fullhuman/postcss-purgecss";
+import replace from "postcss-replace"
+// https://stenciljs.com/docs/config
 
 export const config: Config = {
-  namespace: 'appkit-simulator',
-  preamble: 'Built by Apaq',
-  rollupPlugins: {
-    before: [
-      peerDepsExternal()
-    ]
-  },
+  globalStyle: 'src/global/app.css',
+  globalScript: 'src/global/app.ts',
+  taskQueue: 'async',
   outputTargets: [
     {
-      type: 'dist',
-      esmLoaderPath: '../loader',
-      copy: [
-        { src: 'manifest.json' }
-      ]
-    },
-    {
-      type: 'dist-custom-elements-bundle',
-    },
-    {
-      type: 'docs-readme',
-    },
-    {
       type: 'www',
-      serviceWorker: null, // disable service workers
+      // comment the following line to disable service workers in production
+      // serviceWorker: null,
+      // baseUrl: 'https://myapp.local/',
     },
   ],
+  plugins: [
+    postcss({
+      // add postcss plugins
+      plugins: [
+        // add tailwind css. Config file was added using `npx tailwindcss init`
+        tailwindcss("./tailwind.config.js"),
+        autoprefixer(),
+        // shadow dom does not respect 'html' and 'body' styling, so we replace it with ':host' instead 
+        replace({ pattern: 'html', data: { replaceAll: ':host' } }),
+        // purge and cssnano if production build
+        ...(!process.argv.includes("--dev")
+          ? [ purgecss, cssnano() ]
+          : [])
+      ]
+    })
+  ]
 };

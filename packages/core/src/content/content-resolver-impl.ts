@@ -1,5 +1,4 @@
 import { appkit } from "../global";
-import { Context } from "../context";
 import { ContentProviderClient } from "./content-provider-client";
 import { ContentResolver } from "./content-resolver";
 
@@ -8,7 +7,7 @@ import { ContentResolver } from "./content-resolver";
  */
  export class ContentResolverImpl implements ContentResolver {
     
-    constructor(private context: Context) { }
+    constructor() { }
 
     resolve<TYPE, ID>(uri: string): ContentProviderClient<TYPE, ID> {
         if(uri == null || !uri.startsWith('content://')) return null;

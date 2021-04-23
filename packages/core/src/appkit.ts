@@ -1,5 +1,6 @@
 import { ContentProviderRegistry } from "./content/content-provider-registry";
-import { ContentResolver, ContentResolverImpl } from "./content/content-resolver";
+import { ContentResolver } from "./content/content-resolver";
+import { ContentResolverImpl } from "./content/content-resolver-impl";
 import { ContextManager } from "./context-manager";
 import { appkit } from "./global";
 

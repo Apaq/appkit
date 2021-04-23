@@ -1,24 +1,4 @@
-<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <title>Stencil Component Starter</title> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.css"> <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.27/dist/shoelace/shoelace.esm.js"></script> <script src="https://bronco.previsto.com/dist/bronco/bronco.esm.js" type="module"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/zone.js/0.11.4/zone.min.js" integrity="sha512-cmSURwvMAS9N0/1/OP78yF5I4yVFW/iDH07xeSb2OTDeE3cfGWtQGxm4EwRrOKuMXP48kL546L3i+7jouj70xw==" crossorigin="anonymous"></script> <script type="module" src="/build/appkit-elements.esm.js" data-stencil></script> <script nomodule="" src="/build/appkit-elements.js" data-stencil></script> </head> <body> <button id="btn">Show</button> <script>
-    window.__previsto__ = {};
-    
-    let appkit = Appkit();
-    appkit.registerProvider('contact', {
-        query: () => {
-          return Promise.resolve([]);
-        },
-        get: (id) => {
-          return null;
-        }
-    });
-
-    document.getElementById('btn').addEventListener('click', async (event) => {
-      const app = appkit.resolveAppManagerById('my', 'component');
-      const el = await app.open();
-      el.transmit({uri: 'content://contact/123'});
-    });
-
-    
-  </script> <script>
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <title>Stencil Starter App</title> <meta name="Description" content="Welcome to the Stencil App Starter. You can use this starter to build entire apps all with web components using Stencil!"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <meta name="theme-color" content="#16161d"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta http-equiv="x-ua-compatible" content="IE=Edge"> <script type="module" src="/build/app.esm.js" data-stencil></script> <script nomodule="" src="/build/app.js" data-stencil></script> <link href="/build/app.css" rel="stylesheet"> <link rel="apple-touch-icon" href="/assets/icon/icon.png"> <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico"> <link rel="manifest" href="/manifest.json"> </head> <body> <app-root></app-root> <script>
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   // auto-unregister service worker during dev mode
   navigator.serviceWorker.getRegistration().then(function(registration) {
