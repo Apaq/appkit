@@ -9,7 +9,7 @@ export * from './context-manager';
 export * from './context';
 export * from './data';
 export * from './logger';
-export * from './appkit';
+export * from './registry';
 export * from './global';
 
 declare var window: {createAppContext: (el: HTMLElement) => Context};

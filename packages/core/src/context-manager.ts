@@ -1,6 +1,6 @@
 import { Context, ContextImpl } from "./context";
 import { Logger } from "./logger";
-import { appkit } from "./global";
+import { registry } from "./global";
 
 /**
  * Manager for app contexts.
@@ -19,7 +19,7 @@ export class ContextManager {
     // Create a new context.
     public create(contextId: string): Context {
         Logger.info(`Creating context: ${contextId}`);
-        const context = new ContextImpl(contextId, appkit().content);
+        const context = new ContextImpl(contextId, registry().content);
         this._contexts[contextId] = context;
         return context;
     }
@@ -27,9 +27,9 @@ export class ContextManager {
 
 // Default function for creating a new context
 export function createContext(el: HTMLElement): Context {
-    if(appkit().contexts == null) {
+    if(registry().contexts == null) {
         Logger.warn('Creating a context manager because no one else did.');
-        appkit().contexts = new ContextManager();
+        registry().contexts = new ContextManager();
     }
 
     let contextId = null;
@@ -44,5 +44,5 @@ export function createContext(el: HTMLElement): Context {
 
     contextId += '-' + Date.now();
     el.setAttribute('context-id', contextId);
-    return appkit().contexts.create(contextId);
+    return registry().contexts.create(contextId);
 }

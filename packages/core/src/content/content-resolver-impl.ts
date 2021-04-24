@@ -1,4 +1,4 @@
-import { appkit } from "../global";
+import { registry } from "../global";
 import { ContentProviderClient } from "./content-provider-client";
 import { ContentResolver } from "./content-resolver";
 
@@ -36,7 +36,7 @@ import { ContentResolver } from "./content-resolver";
            }
         */
     
-        const provider = appkit().contentProvider?.get(authority);
+        const provider = registry().contentProvider?.get(authority);
         return new ContentProviderClient<TYPE, ID>(provider);
     }
 }

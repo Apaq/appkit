@@ -10,7 +10,8 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
-  "dependencies": {},
+  "dependencies": {
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c"

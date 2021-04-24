@@ -1,6 +1,5 @@
 import { AppManager } from "./managers/app-manager";
-import { ContentProvider, Data, IData } from "@appkit/core";
-import { appkit } from "@appkit/core";
+import { ContentProvider, Data, IData, registry } from "@appkit/core";
 import { ExtensionManager } from "./managers/extension-manager";
 import { WidgetManager } from "./managers/widget-manager";
 import { IAcceptFilter } from "./bundle/acceptfilter";
@@ -29,7 +28,7 @@ const PATTERN_URL = /(http|https):\/\/.*/;
  * });
  * 
  */
-export class Appkit {
+export class AppkitRegistry {
 
     public config: Config = {
         defaultRepository: 'https://apaq.github.io/appkit',
@@ -62,14 +61,14 @@ export class Appkit {
 
 
     public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
-        appkit().contentProvider.register(authority, contentProvider);
+        registry().contentProvider.register(authority, contentProvider);
     }
 
     public async load(...bundleIds: string[]): Promise<void[]> {
         console.log('loading: ', bundleIds);
         const promises: Promise<void>[] = [];
         for (const bundleId of bundleIds) {
-            const baseUrl = Appkit.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
+            const baseUrl = AppkitRegistry.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
             const url = `${baseUrl}/manifest.json`
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
