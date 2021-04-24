@@ -14,6 +14,8 @@ export class NavSidebar {
 
   componentWillLoad() {
     this.apps.push(this.appkit.resolveAppManagerById('ak', 'dashboard'));
+    this.apps.push(this.appkit.resolveAppManagerById('ak', 'contacts'));
+    this.apps.push(this.appkit.resolveAppManagerById('ak', 'documents'));
   }
 
   render() {
@@ -27,13 +29,8 @@ export class NavSidebar {
               </div>
               <nav-menu>
                 {this.apps.map((app) =>
-                  <nav-menu-item>{app.name}</nav-menu-item>
+                  <nav-menu-item link={'/' + app.id}>{app.name}</nav-menu-item>
                 )}
-                <nav-menu-item>Contacts</nav-menu-item>
-                <nav-menu-item>Agreements</nav-menu-item>
-                <nav-menu-item>Orders</nav-menu-item>
-                <nav-menu-item>Calendar</nav-menu-item>
-                <nav-menu-item>Settings</nav-menu-item>
               </nav-menu>
             </div>
 

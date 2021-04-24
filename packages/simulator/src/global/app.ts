@@ -7,11 +7,9 @@ export default async () => {
     id: 'ak',
     name: 'Appkit Essentials',
     components: [
-        {
-            id: 'dashboard',
-            name: 'Dashboard',
-            type: "App"
-        }
+        { id: 'dashboard', name: 'Dashboard', type: "App" },
+        { id: 'contacts', name: 'Contacts', type: "App" },
+        { id: 'documents', name: 'Documents', type: "App" }
     ]
   } as Bundle);
 

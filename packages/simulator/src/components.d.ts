@@ -7,7 +7,15 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { MatchResults } from "@stencil/router";
 export namespace Components {
+    interface AkAppContainer {
+        "appId": string;
+        "bundleId": string;
+    }
+    interface AkContacts {
+    }
     interface AkDashboard {
+    }
+    interface AkDocuments {
     }
     interface AkTopbar {
     }
@@ -21,16 +29,35 @@ export namespace Components {
     interface NavMenu {
     }
     interface NavMenuItem {
+        "link": string;
     }
     interface NavSidebar {
     }
 }
 declare global {
+    interface HTMLAkAppContainerElement extends Components.AkAppContainer, HTMLStencilElement {
+    }
+    var HTMLAkAppContainerElement: {
+        prototype: HTMLAkAppContainerElement;
+        new (): HTMLAkAppContainerElement;
+    };
+    interface HTMLAkContactsElement extends Components.AkContacts, HTMLStencilElement {
+    }
+    var HTMLAkContactsElement: {
+        prototype: HTMLAkContactsElement;
+        new (): HTMLAkContactsElement;
+    };
     interface HTMLAkDashboardElement extends Components.AkDashboard, HTMLStencilElement {
     }
     var HTMLAkDashboardElement: {
         prototype: HTMLAkDashboardElement;
         new (): HTMLAkDashboardElement;
+    };
+    interface HTMLAkDocumentsElement extends Components.AkDocuments, HTMLStencilElement {
+    }
+    var HTMLAkDocumentsElement: {
+        prototype: HTMLAkDocumentsElement;
+        new (): HTMLAkDocumentsElement;
     };
     interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
@@ -75,7 +102,10 @@ declare global {
         new (): HTMLNavSidebarElement;
     };
     interface HTMLElementTagNameMap {
+        "ak-app-container": HTMLAkAppContainerElement;
+        "ak-contacts": HTMLAkContactsElement;
         "ak-dashboard": HTMLAkDashboardElement;
+        "ak-documents": HTMLAkDocumentsElement;
         "ak-topbar": HTMLAkTopbarElement;
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
@@ -86,7 +116,15 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AkAppContainer {
+        "appId"?: string;
+        "bundleId"?: string;
+    }
+    interface AkContacts {
+    }
     interface AkDashboard {
+    }
+    interface AkDocuments {
     }
     interface AkTopbar {
     }
@@ -100,11 +138,15 @@ declare namespace LocalJSX {
     interface NavMenu {
     }
     interface NavMenuItem {
+        "link"?: string;
     }
     interface NavSidebar {
     }
     interface IntrinsicElements {
+        "ak-app-container": AkAppContainer;
+        "ak-contacts": AkContacts;
         "ak-dashboard": AkDashboard;
+        "ak-documents": AkDocuments;
         "ak-topbar": AkTopbar;
         "app-home": AppHome;
         "app-profile": AppProfile;
@@ -118,7 +160,10 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ak-app-container": LocalJSX.AkAppContainer & JSXBase.HTMLAttributes<HTMLAkAppContainerElement>;
+            "ak-contacts": LocalJSX.AkContacts & JSXBase.HTMLAttributes<HTMLAkContactsElement>;
             "ak-dashboard": LocalJSX.AkDashboard & JSXBase.HTMLAttributes<HTMLAkDashboardElement>;
+            "ak-documents": LocalJSX.AkDocuments & JSXBase.HTMLAttributes<HTMLAkDocumentsElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;

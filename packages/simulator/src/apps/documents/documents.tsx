@@ -1,14 +1,14 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'ak-dashboard',
-  styleUrl: 'dashboard.css',
+  tag: 'ak-documents',
+  styleUrl: 'documents.css',
   shadow: true,
 })
-export class Dashboard {
+export class Documents {
   render() {
     return (
-        <span>Dashboard</span>
+        <span>Documents</span>
     );
   }
 }
