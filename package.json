@@ -1,5 +1,5 @@
 {
-  "name": "@appkit/dev",
+  "name": "@appkitjs/dev",
   "version": "0.0.1",
   "description": "Appkit - Apps for web",
   "main": "dist/index.cjs.js",

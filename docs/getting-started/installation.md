@@ -21,10 +21,10 @@ Now you can [start using Appkit!](/getting-started/usage.md)
 If you don't want to use the CDN, you can install Appkit locally with the following command.
 
 ```bash
-npm install @appkit/core
+npm install @appkitjs.com/core
 ```
 
-It's up to you to make the source files available to your app. One way to do this is to create a route in your app called `/assets/Appkit` that serves static files from `node_modules/@appkit/core`.
+It's up to you to make the source files available to your app. One way to do this is to create a route in your app called `/assets/Appkit` that serves static files from `node_modules/@appkitjs.com/core`.
 
 Once you've done that, add the following tags to your page. Make sure to update `href` and `src` so they point to the route you created.
 
@@ -38,7 +38,7 @@ Once you've done that, add the following tags to your page. Make sure to update 
 
 Another way to install locally is by downloading the latest package from https://github.com/apaq/appkit. <!--Extract the contents of the package and as mentioned above it is up to you to make the source files available to you application.-->
 
-Extract the contents of the package. It's up to you to make the source files available to your app. One way to do this is to create a route in your app called `/assets/Appkit` that serves static files from `node_modules/@appkit/core`.
+Extract the contents of the package. It's up to you to make the source files available to your app. One way to do this is to create a route in your app called `/assets/Appkit` that serves static files from `node_modules/@appkitjs.com/core`.
 
 Once you've done that, add the following tags to your page. Make sure to update `href` and `src` so they point to the route you created.
 

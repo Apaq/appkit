@@ -1,3 +1,5 @@
+import { Appkit } from '@appkitjs.com/integration';
+import { AppManager } from '@appkitjs.com/integration/dist/managers/app-manager';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -6,6 +8,13 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class NavSidebar {
+
+  appkit = Appkit();
+  apps: AppManager[] = [];
+
+  componentWillLoad() {
+    this.apps.push(this.appkit.resolveAppManagerById('ak', 'dashboard'));
+  }
 
   render() {
     return (
@@ -17,7 +26,9 @@ export class NavSidebar {
                 <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Appkit"/>
               </div>
               <nav-menu>
-                <nav-menu-item>Dashboard</nav-menu-item>
+                {this.apps.map((app) =>
+                  <nav-menu-item>{app.name}</nav-menu-item>
+                )}
                 <nav-menu-item>Contacts</nav-menu-item>
                 <nav-menu-item>Agreements</nav-menu-item>
                 <nav-menu-item>Orders</nav-menu-item>

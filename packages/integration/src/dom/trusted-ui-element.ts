@@ -1,4 +1,4 @@
-import { Context, Data, IData, Logger, registry } from "@appkit/core";
+import { Context, Data, IData, Logger, registry } from "@appkitjs.com/core";
 import { UiElement } from "./ui-element";
 
 /**

@@ -1,4 +1,4 @@
-import { IData } from "@appkit/core";
+import { IData } from "@appkitjs.com/core";
 import { UiComponentManager } from "./ui-component-manager";
 
 export class WidgetManager extends UiComponentManager {

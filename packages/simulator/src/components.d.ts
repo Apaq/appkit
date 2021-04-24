@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { MatchResults } from "@stencil/router";
 export namespace Components {
+    interface AkDashboard {
+    }
     interface AkTopbar {
     }
     interface AppHome {
@@ -24,6 +26,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAkDashboardElement extends Components.AkDashboard, HTMLStencilElement {
+    }
+    var HTMLAkDashboardElement: {
+        prototype: HTMLAkDashboardElement;
+        new (): HTMLAkDashboardElement;
+    };
     interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
     var HTMLAkTopbarElement: {
@@ -67,6 +75,7 @@ declare global {
         new (): HTMLNavSidebarElement;
     };
     interface HTMLElementTagNameMap {
+        "ak-dashboard": HTMLAkDashboardElement;
         "ak-topbar": HTMLAkTopbarElement;
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
@@ -77,6 +86,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AkDashboard {
+    }
     interface AkTopbar {
     }
     interface AppHome {
@@ -93,6 +104,7 @@ declare namespace LocalJSX {
     interface NavSidebar {
     }
     interface IntrinsicElements {
+        "ak-dashboard": AkDashboard;
         "ak-topbar": AkTopbar;
         "app-home": AppHome;
         "app-profile": AppProfile;
@@ -106,6 +118,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ak-dashboard": LocalJSX.AkDashboard & JSXBase.HTMLAttributes<HTMLAkDashboardElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;

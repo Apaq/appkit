@@ -1,11 +1,14 @@
 {
-  "name": "@appkit/core",
+  "name": "@appkitjs.com/core",
   "version": "1.0.0-alpha.0",
   "description": "Appkit - the core framework",
   "author": "Apaq",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],

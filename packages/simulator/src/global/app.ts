@@ -1,12 +1,18 @@
-import { Appkit } from '@appkit/integration';
+import { Appkit, Bundle } from '@appkitjs.com/integration';
 
 export default async () => {
-  /**
-   * The code to be executed should be placed within a default function that is
-   * exported by the global script. Ensure all of the code in the global script
-   * is wrapped in the function() that is exported.
-   */
 
   const appkit = Appkit();
-  appkit.load('woohoo');
+  appkit.registerBundle({
+    id: 'ak',
+    name: 'Appkit Essentials',
+    components: [
+        {
+            id: 'dashboard',
+            name: 'Dashboard',
+            type: "App"
+        }
+    ]
+  } as Bundle);
+
 };

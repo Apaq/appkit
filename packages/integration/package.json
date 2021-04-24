@@ -1,5 +1,5 @@
 {
-  "name": "@appkit/integration",
+  "name": "@appkitjs.com/integration",
   "version": "1.0.0-alpha.0",
   "description": "Appkit - the integration framework",
   "author": "Apaq",
@@ -11,6 +11,7 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@appkitjs.com/core": "1.0.0-alpha.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

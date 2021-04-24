@@ -1,5 +1,5 @@
 import { AppManager } from "./managers/app-manager";
-import { ContentProvider, Data, IData, registry } from "@appkit/core";
+import { ContentProvider, Data, IData, registry } from "@appkitjs.com/core";
 import { ExtensionManager } from "./managers/extension-manager";
 import { WidgetManager } from "./managers/widget-manager";
 import { IAcceptFilter } from "./bundle/acceptfilter";
@@ -39,20 +39,7 @@ export class AppkitRegistry {
 
 
     constructor(private instantiatorResolver: InstantiatorResolver) {
-        this.bundles.push({
-            baseUrl: null,
-            bundle: {
-                id: 'my',
-                name: 'My Component',
-                components: [
-                    {
-                        id: 'component',
-                        type: 'App'
-                    }
-                ],
-
-            } as Bundle
-        })
+        
     }
 
     private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
@@ -62,6 +49,10 @@ export class AppkitRegistry {
 
     public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
         registry().contentProvider.register(authority, contentProvider);
+    }
+
+    public registerBundle(bundle: Bundle) {
+        this.bundles.push({ baseUrl: null, bundle });
     }
 
     public async load(...bundleIds: string[]): Promise<void[]> {
@@ -149,11 +140,11 @@ export class AppkitRegistry {
     private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppManager {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
         let name;
-        if(typeof component.name === 'string') {
+        if (typeof component.name === 'string') {
             name = component.name as string;
-         } else if (typeof component.name === 'object') {
+        } else if (typeof component.name === 'object') {
             name = component.name[Language.resolveLanguage()];
-         }
+        }
         return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
