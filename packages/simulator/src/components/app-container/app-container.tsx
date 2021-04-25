@@ -8,7 +8,7 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
 })
 export class AppContainer {
     @Element() hostElement: HTMLAkAppContainerElement;
-
+    el: HTMLDivElement;
     @Prop() bundleId: string;
     @Prop() appId: string;
 
@@ -19,12 +19,14 @@ export class AppContainer {
             this.hostElement.firstChild.remove();
         }
         var app = this.appkit.resolveAppManagerById(this.bundleId, this.appId);
-        app.open(this.hostElement);
+        app.open(this.el);
     }
 
     render() {
         return (
-            <Host></Host>
+            <Host>Container
+                <div ref={el => this.el = el}></div>
+            </Host>
         );
     }
 }
