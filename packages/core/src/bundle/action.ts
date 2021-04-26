@@ -1,7 +1,7 @@
 import { IAcceptFilter } from "./acceptfilter";
 
 export interface Action {
-    key: string;
+    type: string;
     name: string | {[key: string]: string;}
     accepts: IAcceptFilter[];
 }

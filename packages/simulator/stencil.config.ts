@@ -7,6 +7,12 @@ import purgecss from "@fullhuman/postcss-purgecss";
 import replace from "postcss-replace"
 // https://stenciljs.com/docs/config
 
+const purge = purgecss({
+  content: ["./src/**/*.tsx", "./src/index.html"],
+  safelist: [':host'],
+  defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
+});
+
 export const config: Config = {
   globalStyle: 'src/global/app.css',
   globalScript: 'src/global/app.ts',
@@ -30,7 +36,7 @@ export const config: Config = {
         replace({ pattern: 'html', data: { replaceAll: ':host' } }),
         // purge and cssnano if production build
         ...(!process.argv.includes("--dev")
-          ? [ purgecss, cssnano() ]
+          ? [ purge, cssnano() ]
           : [])
       ]
     })

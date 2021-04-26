@@ -1,13 +1,12 @@
 import { AppManager } from "./managers/app-manager";
-import { ContentProvider, Data, IData, registry } from "@appkitjs.com/core";
-import { ExtensionManager } from "./managers/extension-manager";
+import { ContentProvider, IData, registry } from "@appkitjs.com/core";
 import { WidgetManager } from "./managers/widget-manager";
-import { IAcceptFilter } from "./bundle/acceptfilter";
-import { Bundle } from "./bundle/bundle";
-import { Component } from "./bundle/component";
+import { Bundle } from "@appkitjs.com/core";
+import { Component } from "@appkitjs.com/core";
 import { Config } from "./config";
 import { Language } from "./i18n/language";
 import { InstantiatorResolver } from "./dom/instantiator-resolver";
+import { BundleManagerImpl } from "@appkitjs.com/core";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
 
@@ -35,9 +34,6 @@ export class AppkitRegistry {
         trustedRepositories: []
     };
 
-    private bundles: { baseUrl: string, bundle: Bundle }[] = [];
-
-
     constructor(private instantiatorResolver: InstantiatorResolver) {
         
     }
@@ -46,13 +42,17 @@ export class AppkitRegistry {
         return bundleId.match(PATTERN_URL) != null ? bundleId : `${defaultServer}/${bundleId}`;
     }
 
+    private get bundles(): BundleManagerImpl {
+        return registry().bundles as BundleManagerImpl;
+    }
+
 
     public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
         registry().contentProvider.register(authority, contentProvider);
     }
 
     public registerBundle(bundle: Bundle) {
-        this.bundles.push({ baseUrl: null, bundle });
+        this.bundles.addBundle(bundle);
     }
 
     public async load(...bundleIds: string[]): Promise<void[]> {
@@ -64,7 +64,7 @@ export class AppkitRegistry {
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
                     return response.json().then((bundle: Bundle) => {
-                        this.bundles.push({ baseUrl, bundle: bundle as Bundle });
+                        this.bundles.addBundle(bundle, baseUrl);
                     });
                 }
             });
@@ -76,7 +76,7 @@ export class AppkitRegistry {
 
     public resolveAppManagerById(bundleId: string, appId: string): AppManager {
         let app: AppManager = null;
-        this.resolveComponentsByType('App').forEach(e => {
+        this.bundles.resolveComponents({type: 'App'}).forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === appId) {
                 app = this.buildApp(e.baseUrl, e.bundle, e.component);
             }
@@ -86,22 +86,15 @@ export class AppkitRegistry {
 
     public resolveAppManagersByData(data: IData, actionType: string = 'Share'): AppManager[] {
         let apps: AppManager[] = [];
-        this.resolveComponentsByType('App').forEach(e => {
-
-            for(let action of e.component.actions) {
-                if (action.key === actionType && this.filterMatches(data, ...action.accepts)) {
-                    apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
-                    break;
-                }
-            }
-           
+        this.bundles.resolveComponents({type: 'App', action: {type: actionType, data}}).forEach(e => {
+            apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
         });
         return apps;
     }
 
     public resolveWidgetManagerById(bundleId: string, widgetId: string): WidgetManager {
         let widget: WidgetManager = null;
-        this.resolveComponentsByType('Widget').forEach(e => {
+        this.bundles.resolveComponents({type: 'Widget'}).forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === widgetId) {
                 widget = this.buildWidget(e.baseUrl, e.bundle, e.component);
             }
@@ -111,25 +104,11 @@ export class AppkitRegistry {
 
     public resolveWidgetManagersByData(data: IData, actionType: string = 'Share'): WidgetManager[] {
         let widgets: WidgetManager[] = [];
-        this.resolveComponentsByType('App').forEach(e => {
-
-            for(let action of e.component.actions) {
-                if (action.key === actionType && this.filterMatches(data, ...action.accepts)) {
-                    widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
-                    break;
-                }
-            }
-            
+        this.bundles.resolveComponents({type: 'Widget', action: {type: actionType, data}}).forEach(e => {
+            widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
         });
         return widgets;
     }
-
-    public resolveExtensionsByData(data: Data): ExtensionManager[] {
-        // TODO: Figure out how to handle extensions
-        if (data) return null;
-        return null;
-    }
-
 
     private isTrusted(bundle: Bundle) {
         if (bundle.id.match(PATTERN_URL) == null) {
@@ -162,32 +141,7 @@ export class AppkitRegistry {
         const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
         return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
-    /*
-        private buildExtension(bundle: IBundle, component: IComponent): Extension {
-            // TODO: Figure out how to handle extensions
-            if (bundle || component) return null;
-            return null;
-        }
-    */
 
-
-    private resolveComponentsByType(type: 'App' | 'Widget'): { baseUrl: string, bundle: Bundle, component: Component }[] {
-        const components: { baseUrl: string, bundle: Bundle, component: Component }[] = [];
-        this.bundles.forEach(entry => {
-            entry.bundle.components.forEach(component => {
-                if (component.type === type) {
-                    components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
-                }
-            })
-        });
-        return components;
-    }
-
-    private filterMatches(data: IData, ...filter: IAcceptFilter[]): boolean {
-        // TODO: Handle filter
-        if (filter || data) return true;
-        return true;
-    }
 }
 
 

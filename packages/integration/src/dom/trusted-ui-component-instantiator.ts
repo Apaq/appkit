@@ -1,4 +1,4 @@
-import { Bundle } from "../bundle/bundle";
+import { Bundle } from "@appkitjs.com/core";
 import { Language } from "../i18n/language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { UiComponentInstantiator } from "./ui-component-instantiator";

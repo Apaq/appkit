@@ -1,6 +1,7 @@
-import { Context, ContextImpl } from "./context";
-import { Logger } from "./logger";
-import { registry } from "./global";
+import { Context } from "./context";
+import { Logger } from "../logger";
+import { registry } from "../global";
+import { ContextImpl } from "./context-impl";
 
 /**
  * Manager for app contexts.
@@ -19,7 +20,7 @@ export class ContextManager {
     // Create a new context.
     public create(contextId: string): Context {
         Logger.info(`Creating context: ${contextId}`);
-        const context = new ContextImpl(contextId, registry().content);
+        const context = new ContextImpl(contextId, registry().content, registry().bundles);
         this._contexts[contextId] = context;
         return context;
     }

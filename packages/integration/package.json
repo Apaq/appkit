@@ -1,6 +1,6 @@
 {
   "name": "@appkitjs.com/integration",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Appkit - the integration framework",
   "author": "Apaq",
   "license": "MIT",
@@ -10,8 +10,13 @@
     "dist"
   ],
   "types": "dist/index.d.ts",
+  "workspaces": {
+    "packages": [
+      "../core"
+    ]
+  },
   "dependencies": {
-    "@appkitjs.com/core": "1.0.0-alpha.1"
+    "@appkitjs.com/core": "1.0.0-alpha.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

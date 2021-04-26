@@ -1,4 +1,4 @@
-import { Bundle } from "../bundle/bundle";
+import { Bundle } from "@appkitjs.com/core";
 
 export interface ComponentManager {
     // The bundle this component belongs to

@@ -1,7 +1,7 @@
-import { Context } from '@appkitjs.com/core';
-import { Component, Element, h } from '@stencil/core';
+import { Component as App, Context } from '@appkitjs.com/core';
+import { Component, Element, h, State } from '@stencil/core';
 
-declare function createContext(el: HTMLElement): Context;
+declare function createAppContext(el: HTMLElement): Context;
 
 @Component({
   tag: 'ak-contacts',
@@ -12,16 +12,25 @@ export class Contacts {
   @Element() hostElement: HTMLAkContactsElement;
   context: Context;
 
-  componentDidRender() {
-    this.context = createContext(this.hostElement);
+  @State() apps: App[] = [];
+
+  componentDidLoad() {
+    this.context = createAppContext(this.hostElement);
+    this.apps = this.context.getComponents('Share', {uri: 'content://contacts/1221312', type: 'text/vcard'});
   }
 
-  getApps() {
-    // TODO: How to resolve and open apps?
-  }
   render() {
     return (
-        <span>Contacts</span>
-    );
+      <div>
+        <div>Contacts</div>
+        <hr></hr>
+        Compatible Apps:
+        {this.apps.map((c) =>
+          <div>
+            <div>{c.name}</div>
+          </div>
+        )}
+      </div>
+    )
   }
 }

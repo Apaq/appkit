@@ -1,5 +1,4 @@
 import { Appkit } from '@appkitjs.com/integration';
-import { AppManager } from '@appkitjs.com/integration/dist/managers/app-manager';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -10,7 +9,7 @@ import { Component, Host, h } from '@stencil/core';
 export class NavSidebar {
 
   appkit = Appkit();
-  apps: AppManager[] = [];
+  apps: any[] = [];
 
   componentWillLoad() {
     this.apps.push(this.appkit.resolveAppManagerById('ak', 'dashboard'));
