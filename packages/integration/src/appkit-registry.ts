@@ -84,13 +84,17 @@ export class AppkitRegistry {
         return app;
     }
 
-    public resolveAppManagersByData(data: IData): AppManager[] {
+    public resolveAppManagersByData(data: IData, actionType: string = 'Share'): AppManager[] {
         let apps: AppManager[] = [];
         this.resolveComponentsByType('App').forEach(e => {
 
-            if (this.filterMatches(data, ...e.component.accepts)) {
-                apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
+            for(let action of e.component.actions) {
+                if (action.key === actionType && this.filterMatches(data, ...action.accepts)) {
+                    apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
+                    break;
+                }
             }
+           
         });
         return apps;
     }
@@ -105,12 +109,17 @@ export class AppkitRegistry {
         return widget;
     }
 
-    public resolveWidgetManagersByData(data: IData): WidgetManager[] {
+    public resolveWidgetManagersByData(data: IData, actionType: string = 'Share'): WidgetManager[] {
         let widgets: WidgetManager[] = [];
         this.resolveComponentsByType('App').forEach(e => {
-            if (this.filterMatches(data, ...e.component.accepts)) {
-                widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
+
+            for(let action of e.component.actions) {
+                if (action.key === actionType && this.filterMatches(data, ...action.accepts)) {
+                    widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
+                    break;
+                }
             }
+            
         });
         return widgets;
     }
