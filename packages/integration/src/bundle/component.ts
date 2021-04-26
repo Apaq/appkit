@@ -1,4 +1,3 @@
-import { IAcceptFilter } from "./acceptfilter";
 import { Action } from "./action";
 
 /**
@@ -7,7 +6,6 @@ import { Action } from "./action";
 export interface Component {
     id:string;
     type: 'App' | 'Widget';
-    accepts: IAcceptFilter[];
     name: string | {[key: string]: string;}
     actions: Action[];
 }

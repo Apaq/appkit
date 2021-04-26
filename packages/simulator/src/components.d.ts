@@ -17,6 +17,8 @@ export namespace Components {
     }
     interface AkDocuments {
     }
+    interface AkMessages {
+    }
     interface AkTopbar {
     }
     interface AppHome {
@@ -58,6 +60,12 @@ declare global {
     var HTMLAkDocumentsElement: {
         prototype: HTMLAkDocumentsElement;
         new (): HTMLAkDocumentsElement;
+    };
+    interface HTMLAkMessagesElement extends Components.AkMessages, HTMLStencilElement {
+    }
+    var HTMLAkMessagesElement: {
+        prototype: HTMLAkMessagesElement;
+        new (): HTMLAkMessagesElement;
     };
     interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
@@ -106,6 +114,7 @@ declare global {
         "ak-contacts": HTMLAkContactsElement;
         "ak-dashboard": HTMLAkDashboardElement;
         "ak-documents": HTMLAkDocumentsElement;
+        "ak-messages": HTMLAkMessagesElement;
         "ak-topbar": HTMLAkTopbarElement;
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
@@ -125,6 +134,8 @@ declare namespace LocalJSX {
     interface AkDashboard {
     }
     interface AkDocuments {
+    }
+    interface AkMessages {
     }
     interface AkTopbar {
     }
@@ -147,6 +158,7 @@ declare namespace LocalJSX {
         "ak-contacts": AkContacts;
         "ak-dashboard": AkDashboard;
         "ak-documents": AkDocuments;
+        "ak-messages": AkMessages;
         "ak-topbar": AkTopbar;
         "app-home": AppHome;
         "app-profile": AppProfile;
@@ -164,6 +176,7 @@ declare module "@stencil/core" {
             "ak-contacts": LocalJSX.AkContacts & JSXBase.HTMLAttributes<HTMLAkContactsElement>;
             "ak-dashboard": LocalJSX.AkDashboard & JSXBase.HTMLAttributes<HTMLAkDashboardElement>;
             "ak-documents": LocalJSX.AkDocuments & JSXBase.HTMLAttributes<HTMLAkDocumentsElement>;
+            "ak-messages": LocalJSX.AkMessages & JSXBase.HTMLAttributes<HTMLAkMessagesElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;

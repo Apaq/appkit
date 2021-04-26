@@ -1,5 +1,5 @@
 import { Appkit } from '@appkitjs.com/integration';
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 @Component({
     tag: 'ak-app-container',
@@ -7,7 +7,6 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
     shadow: true,
 })
 export class AppContainer {
-    @Element() hostElement: HTMLAkAppContainerElement;
     el: HTMLDivElement;
     @Prop() bundleId: string;
     @Prop() appId: string;
@@ -15,18 +14,13 @@ export class AppContainer {
     appkit = Appkit();
 
     componentDidRender() {
-        while(this.hostElement.firstChild) {
-            this.hostElement.firstChild.remove();
-        }
         var app = this.appkit.resolveAppManagerById(this.bundleId, this.appId);
         app.open(this.el);
     }
 
     render() {
         return (
-            <Host>Container
-                <div ref={el => this.el = el}></div>
-            </Host>
+            <div ref={el => this.el = el}></div>
         );
     }
 }

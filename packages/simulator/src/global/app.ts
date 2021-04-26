@@ -9,7 +9,8 @@ export default async () => {
     components: [
         { id: 'dashboard', name: 'Dashboard', type: "App" },
         { id: 'contacts', name: 'Contacts', type: "App" },
-        { id: 'documents', name: 'Documents', type: "App" }
+        { id: 'documents', name: 'Documents', type: "App" },
+        { id: 'messages', name: 'Messages', type: "App" }
     ]
   } as Bundle);
 
