@@ -22,12 +22,13 @@ export class Contacts {
   render() {
     return (
       <div>
-        <div>Contacts</div>
+        <div class="text-md font-sans">Contacts</div>
         <hr></hr>
         Compatible Apps:
         {this.apps.map((c) =>
           <div>
             <div>{c.name}</div>
+            <sl-button>Woohoo</sl-button>
           </div>
         )}
       </div>
