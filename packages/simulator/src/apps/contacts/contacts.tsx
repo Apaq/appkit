@@ -29,6 +29,7 @@ export class Contacts {
           <div>
             <div>{c.name}</div>
             <sl-button>Woohoo</sl-button>
+            <sl-button type="primary" class="ml-3">Woohoo</sl-button>
           </div>
         )}
       </div>
