@@ -1,4 +1,4 @@
-import { Bundle } from "@appkitjs.com/core";
+import { Bundle } from "../bundle/bundle";
 import { UiComponentInstantiator } from "../dom/ui-component-instantiator";
 import { UiElement } from "../dom/ui-element";
 import { UiComponentManager } from "./ui-component-manager";

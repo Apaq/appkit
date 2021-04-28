@@ -1,4 +1,4 @@
-import { Appkit } from '@appkitjs.com/integration';
+import { Appkit } from '@appkitjs.com/core';
 import { Component, h, Prop } from '@stencil/core';
 
 @Component({

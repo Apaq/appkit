@@ -1,7 +1,7 @@
 {
-  "name": "@appkitjs.com/integration",
+  "name": "@appkitjs.com/proxy",
   "version": "1.0.0-alpha.2",
-  "description": "Appkit - the integration framework",
+  "description": "Appkit - the proxy for untrusted apps",
   "author": "Apaq",
   "license": "MIT",
   "main": "dist/index.js",

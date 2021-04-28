@@ -1,4 +1,5 @@
-import { Context, IData } from "@appkitjs.com/core";
+import { IData } from "../data";
+import { Context } from "../context/context";
 
 /**
  * A Ui Element reference (App or Widgets).

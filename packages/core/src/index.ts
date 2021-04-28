@@ -1,16 +1,43 @@
+import { AppkitRegistry } from './appkit-registry';
 import { Context } from './context/context';
 import { createContext } from './context/context-manager';
+import { TrustedUiComponentInstantiator } from './dom/trusted-ui-component-instantiator';
+import { UntrustedUiComponentInstantiator } from './dom/untrusted-ui-component-instantiator';
 
 export * from './bundle/index';
-export * from './content/content-provider';
-export * from './content/content-provider-client';
-export * from './content/content-provider-registry';
-export * from './content/content-resolver';
-export * from './context/context';
+export * from './content/index';
+export * from './context/index';
+export * from './dom/index';
+export * from './i18n/index';
+export * from './managers/index'
+
+export * from './appkit-registry';
+export * from './config';
 export * from './data';
 export * from './logger';
 export * from './registry';
 export * from './global';
 
-declare var window: {createAppContext: (el: HTMLElement) => Context};
+
+class Singleton {
+    private static singleton: AppkitRegistry = null;
+
+    public static getAppkit(): AppkitRegistry {
+        if(this.singleton == null) {
+            this.singleton = new AppkitRegistry({
+                resolve: (trusted) => {
+                    return trusted ? new TrustedUiComponentInstantiator() : new UntrustedUiComponentInstantiator();
+                }
+            });
+        }
+        return this.singleton;
+    }
+}
+
+export function Appkit(): AppkitRegistry {
+    return Singleton.getAppkit();
+}
+
+declare var window: {createAppContext: (el: HTMLElement) => Context, Appkit: () => AppkitRegistry};
 window.createAppContext = createContext;
+window.Appkit = () => Singleton.getAppkit();

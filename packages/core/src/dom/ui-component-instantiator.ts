@@ -1,4 +1,4 @@
-import { Bundle } from '@appkitjs.com/core';
+import { Bundle } from '../bundle/bundle';
 import { UiElement } from './ui-element';
 
 /**

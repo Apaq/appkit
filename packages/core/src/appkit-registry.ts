@@ -1,12 +1,11 @@
 import { AppManager } from "./managers/app-manager";
-import { ContentProvider, IData, registry } from "@appkitjs.com/core";
 import { WidgetManager } from "./managers/widget-manager";
-import { Bundle } from "@appkitjs.com/core";
-import { Component } from "@appkitjs.com/core";
 import { Config } from "./config";
 import { Language } from "./i18n/language";
 import { InstantiatorResolver } from "./dom/instantiator-resolver";
-import { BundleManagerImpl } from "@appkitjs.com/core";
+import { IData } from "./data";
+import { registry } from "./global";
+import { BundleManagerImpl, ContentProvider, Bundle, Component } from "./index";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
 

@@ -1,5 +1,4 @@
-import { Bundle } from '@appkitjs.com/core';
-import { Appkit } from '@appkitjs.com/integration';
+import { Appkit, Bundle } from '@appkitjs.com/core';
 
 export default async () => {
 
