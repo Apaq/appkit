@@ -14,7 +14,9 @@ export class NavSidebar {
   componentWillLoad() {
     this.apps.push(this.appkit.resolveAppManagerById('ak', 'dashboard'));
     this.apps.push(this.appkit.resolveAppManagerById('ak', 'contacts'));
+    this.apps.push(this.appkit.resolveAppManagerById('ak', 'orders'));
     this.apps.push(this.appkit.resolveAppManagerById('ak', 'documents'));
+    this.apps.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
   }
 
   render() {
@@ -23,7 +25,7 @@ export class NavSidebar {
          <div class="flex flex-shrink-0">
           <div class="flex flex-col w-64">
             <div class="flex flex-col h-0 flex-1">
-              <div class="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900">
+              <div class="flex items-center h-12 flex-shrink-0 px-4 bg-gray-900">
                 <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Appkit"/>
               </div>
               <nav-menu>

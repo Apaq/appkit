@@ -11,6 +11,8 @@ export namespace Components {
         "appId": string;
         "bundleId": string;
     }
+    interface AkAppList {
+    }
     interface AkContacts {
     }
     interface AkDashboard {
@@ -18,6 +20,8 @@ export namespace Components {
     interface AkDocuments {
     }
     interface AkMessages {
+    }
+    interface AkOrders {
     }
     interface AkTopbar {
     }
@@ -43,6 +47,12 @@ declare global {
         prototype: HTMLAkAppContainerElement;
         new (): HTMLAkAppContainerElement;
     };
+    interface HTMLAkAppListElement extends Components.AkAppList, HTMLStencilElement {
+    }
+    var HTMLAkAppListElement: {
+        prototype: HTMLAkAppListElement;
+        new (): HTMLAkAppListElement;
+    };
     interface HTMLAkContactsElement extends Components.AkContacts, HTMLStencilElement {
     }
     var HTMLAkContactsElement: {
@@ -66,6 +76,12 @@ declare global {
     var HTMLAkMessagesElement: {
         prototype: HTMLAkMessagesElement;
         new (): HTMLAkMessagesElement;
+    };
+    interface HTMLAkOrdersElement extends Components.AkOrders, HTMLStencilElement {
+    }
+    var HTMLAkOrdersElement: {
+        prototype: HTMLAkOrdersElement;
+        new (): HTMLAkOrdersElement;
     };
     interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
@@ -111,10 +127,12 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ak-app-container": HTMLAkAppContainerElement;
+        "ak-app-list": HTMLAkAppListElement;
         "ak-contacts": HTMLAkContactsElement;
         "ak-dashboard": HTMLAkDashboardElement;
         "ak-documents": HTMLAkDocumentsElement;
         "ak-messages": HTMLAkMessagesElement;
+        "ak-orders": HTMLAkOrdersElement;
         "ak-topbar": HTMLAkTopbarElement;
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
@@ -129,6 +147,8 @@ declare namespace LocalJSX {
         "appId"?: string;
         "bundleId"?: string;
     }
+    interface AkAppList {
+    }
     interface AkContacts {
     }
     interface AkDashboard {
@@ -136,6 +156,8 @@ declare namespace LocalJSX {
     interface AkDocuments {
     }
     interface AkMessages {
+    }
+    interface AkOrders {
     }
     interface AkTopbar {
     }
@@ -155,10 +177,12 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "ak-app-container": AkAppContainer;
+        "ak-app-list": AkAppList;
         "ak-contacts": AkContacts;
         "ak-dashboard": AkDashboard;
         "ak-documents": AkDocuments;
         "ak-messages": AkMessages;
+        "ak-orders": AkOrders;
         "ak-topbar": AkTopbar;
         "app-home": AppHome;
         "app-profile": AppProfile;
@@ -173,10 +197,12 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "ak-app-container": LocalJSX.AkAppContainer & JSXBase.HTMLAttributes<HTMLAkAppContainerElement>;
+            "ak-app-list": LocalJSX.AkAppList & JSXBase.HTMLAttributes<HTMLAkAppListElement>;
             "ak-contacts": LocalJSX.AkContacts & JSXBase.HTMLAttributes<HTMLAkContactsElement>;
             "ak-dashboard": LocalJSX.AkDashboard & JSXBase.HTMLAttributes<HTMLAkDashboardElement>;
             "ak-documents": LocalJSX.AkDocuments & JSXBase.HTMLAttributes<HTMLAkDocumentsElement>;
             "ak-messages": LocalJSX.AkMessages & JSXBase.HTMLAttributes<HTMLAkMessagesElement>;
+            "ak-orders": LocalJSX.AkOrders & JSXBase.HTMLAttributes<HTMLAkOrdersElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;

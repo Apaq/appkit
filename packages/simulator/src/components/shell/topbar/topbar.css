@@ -4,4 +4,18 @@
 
 :host {
   display: block;
+
+
+}
+
+:host > div {
+  min-width: 50rem;
+}
+
+sl-avatar {
+  --size: 32px;
+}
+
+sl-icon-button::part(base) {
+  color: var(--sl-color-gray-300);
 }

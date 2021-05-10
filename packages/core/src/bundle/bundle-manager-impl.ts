@@ -1,5 +1,5 @@
-import { IData } from "../data";
 import { Action } from "./action";
+import { ActionFilter } from "./actionfilter";
 import { Bundle } from "./bundle";
 import { Component } from "./component";
 
@@ -10,12 +10,12 @@ export class BundleManagerImpl {
         this.bundles.push({ baseUrl: baseUrl, bundle });
     }
 
-    public resolveComponents(filter: {type?: 'App' | 'Widget', action?:{type: string, data: IData}}): { baseUrl: string, bundle: Bundle, component: Component }[] {
+    public resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?:ActionFilter}): { baseUrl: string, bundle: Bundle, component: Component }[] {
         const components: { baseUrl: string, bundle: Bundle, component: Component }[] = [];
         this.bundles.forEach(entry => {
             entry.bundle.components.forEach(component => {
                 if ((!filter.type || component.type === filter.type) &&
-                    (!filter.action || (component.actions && this.filterMatches(filter.action, ...component.actions)))) {
+                    (!filter.actionFilter || (component.actions && this.filterMatches(filter.actionFilter, ...component.actions)))) {
                     components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
                 }
             })
@@ -23,7 +23,7 @@ export class BundleManagerImpl {
         return components;
     }
 
-    private filterMatches(action: {type: string, data: IData}, ...actions: Action[]): boolean {
+    private filterMatches(action: ActionFilter, ...actions: Action[]): boolean {
         if(!actions || !action) {
             return false;
         }

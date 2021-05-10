@@ -19,7 +19,9 @@ export class AppRoot {
                 <stencil-route url="/" component="app-home" exact={true} />
                 <stencil-route url="/dashboard" component="ak-app-container" componentProps={{ 'bundleId': 'ak', 'appId': 'dashboard' }}  />
                 <stencil-route url="/contacts" component="ak-app-container" componentProps={{ 'bundleId': 'ak', 'appId': 'contacts' }}  />
+                <stencil-route url="/orders" component="ak-app-container" componentProps={{ 'bundleId': 'ak', 'appId': 'orders' }}  />
                 <stencil-route url="/documents" component="ak-app-container" componentProps={{ 'bundleId': 'ak', 'appId': 'documents' }}  />
+                <stencil-route url="/app-list" component="ak-app-container" componentProps={{ 'bundleId': 'ak', 'appId': 'app-list' }}  />
               </stencil-route-switch>
             </stencil-router>
           </main>

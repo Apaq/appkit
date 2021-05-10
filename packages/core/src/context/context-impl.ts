@@ -3,6 +3,7 @@ import { Context } from "./context";
 import { IData } from "../data";
 import { Component } from "../bundle/component";
 import { BundleManager } from "../bundle/bundle-manager";
+import { ActionFilter } from "../bundle/actionfilter";
 
 /**
  * Default implementatsion for the Context.s
@@ -27,9 +28,9 @@ import { BundleManager } from "../bundle/bundle-manager";
         return this._extensionHandler;
     }
 
-    public getComponents(actionType: string, data: IData): Component[] {
+    public getComponents(actionFilter?: ActionFilter): Component[] {
         let components: Component[] = [];
-        this.bundleManager.resolveComponents({action: {type: actionType, data}}).forEach(e => components.push(e.component));
+        this.bundleManager.resolveComponents({actionFilter}).forEach(e => components.push(e.component));
         return components;
     }
 

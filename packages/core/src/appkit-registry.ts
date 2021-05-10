@@ -85,7 +85,7 @@ export class AppkitRegistry {
 
     public resolveAppManagersByData(data: IData, actionType: string = 'Share'): AppManager[] {
         let apps: AppManager[] = [];
-        this.bundles.resolveComponents({type: 'App', action: {type: actionType, data}}).forEach(e => {
+        this.bundles.resolveComponents({type: 'App', actionFilter: {type: actionType, data}}).forEach(e => {
             apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
         });
         return apps;
@@ -103,7 +103,7 @@ export class AppkitRegistry {
 
     public resolveWidgetManagersByData(data: IData, actionType: string = 'Share'): WidgetManager[] {
         let widgets: WidgetManager[] = [];
-        this.bundles.resolveComponents({type: 'Widget', action: {type: actionType, data}}).forEach(e => {
+        this.bundles.resolveComponents({type: 'Widget', actionFilter: {type: actionType, data}}).forEach(e => {
             widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
         });
         return widgets;
