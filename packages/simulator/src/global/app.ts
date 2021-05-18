@@ -9,4 +9,5 @@ export default async () => {
   appkit.registerBundle(CoreBundle);
   appkit.registerProvider('contacts', new ContactProvider());
   appkit.registerProvider('orders', new OrderProvider());
+  appkit.getSessionSettings().setString('token', 'my-token-123123');
 };

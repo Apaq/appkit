@@ -10,7 +10,11 @@ if (typeof window.__appkit__ === 'undefined') {
         contexts: null,
         content: null,
         contentProvider: null,
-        bundles: null
+        bundles: null,
+        settings: {
+            device: null,
+            session: null
+        }
     }
 }
 

@@ -20,7 +20,7 @@ export class ContextManager {
     // Create a new context.
     public create(contextId: string): Context {
         Logger.info(`Creating context: ${contextId}`);
-        const context = new ContextImpl(contextId, registry().content, registry().bundles);
+        const context = new ContextImpl(contextId, registry());
         this._contexts[contextId] = context;
         return context;
     }

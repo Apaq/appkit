@@ -2,6 +2,7 @@ import { ActionFilter } from "../bundle/actionfilter";
 import { Component } from "../bundle/component";
 import { ContentResolver } from "../content/content-resolver";
 import { IData } from "../data";
+import { SettingsTable } from "../settings/settings-table";
 
 /**
  * The context that each app can work within.
@@ -14,6 +15,9 @@ export interface Context {
 
     getComponents(actionFilter?: ActionFilter): Component[];
     startApp(actionType: string, data?: IData): void;
+    
+    getDeviceSettings(): SettingsTable;
+    getSessionSettings(): SettingsTable;
 }
 
 

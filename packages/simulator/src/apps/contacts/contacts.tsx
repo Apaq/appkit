@@ -15,9 +15,11 @@ export class Contacts {
 
   @State() apps: App[] = [];
   @State() contacts: Page<Contact>;
+  @State() token: string;
 
   componentDidLoad() {
     this.context = createAppContext(this.hostElement);
+    this.token = this.context.getSessionSettings().getString('token');
 
     // List apps
     this.apps = this.context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});
@@ -38,7 +40,7 @@ export class Contacts {
             <sl-icon name="three-dots"></sl-icon>
           </sl-button>
         </sl-page-header>
-
+        token: {this.token}
         <div class="flex flex-col p-4">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

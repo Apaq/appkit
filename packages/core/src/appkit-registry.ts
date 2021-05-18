@@ -6,6 +6,7 @@ import { InstantiatorResolver } from "./dom/instantiator-resolver";
 import { IData } from "./data";
 import { registry } from "./global";
 import { BundleManagerImpl, ContentProvider, Bundle, Component } from "./index";
+import { SettingsTable } from "./settings/settings-table";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
 
@@ -107,6 +108,15 @@ export class AppkitRegistry {
             widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
         });
         return widgets;
+    }
+
+    
+    public getDeviceSettings(): SettingsTable {
+        return registry().settings.device;
+    }
+
+    public getSessionSettings(): SettingsTable {
+        return registry().settings.session;
     }
 
     private isTrusted(bundle: Bundle) {
