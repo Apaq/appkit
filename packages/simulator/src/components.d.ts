@@ -5,7 +5,6 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { MatchResults } from "@stencil/router";
 export namespace Components {
     interface AkAppContainer {
         "appId": string;
@@ -24,11 +23,6 @@ export namespace Components {
     interface AkOrders {
     }
     interface AkTopbar {
-    }
-    interface AppHome {
-    }
-    interface AppProfile {
-        "match": MatchResults;
     }
     interface AppRoot {
     }
@@ -89,18 +83,6 @@ declare global {
         prototype: HTMLAkTopbarElement;
         new (): HTMLAkTopbarElement;
     };
-    interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {
-    }
-    var HTMLAppHomeElement: {
-        prototype: HTMLAppHomeElement;
-        new (): HTMLAppHomeElement;
-    };
-    interface HTMLAppProfileElement extends Components.AppProfile, HTMLStencilElement {
-    }
-    var HTMLAppProfileElement: {
-        prototype: HTMLAppProfileElement;
-        new (): HTMLAppProfileElement;
-    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
@@ -134,8 +116,6 @@ declare global {
         "ak-messages": HTMLAkMessagesElement;
         "ak-orders": HTMLAkOrdersElement;
         "ak-topbar": HTMLAkTopbarElement;
-        "app-home": HTMLAppHomeElement;
-        "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
         "nav-menu": HTMLNavMenuElement;
         "nav-menu-item": HTMLNavMenuItemElement;
@@ -161,11 +141,6 @@ declare namespace LocalJSX {
     }
     interface AkTopbar {
     }
-    interface AppHome {
-    }
-    interface AppProfile {
-        "match"?: MatchResults;
-    }
     interface AppRoot {
     }
     interface NavMenu {
@@ -184,8 +159,6 @@ declare namespace LocalJSX {
         "ak-messages": AkMessages;
         "ak-orders": AkOrders;
         "ak-topbar": AkTopbar;
-        "app-home": AppHome;
-        "app-profile": AppProfile;
         "app-root": AppRoot;
         "nav-menu": NavMenu;
         "nav-menu-item": NavMenuItem;
@@ -204,8 +177,6 @@ declare module "@stencil/core" {
             "ak-messages": LocalJSX.AkMessages & JSXBase.HTMLAttributes<HTMLAkMessagesElement>;
             "ak-orders": LocalJSX.AkOrders & JSXBase.HTMLAttributes<HTMLAkOrdersElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
-            "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
-            "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "nav-menu": LocalJSX.NavMenu & JSXBase.HTMLAttributes<HTMLNavMenuElement>;
             "nav-menu-item": LocalJSX.NavMenuItem & JSXBase.HTMLAttributes<HTMLNavMenuItemElement>;

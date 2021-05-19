@@ -1,8 +1,8 @@
 import { ActionFilter } from "../bundle/actionfilter";
-import { Component } from "../bundle/component";
 import { ContentResolver } from "../content/content-resolver";
 import { IData } from "../data";
 import { SettingsTable } from "../settings/settings-table";
+import { ComponentInformation } from "./component-information";
 
 /**
  * The context that each app can work within.
@@ -13,7 +13,7 @@ export interface Context {
     getContentResolver(): ContentResolver;
     extensionHandler: (type: string, data: IData) => void
 
-    getComponents(actionFilter?: ActionFilter): Component[];
+    getComponents(actionFilter?: ActionFilter): ComponentInformation[];
     startApp(actionType: string, data?: IData): void;
     
     getDeviceSettings(): SettingsTable;

@@ -1,10 +1,10 @@
 import { ContentResolver } from "../content/content-resolver";
 import { Context } from "./context";
 import { IData } from "../data";
-import { Component } from "../bundle/component";
 import { ActionFilter } from "../bundle/actionfilter";
 import { SettingsTable } from "../settings/settings-table";
 import { Registry } from "../registry";
+import { ComponentInformation } from "./component-information";
 
 /**
  * Default implementatsion for the Contexts
@@ -27,9 +27,9 @@ import { Registry } from "../registry";
         return this._extensionHandler;
     }
 
-    public getComponents(actionFilter?: ActionFilter): Component[] {
-        let components: Component[] = [];
-        this.registry.bundles.resolveComponents({actionFilter}).forEach(e => components.push(e.component));
+    public getComponents(actionFilter?: ActionFilter): ComponentInformation[] {
+        let components: ComponentInformation[] = [];
+        this.registry.bundles.resolveComponents({actionFilter}).forEach(e => components.push({...e.component, bundleId: e.bundle.id}));
         return components;
     }
 

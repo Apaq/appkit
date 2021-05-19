@@ -1,4 +1,4 @@
-import { Appkit } from '@appkitjs.com/core';
+import { Appkit, AppManager } from '@appkitjs.com/core';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -9,14 +9,15 @@ import { Component, Host, h } from '@stencil/core';
 export class NavSidebar {
 
   appkit = Appkit();
-  apps: any[] = [];
+  favorites: AppManager[] = [];
 
   componentWillLoad() {
-    this.apps.push(this.appkit.resolveAppManagerById('ak', 'dashboard'));
-    this.apps.push(this.appkit.resolveAppManagerById('ak', 'contacts'));
-    this.apps.push(this.appkit.resolveAppManagerById('ak', 'orders'));
-    this.apps.push(this.appkit.resolveAppManagerById('ak', 'documents'));
-    this.apps.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
+    /* TODO: Run through favorite apps and add them to the sidebar
+    *  for(...) {
+    *      this.apps.push(this.appkit.resolveAppManagerById(bundleId, appId));
+    *  }
+    */
+    this.favorites.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
   }
 
   render() {
@@ -29,7 +30,7 @@ export class NavSidebar {
                 <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Appkit"/>
               </div>
               <nav-menu>
-                {this.apps.map((app) =>
+                {this.favorites.map((app) =>
                   <nav-menu-item link={'/' + app.id}>{app.name}</nav-menu-item>
                 )}
               </nav-menu>
