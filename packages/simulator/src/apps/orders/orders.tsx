@@ -21,7 +21,7 @@ export class Orders {
     
     // Get contacts
     const contactResolver = this.context.getContentResolver().resolve<Order, string>('content://orders');
-    contactResolver.query().then(page => {
+    contactResolver.findAll().then(page => {
       this.orders = page;
     });
   }

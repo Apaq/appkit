@@ -26,7 +26,7 @@ export class Contacts {
 
     // Get contacts
     const contactResolver = this.context.getContentResolver().resolve<Contact, string>('content://contacts');
-    contactResolver.query().then(page => {
+    contactResolver.findAll().then(page => {
       this.contacts = page;
     });
   }
