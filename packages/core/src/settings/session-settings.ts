@@ -22,6 +22,10 @@ export class SessionSettings implements SettingsTable {
         return !!value;
     }
 
+    getObject<T>(key: string): T {
+        return JSON.parse(this.getString(key)) as T;
+    }
+
     setInt(key: string, value: number): void {
         this.table.set(key, !!value ? value.toString() : null);
     }
@@ -36,6 +40,10 @@ export class SessionSettings implements SettingsTable {
 
     setBoolean(key: string, value: boolean): void {
         localStorage.setItem(key, !!value ? value.toString() : null);
+    }
+
+    setObject<T>(key: string, value: T): void {
+        this.setString(key, JSON.stringify(value));
     }
 
 }

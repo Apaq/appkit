@@ -13,16 +13,22 @@ export class AppList {
   context: Context;
 
   @State() apps: ComponentInformation[] = [];
+  @State() favoriteApps: ComponentInformation[] = [];
 
   componentDidLoad() {
     this.context = createAppContext(this.hostElement);
 
     // List all apps
     this.apps = this.context.getComponents();
+    
+    const favorites = this.context.getDeviceSettings().getObject<ComponentInformation[]>('favorites');
+    this.favoriteApps = favorites ?? [];
   }
 
   favorite(app: ComponentInformation) {
     console.log(app);
+    this.favoriteApps.push(app);
+    this.context.getDeviceSettings().setObject('favorites', this.favoriteApps);
   }
 
   render() {

@@ -1,4 +1,4 @@
-import { Appkit, AppManager } from '@appkitjs.com/core';
+import { Appkit, AppManager, ComponentInformation } from '@appkitjs.com/core';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -12,11 +12,11 @@ export class NavSidebar {
   favorites: AppManager[] = [];
 
   componentWillLoad() {
-    /* TODO: Run through favorite apps and add them to the sidebar
-    *  for(...) {
-    *      this.apps.push(this.appkit.resolveAppManagerById(bundleId, appId));
-    *  }
-    */
+    const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
+    for(let info of favs) {
+      this.favorites.push(this.appkit.resolveAppManagerById(info.bundleId, info.id));
+    }
+    
     this.favorites.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
   }
 

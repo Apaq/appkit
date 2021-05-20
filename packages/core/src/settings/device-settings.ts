@@ -20,6 +20,10 @@ export class DeviceSettings implements SettingsTable {
         return !!value;
     }
 
+    getObject<T>(key: string): T {
+        return JSON.parse(this.getString(key)) as T;
+    }
+
     setInt(key: string, value: number): void {
         localStorage.setItem(key, !!value ? value.toString() : null);
     }
@@ -37,4 +41,7 @@ export class DeviceSettings implements SettingsTable {
     }
 
 
+    setObject<T>(key: string, value: T): void {
+        this.setString(key, JSON.stringify(value));
+    }
 }
