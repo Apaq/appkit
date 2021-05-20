@@ -1,8 +1,10 @@
 {
-  "name": "@appkitjs/simulator",
-  "private": true,
-  "version": "0.0.1",
+  "name": "@appkitjs.com/simulator",
+  "version": "1.0.0-alpha.4",
   "description": "Appkit Simulator",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
@@ -16,7 +18,7 @@
     ]
   },
   "dependencies": {
-    "@appkitjs.com/core": "1.0.0-alpha.2"
+    "@appkitjs.com/core": "1.0.0-alpha.4"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",
