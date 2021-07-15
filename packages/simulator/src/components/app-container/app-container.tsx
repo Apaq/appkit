@@ -4,7 +4,7 @@ import { Component, h, Prop } from '@stencil/core';
 @Component({
     tag: 'ak-app-container',
     styleUrl: 'app-container.css',
-    shadow: true,
+    shadow: false,
 })
 export class AppContainer {
     el: HTMLDivElement;

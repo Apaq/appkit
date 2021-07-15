@@ -10,6 +10,10 @@ export abstract class BaseProvider<T extends HasId> implements ContentProvider<T
 
     }
 
+    call<T>(method: string, ...args: any[]): Promise<T> {
+        throw new Error(`Method not implemented. [method: ${method}, args: ${args}`);
+    }
+
     findAll(pageRequest: PageRequest, query: string): Promise<Page<T>> {
         if(!!query) {
             Logger.info('query defined, but is ignored');

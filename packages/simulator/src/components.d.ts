@@ -31,9 +31,9 @@ export namespace Components {
     interface AkOrders {
         "onContextAvailable": (context: Context) => Promise<void>;
     }
-    interface AkTopbar {
+    interface AkSimulator {
     }
-    interface AppRoot {
+    interface AkTopbar {
     }
     interface NavMenu {
     }
@@ -86,17 +86,17 @@ declare global {
         prototype: HTMLAkOrdersElement;
         new (): HTMLAkOrdersElement;
     };
+    interface HTMLAkSimulatorElement extends Components.AkSimulator, HTMLStencilElement {
+    }
+    var HTMLAkSimulatorElement: {
+        prototype: HTMLAkSimulatorElement;
+        new (): HTMLAkSimulatorElement;
+    };
     interface HTMLAkTopbarElement extends Components.AkTopbar, HTMLStencilElement {
     }
     var HTMLAkTopbarElement: {
         prototype: HTMLAkTopbarElement;
         new (): HTMLAkTopbarElement;
-    };
-    interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
-    }
-    var HTMLAppRootElement: {
-        prototype: HTMLAppRootElement;
-        new (): HTMLAppRootElement;
     };
     interface HTMLNavMenuElement extends Components.NavMenu, HTMLStencilElement {
     }
@@ -124,8 +124,8 @@ declare global {
         "ak-documents": HTMLAkDocumentsElement;
         "ak-messages": HTMLAkMessagesElement;
         "ak-orders": HTMLAkOrdersElement;
+        "ak-simulator": HTMLAkSimulatorElement;
         "ak-topbar": HTMLAkTopbarElement;
-        "app-root": HTMLAppRootElement;
         "nav-menu": HTMLNavMenuElement;
         "nav-menu-item": HTMLNavMenuItemElement;
         "nav-sidebar": HTMLNavSidebarElement;
@@ -148,9 +148,9 @@ declare namespace LocalJSX {
     }
     interface AkOrders {
     }
-    interface AkTopbar {
+    interface AkSimulator {
     }
-    interface AppRoot {
+    interface AkTopbar {
     }
     interface NavMenu {
     }
@@ -167,8 +167,8 @@ declare namespace LocalJSX {
         "ak-documents": AkDocuments;
         "ak-messages": AkMessages;
         "ak-orders": AkOrders;
+        "ak-simulator": AkSimulator;
         "ak-topbar": AkTopbar;
-        "app-root": AppRoot;
         "nav-menu": NavMenu;
         "nav-menu-item": NavMenuItem;
         "nav-sidebar": NavSidebar;
@@ -185,8 +185,8 @@ declare module "@stencil/core" {
             "ak-documents": LocalJSX.AkDocuments & JSXBase.HTMLAttributes<HTMLAkDocumentsElement>;
             "ak-messages": LocalJSX.AkMessages & JSXBase.HTMLAttributes<HTMLAkMessagesElement>;
             "ak-orders": LocalJSX.AkOrders & JSXBase.HTMLAttributes<HTMLAkOrdersElement>;
+            "ak-simulator": LocalJSX.AkSimulator & JSXBase.HTMLAttributes<HTMLAkSimulatorElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
-            "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "nav-menu": LocalJSX.NavMenu & JSXBase.HTMLAttributes<HTMLNavMenuElement>;
             "nav-menu-item": LocalJSX.NavMenuItem & JSXBase.HTMLAttributes<HTMLNavMenuItemElement>;
             "nav-sidebar": LocalJSX.NavSidebar & JSXBase.HTMLAttributes<HTMLNavSidebarElement>;

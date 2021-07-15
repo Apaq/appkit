@@ -9,6 +9,7 @@ import { BundleManagerImpl, ContentProvider, Bundle, Component } from "./index";
 import { SettingsTable } from "./settings/settings-table";
 
 const PATTERN_URL = /(http|https):\/\/.*/;
+const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
 /**
  * An appkit registry.
@@ -39,7 +40,8 @@ export class AppkitRegistry {
     }
 
     private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
-        return bundleId.match(PATTERN_URL) != null ? bundleId : `${defaultServer}/${bundleId}`;
+        return bundleId.match(PATTERN_URL) != null || bundleId.match(PATTERN_RELATIVE_URL) ? 
+            bundleId : `${defaultServer}/${bundleId}`;
     }
 
     private get bundles(): BundleManagerImpl {

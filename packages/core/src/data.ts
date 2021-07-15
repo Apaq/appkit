@@ -4,7 +4,7 @@
  */
 export interface IData {
     uri: string;
-    type?: string;
+    type?: string | null;
 }
 
 /**

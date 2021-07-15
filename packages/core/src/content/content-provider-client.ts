@@ -49,9 +49,11 @@ export class ContentProviderClient<TYPE, IDTYPE> implements ContentRepository<TY
         return this.contentProvider.deleteById(id);
     }
 
-    
-
     public close(): void {
         
+    }
+
+    public call<T>(method: string, ...args:any[]): Promise<T> {
+        return this.contentProvider.call(method, args);
     }
 }

@@ -19,9 +19,9 @@
     "url": "ssh://git@github.com:apaq/appkit.git"
   },
   "scripts": {
-    "build-stencil": "cd packages/elements && stencil build --docs --docs-readme",
+    "build-stencil": "cd packages/simulator && stencil build --docs --docs-readme",
     "build": "npm run build-stencil",
-    "dev": "cd packages/elements && npm start",
+    "dev": "cd packages/simulator && npm start",
     "lint": "eslint src/**/*{.ts,.tsx}",
     "prettier": "prettier --write --loglevel warn .",
     "prebuild": "npm run prettier && npm run lint",
