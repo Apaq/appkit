@@ -1,8 +1,11 @@
 import { Bundle } from "../bundle/bundle";
+import { Context } from "../context/context";
 import { Language } from "../i18n/language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { UiComponentInstantiator } from "./ui-component-instantiator";
 import { UiElement } from "./ui-element";
+import { registry } from "../global";
+import { ContextAvailable } from "../context/context-available";
 
 /**
  * A trusted UiComponentInstantiator.
@@ -32,6 +35,12 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             el = document.createElement(tagName);;
         }
 
+        const context = await this.whenInitialized(el);
+        if(this.implementsContextAvailable(el)) {
+            // Hand context to component if possible.
+            el.onContextAvailable(context);
+        }
+
         return Promise.resolve(new TrustedUiElement(el));
     }
 
@@ -52,7 +61,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
             scriptEl.onerror = (error) => reject(error);
             scriptEl.onload = () => resolve(null);
-            // TODO: How to know whether to load as module or not?
+            // TODO: How to know whether to load as module or not? Describe in bundle?
             scriptEl.setAttribute("type", bundle.type ?? 'application/javascript');
             scriptEl.setAttribute("src", scriptUrl);
             scriptEl.setAttribute('id', scriptId);
@@ -69,5 +78,31 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         });
 
 
+    }
+
+    async whenInitialized(el: HTMLElement): Promise<Context> {
+        await customElements.whenDefined(el.tagName.toLowerCase());
+
+        const existingContextId = el.getAttribute('context-id');
+        if(existingContextId == null) {
+            let contextId = null;
+            if(customElements.get(el.tagName.toLowerCase()) != null) {
+                contextId = el.tagName;
+            } else if(customElements.get(el.parentElement?.tagName.toLowerCase()) != null) {
+                // Some frameworks has the parent element registered instead.
+                contextId = el.parentElement.tagName;
+            } else {
+                throw 'Element is not defined as a custom element.';
+            }
+            contextId += '-' + Date.now();
+            el.setAttribute('context-id', contextId);
+            return Promise.resolve(registry().contexts.create(contextId));
+        } else {
+            return Promise.resolve(registry().contexts.get(existingContextId));
+        }
+    }
+    
+    private implementsContextAvailable(element: any): element is ContextAvailable {
+        return typeof(element.onContextAvailable) === 'function'; 
     }
 }

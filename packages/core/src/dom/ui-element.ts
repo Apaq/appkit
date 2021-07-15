@@ -8,6 +8,5 @@ export interface UiElement {
     readonly context: Context;
     readonly nativeElement: HTMLElement
 
-    whenInitialized(): Promise<Context>;
     callExtension(type: string, data: IData): Promise<void>;
 }

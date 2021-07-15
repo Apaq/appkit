@@ -1,22 +1,21 @@
-import { Context, Page } from '@appkitjs.com/core';
-import { Component, Element, h, State } from '@stencil/core';
+import { Context, Page, ContextAvailable } from '@appkitjs.com/core';
+import { Component, Element, h, Method, State } from '@stencil/core';
 import { Order } from '../../global/providers/orders-providers';
-
-declare function createAppContext(el: HTMLElement): Context;
 
 @Component({
   tag: 'ak-orders',
   styleUrl: 'orders.css',
   shadow: true,
 })
-export class Orders {
+export class Orders implements ContextAvailable {
   @Element() hostElement: HTMLAkOrdersElement;
   context: Context;
 
   @State() orders: Page<Order>;
 
-  componentDidLoad() {
-    this.context = createAppContext(this.hostElement);
+  @Method()
+  async onContextAvailable(context: Context) {
+    this.context = context;
 
     
     // Get contacts

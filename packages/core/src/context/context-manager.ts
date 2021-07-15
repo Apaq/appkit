@@ -25,25 +25,3 @@ export class ContextManager {
         return context;
     }
 }
-
-// Default function for creating a new context
-export function createContext(el: HTMLElement): Context {
-    if(registry().contexts == null) {
-        Logger.warn('Creating a context manager because no one else did.');
-        registry().contexts = new ContextManager();
-    }
-
-    let contextId = null;
-    if(customElements.get(el.tagName.toLowerCase()) != null) {
-        contextId = el.tagName;
-    } else if(customElements.get(el.parentElement?.tagName.toLowerCase()) != null) {
-        // Some frameworks has the parent element registered instead.
-        contextId = el.parentElement.tagName;
-    } else {
-        throw 'Element is not defined as a custom element.';
-    }
-
-    contextId += '-' + Date.now();
-    el.setAttribute('context-id', contextId);
-    return registry().contexts.create(contextId);
-}

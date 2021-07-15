@@ -1,15 +1,13 @@
-import { Component as App, Context, Page } from '@appkitjs.com/core';
-import { Component, Element, h, State } from '@stencil/core';
+import { Component as App, Context, Page, ContextAvailable } from '@appkitjs.com/core';
+import { Component, Element, h, Method, State } from '@stencil/core';
 import { Contact } from '../../global/providers/contact-provider';
-
-declare function createAppContext(el: HTMLElement): Context;
 
 @Component({
   tag: 'ak-contacts',
   styleUrl: 'contacts.css',
   shadow: true,
 })
-export class Contacts {
+export class Contacts implements ContextAvailable {
   @Element() hostElement: HTMLAkContactsElement;
   context: Context;
 
@@ -17,9 +15,10 @@ export class Contacts {
   @State() contacts: Page<Contact>;
   @State() token: string;
 
-  componentDidLoad() {
-    this.context = createAppContext(this.hostElement);
-    this.token = this.context.getSessionSettings().getString('token');
+  @Method()
+  async onContextAvailable(context: Context){
+    this.context = context;
+    this.token = context.getSessionSettings().getString('token');
 
     // List apps
     this.apps = this.context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});

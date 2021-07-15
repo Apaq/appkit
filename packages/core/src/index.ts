@@ -1,6 +1,4 @@
 import { AppkitRegistry } from './appkit-registry';
-import { Context } from './context/context';
-import { createContext } from './context/context-manager';
 import { TrustedUiComponentInstantiator } from './dom/trusted-ui-component-instantiator';
 import { UntrustedUiComponentInstantiator } from './dom/untrusted-ui-component-instantiator';
 
@@ -38,6 +36,5 @@ export function Appkit(): AppkitRegistry {
     return Singleton.getAppkit();
 }
 
-declare var window: {createAppContext: (el: HTMLElement) => Context, Appkit: () => AppkitRegistry};
-window.createAppContext = createContext;
+declare var window: {Appkit: () => AppkitRegistry};
 window.Appkit = () => Singleton.getAppkit();

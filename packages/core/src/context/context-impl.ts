@@ -7,7 +7,7 @@ import { Registry } from "../registry";
 import { ComponentInformation } from "./component-information";
 
 /**
- * Default implementatsion for the Contexts
+ * Default implementation for the Contexts
  */
  export class ContextImpl implements Context {
     private _extensionHandler: ((type: string, data: IData) => void | IData);

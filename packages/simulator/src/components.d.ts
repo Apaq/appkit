@@ -5,22 +5,31 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ComponentInformation, Context } from "@appkitjs.com/core";
+import { Contact } from "./global/providers/contact-provider";
+import { Order } from "./global/providers/orders-providers";
 export namespace Components {
     interface AkAppContainer {
         "appId": string;
         "bundleId": string;
     }
     interface AkAppList {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkContacts {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkDashboard {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkDocuments {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkMessages {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkOrders {
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkTopbar {
     }

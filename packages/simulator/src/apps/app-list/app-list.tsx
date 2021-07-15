@@ -1,22 +1,21 @@
-import { ComponentInformation, Context}  from '@appkitjs.com/core';
-import { Component, Element, h, State } from '@stencil/core';
-
-declare function createAppContext(el: HTMLElement): Context;
+import { ComponentInformation, Context, ContextAvailable}  from '@appkitjs.com/core';
+import { Component, Element, h, Method, State } from '@stencil/core';
 
 @Component({
   tag: 'ak-app-list',
   styleUrl: 'app-list.css',
   shadow: true,
 })
-export class AppList {
+export class AppList implements ContextAvailable {
   @Element() hostElement: HTMLAkAppListElement;
   context: Context;
 
   @State() apps: ComponentInformation[] = [];
   @State() favoriteApps: ComponentInformation[] = [];
 
-  componentDidLoad() {
-    this.context = createAppContext(this.hostElement);
+  @Method()
+  async onContextAvailable(context: Context) {
+    this.context = context;
 
     // List all apps
     this.apps = this.context.getComponents();

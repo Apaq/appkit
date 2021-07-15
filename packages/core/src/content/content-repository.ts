@@ -1,6 +1,9 @@
 import { Page } from "./page";
 import { PageRequest } from "./page-request";
 
+/**
+ * Interface for a ContentRepository.
+ */
 export interface ContentRepository<TYPE, IDTYPE> {
     findAll(pageable?: PageRequest, query?: string): Promise<Page<TYPE>>; 
     findById(id: IDTYPE): Promise<TYPE>;

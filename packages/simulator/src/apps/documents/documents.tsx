@@ -1,19 +1,18 @@
-import { Context } from '@appkitjs.com/core';
-import { Component, Element, h } from '@stencil/core';
-
-declare function createContext(el: HTMLElement): Context;
+import { Context, ContextAvailable } from '@appkitjs.com/core';
+import { Component, Element, h, Method } from '@stencil/core';
 
 @Component({
   tag: 'ak-documents',
   styleUrl: 'documents.css',
   shadow: true,
 })
-export class Documents {
+export class Documents implements ContextAvailable {
   @Element() hostElement: HTMLAkContactsElement;
   context: Context;
 
-  componentDidRender() {
-    this.context = createContext(this.hostElement);
+  @Method()
+  async onContextAvailable(context: Context) {
+    this.context = context;
   }
 
   render() {

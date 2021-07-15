@@ -3,6 +3,9 @@ import { ActionFilter } from "./actionfilter";
 import { Bundle } from "./bundle";
 import { Component } from "./component";
 
+/**
+ * BundleMAnager implementation.
+ */
 export class BundleManagerImpl {
     private bundles: { baseUrl: string, bundle: Bundle }[] = [];
 
