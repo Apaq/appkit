@@ -1,4 +1,5 @@
-import { ContentProvider, Logger, Page, PageRequest } from "@appkitjs.com/core";
+import { ContentProvider, Logger } from "@appkitjs.com/core";
+import { Page, PageRequest } from "@apaq/leap-data-core";
 
 export interface HasId {
     id: string;

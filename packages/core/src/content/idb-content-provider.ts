@@ -1,6 +1,5 @@
+import { Page, PageRequest } from "@apaq/leap-data-core";
 import { ContentProvider } from "./content-provider";
-import { Page } from "./page";
-import { PageRequest } from "./page-request";
 
 export class IdbContentProvider<TYPE> implements ContentProvider<TYPE, string> {
 

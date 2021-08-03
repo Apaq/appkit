@@ -1,14 +1,12 @@
+import { CrudRepository, Page, PageRequest } from "@apaq/leap-data-core";
 import { ContentProvider } from "./content-provider";
-import { ContentRepository } from "./content-repository";
-import { Page } from "./page";
-import { PageRequest } from "./page-request";
 
 /**
  * A client for retreiving content.
  * 
  * Multiple clients will be instantiated for the same content provider.
  */
-export class ContentProviderClient<TYPE, IDTYPE> implements ContentRepository<TYPE, IDTYPE> {
+export class ContentProviderClient<TYPE, IDTYPE> implements CrudRepository<TYPE, IDTYPE> {
 
     constructor(private contentProvider: ContentProvider<TYPE, IDTYPE>) { }
 
