@@ -1,6 +1,7 @@
 import { registry } from "../global";
 import { ContentProviderClient } from "./content-provider-client";
 import { ContentResolver } from "./content-resolver";
+import { ContentResolverArguments } from "./content-resolver-arguments";
 
 interface Uri {
     href: string,
@@ -20,11 +21,13 @@ interface Uri {
     
     constructor() { }
 
-    resolve<TYPE, ID>(uri: string): ContentProviderClient<TYPE, ID> {
+    resolve<TYPE, ID>(uri: string, args?: ContentResolverArguments): ContentProviderClient<TYPE, ID> {
         if(uri == null || !uri.startsWith('content://')) return null;
         
         const uriObj = this.resolveUri(uri);
         const authority = uriObj.hostname; // uri.substring(10, uri.indexOf('/', 10));
+
+        console.log('args: ', args);
     
         // TODO: Should detect whether user has granted access to this 
         // authority for this contextId
