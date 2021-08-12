@@ -1,7 +1,4 @@
-import { Bundle } from "../bundle/bundle";
-import { UiComponentInstantiator } from "../dom/ui-component-instantiator";
-import { UiElement } from "../dom/ui-element";
-import { UiComponentManager } from "./ui-component-manager";
+import { Bundle, UiComponentInstantiator, AppManager, UiElement } from "@appkitjs.com/types";
 
 /**
  * A Manager for a specific app.
@@ -9,16 +6,15 @@ import { UiComponentManager } from "./ui-component-manager";
  * In order to open an app, an AppManager has to be retrieved from Appkit registry.
  * Having the AppManager allows to open the app.s
  */
-export class AppManager extends UiComponentManager {
+export class AppManagerImpl implements AppManager {
 
     constructor(
-        instantiator: UiComponentInstantiator,
-        baseUrl: string,
-        bundle: Bundle,
-        id: string,
-        name: string,
-        version: string) {
-        super(instantiator, baseUrl, bundle, id, name, version);
+        private instantiator: UiComponentInstantiator,
+        private baseUrl: string,
+        public bundle: Bundle,
+        public id: string,
+        public name: string,
+        public version: string) {
     }
 
     public async open(parentElement?: HTMLElement): Promise<UiElement> {

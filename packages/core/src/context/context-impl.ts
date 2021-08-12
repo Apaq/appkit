@@ -1,16 +1,12 @@
-import { ContentResolver } from "../content/content-resolver";
-import { Context } from "./context";
-import { IData } from "../data";
-import { ActionFilter } from "../bundle/actionfilter";
-import { SettingsTable } from "../settings/settings-table";
+import { ActionFilter, ComponentInformation, ContentResolver, Context, Data } from "@appkitjs.com/types";
+import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
 import { Registry } from "../registry";
-import { ComponentInformation } from "./component-information";
 
 /**
  * Default implementation for the Contexts
  */
  export class ContextImpl implements Context {
-    private _extensionHandler: ((type: string, data: IData) => void | IData);
+    private _extensionHandler: ((type: string, data: Data) => void | Data);
 
     constructor(public readonly id: string, 
         private registry: Registry) {}
@@ -19,11 +15,11 @@ import { ComponentInformation } from "./component-information";
         return this.registry.content;
     }
 
-    public set extensionHandler(receiver: (type: string, data: IData) => void) {
+    public set extensionHandler(receiver: (type: string, data: Data) => void) {
         this._extensionHandler = receiver;
     }
 
-    public get extensionHandler(): (type: string, data: IData) => void {
+    public get extensionHandler(): (type: string, data: Data) => void {
         return this._extensionHandler;
     }
 
@@ -33,7 +29,7 @@ import { ComponentInformation } from "./component-information";
         return components;
     }
 
-    public startApp(actionType: string, data?: IData): void {
+    public startApp(actionType: string, data?: Data): void {
         console.log(actionType, data);
         throw new Error("Method not implemented.");
     }

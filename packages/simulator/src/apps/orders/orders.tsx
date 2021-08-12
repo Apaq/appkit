@@ -1,4 +1,4 @@
-import { Context, ContextAvailable } from '@appkitjs.com/core';
+import { Context, ContextAvailable } from '@appkitjs.com/types';
 import { Component, Element, h, Method, State } from '@stencil/core';
 import { Order } from '../../global/providers/orders-providers';
 import { Page } from "@apaq/leap-data-core";

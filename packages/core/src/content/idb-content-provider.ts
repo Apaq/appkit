@@ -1,5 +1,5 @@
 import { Page, PageRequest } from "@apaq/leap-data-core";
-import { ContentProvider } from "./content-provider";
+import { ContentProvider } from "@appkitjs.com/types";
 
 export class IdbContentProvider<TYPE> implements ContentProvider<TYPE, string> {
 

@@ -1,7 +1,7 @@
 {
-  "name": "@appkitjs.com/core",
-  "version": "1.0.0-alpha.16",
-  "description": "Appkit - the core framework",
+  "name": "@appkitjs.com/types",
+  "version": "1.0.0-alpha.17",
+  "description": "Appkit - the types",
   "author": "Apaq",
   "license": "MIT",
   "main": "dist/index.js",
@@ -14,17 +14,11 @@
   ],
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@apaq/leap-data-core": "^1.0.0",
-    "@appkitjs.com/types": "1.0.0-alpha.15"
+    "@apaq/leap-data-core": "^1.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c"
-  },
-  "workspaces": {
-    "packages": [
-      "../types"
-    ]
   },
   "devDependencies": {
     "eslint": "7.19.0",

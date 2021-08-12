@@ -1,4 +1,5 @@
-import { Appkit, AppkitRegistry, IdbContentProvider } from '@appkitjs.com/core';
+import { Appkit, IdbContentProvider } from '@appkitjs.com/core';
+import { AppkitRegistry } from '@appkitjs.com/types';
 import CoreBundle from './core-bundle';
 import { ContactProvider } from './providers/contact-provider';
 import { OrderProvider } from './providers/orders-providers';
@@ -29,3 +30,5 @@ export default async () => {
 
   window.appkit = appkit;
 };
+
+export var test = 123;

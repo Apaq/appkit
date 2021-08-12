@@ -1,7 +1,5 @@
-import { Action } from "./action";
-import { ActionFilter } from "./actionfilter";
-import { Bundle } from "./bundle";
-import { Component } from "./component";
+import { Action, Bundle, Component, ActionFilter } from "@appkitjs.com/types";
+
 
 /**
  * BundleMAnager implementation.

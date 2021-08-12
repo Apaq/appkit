@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ComponentInformation, Context } from "@appkitjs.com/core";
+import { ComponentInformation, Context } from "@appkitjs.com/types";
 import { Contact } from "./global/providers/contact-provider";
 import { Order } from "./global/providers/orders-providers";
 export namespace Components {

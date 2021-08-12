@@ -1,11 +1,7 @@
-import { Bundle } from "../bundle/bundle";
-import { Context } from "../context/context";
 import { Language } from "../i18n/language";
 import { TrustedUiElement } from "./trusted-ui-element";
-import { UiComponentInstantiator } from "./ui-component-instantiator";
-import { UiElement } from "./ui-element";
 import { registry } from "../global";
-import { ContextAvailable } from "../context/context-available";
+import { Bundle, Context, ContextAvailable, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
 
 /**
  * A trusted UiComponentInstantiator.

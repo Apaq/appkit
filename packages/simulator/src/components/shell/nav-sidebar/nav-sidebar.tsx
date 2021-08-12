@@ -1,4 +1,5 @@
-import { Appkit, AppManager, ComponentInformation } from '@appkitjs.com/core';
+import { Appkit } from '@appkitjs.com/core';
+import { AppManager, ComponentInformation } from '@appkitjs.com/types';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({

@@ -1,8 +1,5 @@
-import { Bundle } from "../bundle/bundle";
-import { UiComponentInstantiator } from "../dom/ui-component-instantiator";
-import { ComponentManager } from "./component-manager";
+import { Bundle, ComponentManager, UiComponentInstantiator } from "@appkitjs.com/types";
 
-export interface UiComponentManager extends ComponentManager {}
 export abstract class UiComponentManager implements ComponentManager {
     constructor(
         protected instantiator: UiComponentInstantiator, 

@@ -1,4 +1,4 @@
-import { IAcceptFilter } from "./acceptfilter";
+import { AcceptFilter } from "./acceptfilter";
 
 /**
  * Defines an Action supported by a Component.
@@ -6,5 +6,5 @@ import { IAcceptFilter } from "./acceptfilter";
 export interface Action {
     type: string;
     name: string | {[key: string]: string;}
-    accepts: IAcceptFilter[];
+    accepts: AcceptFilter[];
 }

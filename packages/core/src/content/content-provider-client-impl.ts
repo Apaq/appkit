@@ -1,5 +1,5 @@
 import { CrudRepository, Page, PageRequest } from "@apaq/leap-data-core";
-import { ContentProvider } from "./content-provider";
+import { ContentProvider } from "@appkitjs.com/types";
 
 /**
  * A client for retreiving content.

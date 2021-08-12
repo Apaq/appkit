@@ -1,7 +1,6 @@
+import { ContentResolver } from "@appkitjs.com/types";
 import { registry } from "../global";
-import { ContentProviderClient } from "./content-provider-client";
-import { ContentResolver } from "./content-resolver";
-import { ContentResolverArguments } from "./content-resolver-arguments";
+import { ContentProviderClient } from "./content-provider-client-impl";
 
 interface Uri {
     href: string,
@@ -21,14 +20,12 @@ interface Uri {
     
     constructor() { }
 
-    resolve<TYPE, ID>(uri: string, args?: ContentResolverArguments): ContentProviderClient<TYPE, ID> {
+    resolve<TYPE, ID>(uri: string, discriminator?: string): ContentProviderClient<TYPE, ID> {
         if(uri == null || !uri.startsWith('content://')) return null;
         
         const uriObj = this.resolveUri(uri);
         const authority = uriObj.hostname; // uri.substring(10, uri.indexOf('/', 10));
 
-        console.log('args: ', args);
-    
         // TODO: Should detect whether user has granted access to this 
         // authority for this contextId
         
@@ -51,7 +48,7 @@ interface Uri {
            }
         */
     
-        const provider = registry().contentProvider?.get(authority);
+        const provider = registry().contentProvider?.get(authority, discriminator);
         return new ContentProviderClient<TYPE, ID>(provider);
     }
 

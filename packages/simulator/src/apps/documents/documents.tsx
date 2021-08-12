@@ -1,4 +1,4 @@
-import { Context, ContextAvailable } from '@appkitjs.com/core';
+import { Context, ContextAvailable } from '@appkitjs.com/types';
 import { Component, Element, h, Method } from '@stencil/core';
 
 @Component({

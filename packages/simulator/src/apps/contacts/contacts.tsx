@@ -1,4 +1,4 @@
-import { Component as App, Context, ContextAvailable } from '@appkitjs.com/core';
+import { Component as App, Context, ContextAvailable } from '@appkitjs.com/types';
 import { Component, Element, h, Method, State } from '@stencil/core';
 import { Contact } from '../../global/providers/contact-provider';
 import { Page } from "@apaq/leap-data-core";

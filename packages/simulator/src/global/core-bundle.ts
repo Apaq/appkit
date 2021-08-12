@@ -1,4 +1,4 @@
-import { Bundle } from '@appkitjs.com/core';
+import { Bundle } from '@appkitjs.com/types';
 
 export default {
     id: 'ak',

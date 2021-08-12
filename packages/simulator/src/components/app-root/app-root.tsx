@@ -1,5 +1,6 @@
-import { Appkit, AppManager, ComponentInformation } from '@appkitjs.com/core';
+import { AppManager, ComponentInformation } from '@appkitjs.com/types';
 import { Component, h } from '@stencil/core';
+import { Appkit } from '@appkitjs.com/core';
 
 @Component({
   tag: 'ak-simulator',
@@ -16,7 +17,9 @@ export class AppRoot {
     for(let info of favs) {
       this.favorites.push(this.appkit.resolveAppManagerById(info.bundleId, info.id));
     }
-    this.favorites.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
+
+    const appList = this.appkit.resolveAppManagerById('ak', 'app-list');
+    this.favorites.push(appList);
   }
 
   render() {

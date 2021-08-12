@@ -1,5 +1,4 @@
 import { ContentProviderClient } from "./content-provider-client";
-import { ContentResolverArguments } from "./content-resolver-arguments";
 
 /**
  * Interface for a ContentResolver.
@@ -7,5 +6,5 @@ import { ContentResolverArguments } from "./content-resolver-arguments";
  * This interface will be avaiable through the app context.
  */
 export interface ContentResolver {
-    resolve<TYPE, ID>(uri: string, args?: ContentResolverArguments): ContentProviderClient<TYPE, ID>;
+    resolve<TYPE, ID>(uri: string, discriminator?: string): ContentProviderClient<TYPE, ID>;
 }

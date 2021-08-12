@@ -1,4 +1,4 @@
-import { IData } from "../data";
+import { Data } from "../data";
 import { Context } from "../context/context";
 
 /**
@@ -8,5 +8,5 @@ export interface UiElement {
     readonly context: Context;
     readonly nativeElement: HTMLElement
 
-    callExtension(type: string, data: IData): Promise<void>;
+    callExtension(type: string, data: Data): Promise<void>;
 }

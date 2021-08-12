@@ -1,7 +1,7 @@
-import { Context } from "./context";
 import { Logger } from "../logger";
 import { registry } from "../global";
 import { ContextImpl } from "./context-impl";
+import { Context } from "@appkitjs.com/types";
 
 /**
  * Manager for app contexts.

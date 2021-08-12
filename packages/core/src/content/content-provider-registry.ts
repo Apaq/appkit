@@ -1,4 +1,4 @@
-import { ContentProvider } from "./content-provider";
+import { ContentProvider } from "@appkitjs.com/types";
 import { Logger } from "../logger";
 
 /**
@@ -7,14 +7,24 @@ import { Logger } from "../logger";
 export class ContentProviderRegistry {
     private _registry: {[key: string]: ContentProvider<any, any>;} = {};
 
-    get(authority: string) {
-        return this._registry[authority];
+    get(authority: string, discriminator?: string) {
+        const key = this.resolveKey(authority, discriminator);
+        return this._registry[key];
     }
     
-    public register(authority: string, contentProvider: ContentProvider<any, any>) {
+    public register(authority: string, contentProvider: ContentProvider<any, any>, discriminator?: string) {
         Logger.info(`Registering content provider: ${authority}`);
-        if(this._registry[authority] == null) {
-            this._registry[authority] = contentProvider;
+        const key = this.resolveKey(authority, discriminator);
+        if(this._registry[key] == null) {
+            this._registry[key] = contentProvider;
         }
+    }
+
+    private resolveKey(authority: string, discriminator: string) {
+        let key = authority;
+        if(discriminator) {
+            key += '[' + discriminator + ']';
+        }
+        return key;
     }
 }

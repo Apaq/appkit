@@ -1,6 +1,4 @@
-import { Bundle } from "../bundle/bundle";
-import { UiComponentInstantiator } from "./ui-component-instantiator";
-import { UiElement } from "./ui-element";
+import { Bundle, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
 
 /**
  * An untrusted UiComponentInstantiator.

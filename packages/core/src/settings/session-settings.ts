@@ -1,4 +1,4 @@
-import { SettingsTable } from "./settings-table";
+import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
 
 export class SessionSettings implements SettingsTable {
     private table: Map<string, string> = new Map<string, string>();

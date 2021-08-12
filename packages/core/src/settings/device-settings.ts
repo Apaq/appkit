@@ -1,4 +1,5 @@
-import { SettingsTable } from "./settings-table";
+import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
+
 
 export class DeviceSettings implements SettingsTable {
     getInt(key: string): number {

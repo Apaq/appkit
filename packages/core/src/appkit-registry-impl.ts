@@ -1,13 +1,11 @@
-import { AppManager } from "./managers/app-manager";
-import { WidgetManager } from "./managers/widget-manager";
+import { AppManagerImpl } from "./managers/app-manager-impl";
+import { WidgetManagerImpl } from "./managers/widget-manager-impl";
 import { Config } from "./config";
 import { Language } from "./i18n/language";
-import { InstantiatorResolver } from "./dom/instantiator-resolver";
-import { IData } from "./data";
 import { registry } from "./global";
-import { BundleManagerImpl, ContentProvider, Bundle, Component } from "./index";
-import { SettingsTable } from "./settings/settings-table";
-
+import { AppkitRegistry, Bundle, ContentProvider, Data, InstantiatorResolver, WidgetManager, AppManager, Component } from "@appkitjs.com/types";
+import { BundleManagerImpl } from "./bundle";
+import { SettingsTable } from "../../types/dist/settings/settings-table";
 const PATTERN_URL = /(http|https):\/\/.*/;
 const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
@@ -28,7 +26,7 @@ const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
  * });
  * 
  */
-export class AppkitRegistry {
+export class AppkitRegistryImpl implements AppkitRegistry {
 
     public config: Config = {
         defaultRepository: 'https://apaq.github.io/appkit',
@@ -49,8 +47,8 @@ export class AppkitRegistry {
     }
 
 
-    public registerProvider(authority: string, contentProvider: ContentProvider<any, any>) {
-        registry().contentProvider.register(authority, contentProvider);
+    public registerProvider(authority: string, contentProvider: ContentProvider<any, any>, discriminator?: string) {
+        registry().contentProvider.register(authority, contentProvider, discriminator);
     }
 
     public registerBundle(bundle: Bundle) {
@@ -61,7 +59,7 @@ export class AppkitRegistry {
         console.log('loading: ', bundleIds);
         const promises: Promise<void>[] = [];
         for (const bundleId of bundleIds) {
-            const baseUrl = AppkitRegistry.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
+            const baseUrl = AppkitRegistryImpl.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
             const url = `${baseUrl}/manifest.json`
             const p = fetch(url).then(response => {
                 if (response.status === 200) {
@@ -77,7 +75,7 @@ export class AppkitRegistry {
     }
 
     public resolveAppManagerById(bundleId: string, appId: string): AppManager {
-        let app: AppManager = null;
+        let app: AppManagerImpl = null;
         this.bundles.resolveComponents({type: 'App'}).forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === appId) {
                 app = this.buildApp(e.baseUrl, e.bundle, e.component);
@@ -86,8 +84,8 @@ export class AppkitRegistry {
         return app;
     }
 
-    public resolveAppManagersByData(data: IData, actionType: string = 'Share'): AppManager[] {
-        let apps: AppManager[] = [];
+    public resolveAppManagersByData(data: Data, actionType: string = 'Share'): AppManager[] {
+        let apps: AppManagerImpl[] = [];
         this.bundles.resolveComponents({type: 'App', actionFilter: {type: actionType, data}}).forEach(e => {
             apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
         });
@@ -95,7 +93,7 @@ export class AppkitRegistry {
     }
 
     public resolveWidgetManagerById(bundleId: string, widgetId: string): WidgetManager {
-        let widget: WidgetManager = null;
+        let widget: WidgetManagerImpl = null;
         this.bundles.resolveComponents({type: 'Widget'}).forEach(e => {
             if (e.bundle.id === bundleId && e.component.id === widgetId) {
                 widget = this.buildWidget(e.baseUrl, e.bundle, e.component);
@@ -104,8 +102,8 @@ export class AppkitRegistry {
         return widget;
     }
 
-    public resolveWidgetManagersByData(data: IData, actionType: string = 'Share'): WidgetManager[] {
-        let widgets: WidgetManager[] = [];
+    public resolveWidgetManagersByData(data: Data, actionType: string = 'Share'): WidgetManager[] {
+        let widgets: WidgetManagerImpl[] = [];
         this.bundles.resolveComponents({type: 'Widget', actionFilter: {type: actionType, data}}).forEach(e => {
             widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
         });
@@ -136,7 +134,7 @@ export class AppkitRegistry {
         return false;
     }
 
-    private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppManager {
+    private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppManagerImpl {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
         let name;
         if (typeof component.name === 'string') {
@@ -144,13 +142,13 @@ export class AppkitRegistry {
         } else if (typeof component.name === 'object') {
             name = component.name[Language.resolveLanguage()];
         }
-        return new AppManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+        return new AppManagerImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
-    private buildWidget(baseUrl: string, bundle: Bundle, component: Component): WidgetManager {
+    private buildWidget(baseUrl: string, bundle: Bundle, component: Component): WidgetManagerImpl {
         const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
         const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
-        return new WidgetManager(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+        return new WidgetManagerImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
 }

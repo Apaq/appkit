@@ -1,7 +1,6 @@
-import { IData, Data } from "../data";
+import { Context, Data, UiElement } from "@appkitjs.com/types";
+import { DataImpl } from "../data";
 import { registry } from "../global";
-import { Context } from "../index";
-import { UiElement } from "./ui-element";
 
 /**
  * A trusted UiElement.
@@ -19,11 +18,11 @@ export class TrustedUiElement implements UiElement {
         this._context = registry().contexts.get(existingContextId);
      }
 
-    async callExtension(type: string, data: IData): Promise<void> {
+    async callExtension(type: string, data: Data): Promise<void> {
 
         if (data && this._context.extensionHandler != null) {
             // Call extensionshandle if registered by now.
-            const dataObj = Data.of(data);
+            const dataObj = DataImpl.of(data);
             this._context.extensionHandler(type, dataObj);
         }
     }

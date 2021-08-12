@@ -1,16 +1,10 @@
+import { Data } from "../../types/dist";
 
-/**
- * Interface for transporting data from and to apps.
- */
-export interface IData {
-    uri: string;
-    type?: string | null;
-}
 
 /**
  * Default implementation for the IData interface.
  */
-export class Data implements IData {
+export class DataImpl implements Data {
     type: string | null;
     constructor(public uri: string, type?: string) {
         if(this.type != null) {
@@ -23,7 +17,7 @@ export class Data implements IData {
         }
     }
     
-    static of(data: IData) {
-        return new Data(data.uri, data.type);
+    static of(data: Data) {
+        return new DataImpl(data.uri, data.type);
     }
 }

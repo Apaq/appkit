@@ -1,5 +1,5 @@
+import { Context } from "../../types/dist";
 import { Registry } from "./registry";
-import { Context } from "./context/context";
 
 /**
  * This sets up the global appkit variable

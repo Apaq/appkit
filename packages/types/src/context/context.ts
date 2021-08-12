@@ -1,6 +1,6 @@
 import { ActionFilter } from "../bundle/actionfilter";
 import { ContentResolver } from "../content/content-resolver";
-import { IData } from "../data";
+import { Data } from "../data";
 import { SettingsTable } from "../settings/settings-table";
 import { ComponentInformation } from "./component-information";
 
@@ -11,10 +11,10 @@ import { ComponentInformation } from "./component-information";
 export interface Context {
     readonly id: string;
     getContentResolver(): ContentResolver;
-    extensionHandler: (type: string, data: IData) => void
+    extensionHandler: (type: string, data: Data) => void
 
     getComponents(actionFilter?: ActionFilter): ComponentInformation[];
-    startApp(actionType: string, data?: IData): void;
+    startApp(actionType: string, data?: Data): void;
     
     getDeviceSettings(): SettingsTable;
     getSessionSettings(): SettingsTable;
