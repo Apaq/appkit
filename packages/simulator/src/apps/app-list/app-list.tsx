@@ -1,4 +1,4 @@
-import { ComponentInformation, Context, ContextAvailable}  from '@appkitjs.com/types';
+import { ComponentInformation, Context, ContextAvailable} from '@appkitjs.com/types';
 import { Component, Element, h, Method, State } from '@stencil/core';
 
 @Component({
@@ -22,6 +22,10 @@ export class AppList implements ContextAvailable {
     
     const favorites = this.context.getDeviceSettings().getObject<ComponentInformation[]>('favorites');
     this.favoriteApps = favorites ?? [];
+  }
+
+  open(app: ComponentInformation) {
+      
   }
 
   favorite(app: ComponentInformation) {

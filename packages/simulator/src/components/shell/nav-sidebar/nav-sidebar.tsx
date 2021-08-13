@@ -15,10 +15,18 @@ export class NavSidebar {
   componentWillLoad() {
     const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
     for(let info of favs) {
-      this.favorites.push(this.appkit.resolveAppManagerById(info.bundleId, info.id));
+
+      this.tryAddApp(info.bundleId, info.id);
     }
-    
-    this.favorites.push(this.appkit.resolveAppManagerById('ak', 'app-list'));
+
+    this.tryAddApp('ak', 'app-list');
+  }
+
+  private tryAddApp(bundleId: string, appId: string) {
+    const app = this.appkit.resolveAppManagerById(bundleId, appId);
+    if(app != null) {
+      this.favorites.push(app);
+    }
   }
 
   render() {

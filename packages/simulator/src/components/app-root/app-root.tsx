@@ -15,11 +15,18 @@ export class AppRoot {
   componentWillLoad() {
     const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
     for(let info of favs) {
-      this.favorites.push(this.appkit.resolveAppManagerById(info.bundleId, info.id));
+
+      this.tryAddApp(info.bundleId, info.id);
     }
 
-    const appList = this.appkit.resolveAppManagerById('ak', 'app-list');
-    this.favorites.push(appList);
+    this.tryAddApp('ak', 'app-list');
+  }
+
+  private tryAddApp(bundleId: string, appId: string) {
+    const app = this.appkit.resolveAppManagerById(bundleId, appId);
+    if(app != null) {
+      this.favorites.push(app);
+    }
   }
 
   render() {

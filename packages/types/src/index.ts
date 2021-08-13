@@ -1,8 +1,9 @@
 
-export * from './bundle/index';
-export * from './content/index';
-export * from './context/index';
-export * from './dom/index';
-export * from './managers/index'
+export * from './bundle';
+export * from './content';
+export * from './context';
+export * from './dom';
+export * from './managers'
 export * from './appkit-registry';
 export * from './data';
+export * from './settings';
