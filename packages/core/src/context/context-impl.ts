@@ -1,4 +1,4 @@
-import { ActionFilter, AppManager, ComponentInformation, ContentResolver, Context, Data, WidgetManager } from "@appkitjs.com/types";
+import { ActionFilter, ComponentInformation, ContentResolver, Context, Data } from "@appkitjs.com/types";
 import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
 import { Registry } from "../registry";
 
@@ -29,25 +29,12 @@ import { Registry } from "../registry";
         return components;
     }
 
-    public getApp(actionType: string, data?: Data): AppManager;
-    public getApp(bundleId: string, appId: string): AppManager;
-
-    public getApp(bundleIdOrAction: string, appIdOrData: string | Data): AppManager {
-        console.log(bundleIdOrAction, appIdOrData);
-        throw new Error("Method not implemented.");
-
-        // TO fix this we need to move logic from AppRegistryImpl for creating apps and 
-        // widgets to a better place.
+    public startApp(bundleId: string, appId: string): void {
+        const app = this.registry.components.resolveAppById(bundleId, appId);
+        const host = this.registry.components.buildHost('App');
+        app.open(host);
     }
 
-    public getWidget(actionType: string, data?: Data): WidgetManager;
-    public getWidget(bundleId: string, appId: string): WidgetManager;
-
-    public getWidget(bundleIdOrAction: string, appIdOrData: string | Data): WidgetManager {
-        console.log(bundleIdOrAction, appIdOrData);
-        throw new Error("Method not implemented.");
-    }
-    
     getDeviceSettings(): SettingsTable {
         return this.registry.settings.device;
     }

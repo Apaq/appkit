@@ -9,6 +9,8 @@ declare var window: { appkit: AppkitRegistry };
 export default async () => {
 
   const appkit = Appkit();
+  const appDialog = document.createElement('sl-dialog');
+  document.body.appendChild(appDialog);
 
   if (navigator.storage && navigator.storage.persist)
     navigator.storage.persist().then(granted => {
@@ -27,6 +29,10 @@ export default async () => {
 
   appkit.getSessionSettings().setString('token', 'my-token-123123');
 
+  appkit.setHostBuilder(_ => {
+    appDialog.attributes['open'] = true;
+    return appDialog;
+  });
 
   window.appkit = appkit;
 };

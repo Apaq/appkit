@@ -1,4 +1,4 @@
-import { Bundle, UiComponentInstantiator, AppManager, UiElement } from "@appkitjs.com/types";
+import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
 
 /**
  * A Manager for a specific app.
@@ -6,7 +6,7 @@ import { Bundle, UiComponentInstantiator, AppManager, UiElement } from "@appkitj
  * In order to open an app, an AppManager has to be retrieved from Appkit registry.
  * Having the AppManager allows to open the app.s
  */
-export class AppManagerImpl implements AppManager {
+export class AppImpl implements App {
 
     constructor(
         private instantiator: UiComponentInstantiator,
@@ -27,7 +27,5 @@ export class AppManagerImpl implements AppManager {
 
         return Promise.resolve(uiElement);
     }
-
-
 
 }

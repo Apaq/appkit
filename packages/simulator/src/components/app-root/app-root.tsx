@@ -1,4 +1,4 @@
-import { AppManager, ComponentInformation } from '@appkitjs.com/types';
+import { App, ComponentInformation } from '@appkitjs.com/types';
 import { Component, h } from '@stencil/core';
 import { Appkit } from '@appkitjs.com/core';
 
@@ -10,7 +10,7 @@ import { Appkit } from '@appkitjs.com/core';
 export class AppRoot {
 
   appkit = Appkit();
-  favorites: AppManager[] = [];
+  favorites: App[] = [];
 
   componentWillLoad() {
     const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
@@ -23,7 +23,7 @@ export class AppRoot {
   }
 
   private tryAddApp(bundleId: string, appId: string) {
-    const app = this.appkit.resolveAppManagerById(bundleId, appId);
+    const app = this.appkit.resolveAppById(bundleId, appId);
     if(app != null) {
       this.favorites.push(app);
     }

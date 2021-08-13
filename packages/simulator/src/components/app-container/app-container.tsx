@@ -14,7 +14,7 @@ export class AppContainer {
     appkit = Appkit();
 
     componentDidRender() {
-        var app = this.appkit.resolveAppManagerById(this.bundleId, this.appId);
+        var app = this.appkit.resolveAppById(this.bundleId, this.appId);
         app.open(this.el);
     }
 

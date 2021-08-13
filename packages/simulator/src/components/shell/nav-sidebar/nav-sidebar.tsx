@@ -1,5 +1,5 @@
 import { Appkit } from '@appkitjs.com/core';
-import { AppManager, ComponentInformation } from '@appkitjs.com/types';
+import { App, ComponentInformation } from '@appkitjs.com/types';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -10,7 +10,7 @@ import { Component, Host, h } from '@stencil/core';
 export class NavSidebar {
 
   appkit = Appkit();
-  favorites: AppManager[] = [];
+  favorites: App[] = [];
 
   componentWillLoad() {
     const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
@@ -23,7 +23,7 @@ export class NavSidebar {
   }
 
   private tryAddApp(bundleId: string, appId: string) {
-    const app = this.appkit.resolveAppManagerById(bundleId, appId);
+    const app = this.appkit.resolveAppById(bundleId, appId);
     if(app != null) {
       this.favorites.push(app);
     }

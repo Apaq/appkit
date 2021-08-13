@@ -1,11 +1,9 @@
-import { AppManagerImpl } from "./managers/app-manager-impl";
-import { WidgetManagerImpl } from "./managers/widget-manager-impl";
 import { Config } from "./config";
-import { Language } from "./i18n/language";
 import { registry } from "./global";
-import { AppkitRegistry, Bundle, ContentProvider, Data, InstantiatorResolver, WidgetManager, AppManager, Component } from "@appkitjs.com/types";
+import { AppkitRegistry, Bundle, ContentProvider, Data, Widget, App } from "@appkitjs.com/types";
 import { BundleManagerImpl } from "./bundle";
 import { SettingsTable } from "../../types/dist/settings/settings-table";
+import { ComponentManager } from "./components/component-manager";
 const PATTERN_URL = /(http|https):\/\/.*/;
 const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
@@ -33,10 +31,6 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         trustedRepositories: []
     };
 
-    constructor(private instantiatorResolver: InstantiatorResolver) {
-        
-    }
-
     private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
         return bundleId.match(PATTERN_URL) != null || bundleId.match(PATTERN_RELATIVE_URL) ? 
             bundleId : `${defaultServer}/${bundleId}`;
@@ -46,6 +40,13 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         return registry().bundles as BundleManagerImpl;
     }
 
+    private get components(): ComponentManager {
+        return registry().components;
+    }
+
+    public setHostBuilder(builder: (type: string) => HTMLElement) {
+        this.components.setHostBuilder(builder);
+    }
 
     public registerProvider(authority: string, contentProvider: ContentProvider<any, any>, discriminator?: string) {
         registry().contentProvider.register(authority, contentProvider, discriminator);
@@ -74,40 +75,20 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         return Promise.all(promises);
     }
 
-    public resolveAppManagerById(bundleId: string, appId: string): AppManager {
-        let app: AppManagerImpl = null;
-        this.bundles.resolveComponents({type: 'App'}).forEach(e => {
-            if (e.bundle.id === bundleId && e.component.id === appId) {
-                app = this.buildApp(e.baseUrl, e.bundle, e.component);
-            }
-        });
-        return app;
+    public resolveAppById(bundleId: string, appId: string): App {
+        return this.components.resolveAppById(bundleId, appId);
     }
 
-    public resolveAppManagersByData(data: Data, actionType: string = 'Share'): AppManager[] {
-        let apps: AppManagerImpl[] = [];
-        this.bundles.resolveComponents({type: 'App', actionFilter: {type: actionType, data}}).forEach(e => {
-            apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
-        });
-        return apps;
+    public resolveAppsByData(data: Data, actionType: string = 'Share'): App[] {
+        return this.components.resolveAppsByData(data, actionType);
     }
 
-    public resolveWidgetManagerById(bundleId: string, widgetId: string): WidgetManager {
-        let widget: WidgetManagerImpl = null;
-        this.bundles.resolveComponents({type: 'Widget'}).forEach(e => {
-            if (e.bundle.id === bundleId && e.component.id === widgetId) {
-                widget = this.buildWidget(e.baseUrl, e.bundle, e.component);
-            }
-        });
-        return widget;
+    public resolveWidgetById(bundleId: string, widgetId: string): Widget {
+        return this.components.resolveWidgetById(bundleId, widgetId);
     }
 
-    public resolveWidgetManagersByData(data: Data, actionType: string = 'Share'): WidgetManager[] {
-        let widgets: WidgetManagerImpl[] = [];
-        this.bundles.resolveComponents({type: 'Widget', actionFilter: {type: actionType, data}}).forEach(e => {
-            widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
-        });
-        return widgets;
+    public resolveWidgetsByData(data: Data, actionType: string = 'Share'): Widget[] {
+        return this.components.resolveWidgetsByData(data, actionType);
     }
 
     
@@ -119,7 +100,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         return registry().settings.session;
     }
 
-    private isTrusted(bundle: Bundle) {
+    /*private isTrusted(bundle: Bundle) {
         if (bundle.id.match(PATTERN_URL) == null) {
             // If loaded from default, then it is trusted.
             return true;
@@ -132,24 +113,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
             }
         }
         return false;
-    }
-
-    private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppManagerImpl {
-        const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
-        let name;
-        if (typeof component.name === 'string') {
-            name = component.name as string;
-        } else if (typeof component.name === 'object') {
-            name = component.name[Language.resolveLanguage()];
-        }
-        return new AppManagerImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
-    }
-
-    private buildWidget(baseUrl: string, bundle: Bundle, component: Component): WidgetManagerImpl {
-        const instantiator = this.instantiatorResolver.resolve(this.isTrusted(bundle));
-        const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
-        return new WidgetManagerImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
-    }
+    }*/
 
 }
 

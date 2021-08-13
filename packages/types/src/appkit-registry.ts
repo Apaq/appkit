@@ -1,8 +1,8 @@
 import { Bundle } from "./bundle";
 import { ContentProvider } from "./content";
 import { Data } from "./data";
-import { AppManager } from "./managers/app-manager";
-import { WidgetManager } from "./managers/widget-manager";
+import { App } from "./components/app";
+import { Widget } from "./components/widget";
 import { SettingsTable } from "./settings/settings-table";
 
 export interface AppkitRegistry {
@@ -11,15 +11,17 @@ export interface AppkitRegistry {
 
     registerBundle(bundle: Bundle): void;
 
-    load(...bundleIds: string[]): Promise<void[]> ;
+    load(...bundleIds: string[]): Promise<void[]>;
 
-    resolveAppManagerById(bundleId: string, appId: string): AppManager;
+    setHostBuilder(builder: (type: string) => HTMLElement): void;
 
-    resolveAppManagersByData(data: Data, actionType?: string): AppManager[] ;
+    resolveAppById(bundleId: string, appId: string): App;
 
-    resolveWidgetManagerById(bundleId: string, widgetId: string): WidgetManager;
+    resolveAppsByData(data: Data, actionType?: string): App[] ;
 
-    resolveWidgetManagersByData(data: Data, actionType?: string): WidgetManager[];
+    resolveWidgetById(bundleId: string, widgetId: string): Widget;
+
+    resolveWidgetsByData(data: Data, actionType?: string): Widget[];
 
     getDeviceSettings(): SettingsTable;
 

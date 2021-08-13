@@ -25,7 +25,7 @@ export class AppList implements ContextAvailable {
   }
 
   open(app: ComponentInformation) {
-      
+      this.context.startApp(app.bundleId, app.id);
   }
 
   favorite(app: ComponentInformation) {
@@ -53,7 +53,7 @@ export class AppList implements ContextAvailable {
             <div>
               <div class="-mt-px flex divide-x divide-gray-200">
                 <div class="w-0 flex-1 flex">
-                  <a href="mailto:janecooper@example.com" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                  <a onClick={_ => this.open(app)} class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
                     <span class="ml-3">Open</span>
                   </a>
                 </div>

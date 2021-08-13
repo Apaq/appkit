@@ -1,5 +1,5 @@
 import { UiElement } from "../dom/ui-element";
-import { UiComponentManager } from "./ui-component-manager";
+import { UiComponent } from "./ui-component";
 
 /**
  * A Manager for a specific app.
@@ -7,7 +7,7 @@ import { UiComponentManager } from "./ui-component-manager";
  * In order to open an app, an AppManager has to be retrieved from Appkit registry.
  * Having the AppManager allows to open the app.s
  */
-export interface AppManager extends UiComponentManager {
+export interface App extends UiComponent {
 
    open(parentElement?: HTMLElement): Promise<UiElement>;
 

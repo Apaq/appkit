@@ -11,6 +11,7 @@ if (typeof window.__appkit__ === 'undefined') {
         content: null,
         contentProvider: null,
         bundles: null,
+        components: null,
         settings: {
             device: null,
             session: null

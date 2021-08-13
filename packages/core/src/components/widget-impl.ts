@@ -1,7 +1,7 @@
-import { Bundle, Data, UiComponentInstantiator, WidgetManager } from "@appkitjs.com/types";
+import { Bundle, Data, UiComponentInstantiator, Widget } from "@appkitjs.com/types";
 
 
-export class WidgetManagerImpl implements WidgetManager {
+export class WidgetImpl implements Widget {
 
     constructor(
         private instantiator: UiComponentInstantiator,

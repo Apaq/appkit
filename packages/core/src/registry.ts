@@ -1,6 +1,7 @@
 import { BundleManager, ContentResolver } from "@appkitjs.com/types";
 import { SettingsTable } from "../../types/dist/settings/settings-table";
 import { BundleManagerImpl } from "./bundle/bundle-manager-impl";
+import { ComponentManager } from "./components/component-manager";
 import { ContentProviderRegistry } from "./content/content-provider-registry";
 import { ContentResolverImpl } from "./content/content-resolver-impl";
 import { ContextManager } from "./context/context-manager";
@@ -13,6 +14,7 @@ export interface Registry {
     content: ContentResolver;
     contentProvider: ContentProviderRegistry;
     bundles: BundleManager;
+    components: ComponentManager;
     settings: {
         device: SettingsTable,
         session: SettingsTable
@@ -26,3 +28,4 @@ instance.content = new ContentResolverImpl();
 instance.bundles = new BundleManagerImpl();
 instance.settings.device = new DeviceSettings();
 instance.settings.session = new SessionSettings();
+instance.components = new ComponentManager(instance.bundles);

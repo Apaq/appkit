@@ -15,7 +15,7 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@apaq/leap-data-core": "^1.0.0",
-    "@appkitjs.com/types": "1.0.0-alpha.15"
+    "@appkitjs.com/types": "1.0.0-alpha.20"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
