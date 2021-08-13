@@ -1,7 +1,7 @@
 import { Action } from "./action";
 
 /**
- * Defines a component in a bundle
+ * Defines a component in a bundle.
  */
 export interface Component {
     id:string;

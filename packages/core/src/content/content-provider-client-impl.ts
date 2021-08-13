@@ -4,7 +4,7 @@ import { ContentProvider } from "@appkitjs.com/types";
 /**
  * A client for retreiving content.
  * 
- * Multiple clients will be instantiated for the same content provider.
+ * A new client will be instantiated for each context using the same content provider.
  */
 export class ContentProviderClient<TYPE, IDTYPE> implements CrudRepository<TYPE, IDTYPE> {
 
