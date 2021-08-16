@@ -1,6 +1,6 @@
 {
   "name": "@appkitjs.com/simulator",
-  "version": "1.0.0-alpha.17",
+  "version": "1.0.0-alpha.21",
   "description": "Appkit Simulator",
   "publishConfig": {
     "access": "public"
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@apaq/leap-data-core": "^1.0.0",
-    "@appkitjs.com/core": "1.0.0-alpha.15",
-    "@appkitjs.com/types": "1.0.0-alpha.18"
+    "@appkitjs.com/core": "1.0.0-alpha.21",
+    "@appkitjs.com/types": "1.0.0-alpha.21"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",

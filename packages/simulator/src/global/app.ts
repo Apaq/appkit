@@ -30,7 +30,10 @@ export default async () => {
   appkit.getSessionSettings().setString('token', 'my-token-123123');
 
   appkit.setHostBuilder(_ => {
-    appDialog.attributes['open'] = true;
+    while (appDialog.firstChild) {
+      appDialog.removeChild(appDialog.firstChild);
+    }
+    appDialog.setAttribute('open', 'true');
     return appDialog;
   });
 
