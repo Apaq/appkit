@@ -24,6 +24,7 @@ export class AppImpl implements App {
 
         const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
         parentElement.appendChild(uiElement.nativeElement)
+        this.instantiator.bootstrap(uiElement.nativeElement);
 
         return Promise.resolve(uiElement);
     }

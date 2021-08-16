@@ -1,15 +1,10 @@
-<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <title>Appkit Simulator</title> <meta name="Description" content="Welcome to the Appkit Simulator. You can use this starter to build entire apps all with web components and Appkit!"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <meta name="theme-color" content="#16161d"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta http-equiv="x-ua-compatible" content="IE=Edge"> <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@apaq/stallion@1.0.0-alpha.10/dist/stallion/stallion.css"> <link rel="modulepreload" href="/build/p-634a1820.js"><script type="module" src="https://cdn.jsdelivr.net/npm/@apaq/stallion@1.0.0-alpha.10/dist/stallion/stallion.esm.js"></script> <script type="module" src="/build/p-634a1820.js" data-stencil data-resources-url="/build/" data-stencil-namespace="app"></script> <script nomodule="" src="/build/app.js" data-stencil></script> <style>/*
-  Global App CSS
-  ----------------------
-  Use this file for styles that should be applied to all components.
-  For example, "font-family" within the "body" selector is a CSS property
-  most apps will want applied to all components.
-
-  Any global CSS variables should also be applied here.
-*/
-
-body {
-  margin: 0px;
-  padding: 0px;
-  font-family: var(--sl-font-sans);
-}</style> <link rel="apple-touch-icon" href="/assets/icon/icon.png"> <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico"> <link rel="manifest" href="/manifest.json"> </head> <body> <ak-simulator></ak-simulator> </body></html>
+<!doctype html><html dir="ltr" lang="en"><head> <meta charset="utf-8"> <title>Appkit Simulator</title> <meta name="Description" content="Welcome to the Appkit Simulator. You can use this starter to build entire apps all with web components and Appkit!"> <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"> <meta name="theme-color" content="#16161d"> <meta name="apple-mobile-web-app-capable" content="yes"> <meta http-equiv="x-ua-compatible" content="IE=Edge"> <link rel="stylesheet" href="https://rsms.me/inter/inter.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@apaq/stallion@1.0.0-alpha.10/dist/stallion/stallion.css"> <script type="module" src="https://cdn.jsdelivr.net/npm/@apaq/stallion@1.0.0-alpha.10/dist/stallion/stallion.esm.js"></script> <script type="module" src="/build/app.esm.js" data-stencil></script> <script nomodule="" src="/build/app.js" data-stencil></script> <link href="/build/app.css" rel="stylesheet"> <link rel="apple-touch-icon" href="/assets/icon/icon.png"> <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico"> <link rel="manifest" href="/manifest.json"> </head> <body> <ak-simulator></ak-simulator> <script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  // auto-unregister service worker during dev mode
+  navigator.serviceWorker.getRegistration().then(function(registration) {
+  if (registration) {
+    registration.unregister().then(function() { location.reload(true) });
+  }
+  });
+}
+</script></body></html>

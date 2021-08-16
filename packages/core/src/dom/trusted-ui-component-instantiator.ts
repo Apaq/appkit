@@ -31,13 +31,17 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             el = document.createElement(tagName);;
         }
 
-        const context = await this.whenInitialized(el);
-        if(this.implementsContextAvailable(el)) {
-            // Hand context to component if possible.
-            el.onContextAvailable(context);
-        }
+
 
         return Promise.resolve(new TrustedUiElement(el));
+    }
+
+    async bootstrap(element: HTMLElement): Promise<void> {
+        const context = await this.whenInitialized(element);
+        if(this.implementsContextAvailable(element)) {
+            // Hand context to component if possible.
+            element.onContextAvailable(context);
+        }
     }
 
     private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {
@@ -78,7 +82,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
     async whenInitialized(el: HTMLElement): Promise<Context> {
         await customElements.whenDefined(el.tagName.toLowerCase());
-
+        
         const existingContextId = el.getAttribute('context-id');
         if(existingContextId == null) {
             let contextId = null;
@@ -101,4 +105,5 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
     private implementsContextAvailable(element: any): element is ContextAvailable {
         return typeof(element.onContextAvailable) === 'function'; 
     }
+
 }
