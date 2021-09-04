@@ -36,8 +36,8 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         return Promise.resolve(new TrustedUiElement(el));
     }
 
-    async bootstrap(element: HTMLElement): Promise<void> {
-        const context = await this.whenInitialized(element);
+    async bootstrap(element: UiElement): Promise<void> {
+        const context = await this.whenInitialized(element.nativeElement);
         if(this.implementsContextAvailable(element)) {
             // Hand context to component if possible.
             element.onContextAvailable(context);

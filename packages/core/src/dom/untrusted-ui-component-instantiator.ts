@@ -14,7 +14,7 @@ import { Bundle, UiComponentInstantiator, UiElement } from "@appkitjs.com/types"
  * If specified, styles for the app is also added to the header.
  */
 export class UntrustedUiComponentInstantiator implements UiComponentInstantiator {
-    bootstrap(element: HTMLElement): Promise<void> {
+    bootstrap(element: UiElement): Promise<void> {
         throw new Error("Method not implemented." + element);
     }
     instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {

@@ -13,4 +13,6 @@ export interface UiComponentInstantiator {
      * @param singleElement 
      */
     instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement>;
+
+    bootstrap(uiElement: UiElement): Promise<void>;
 }
