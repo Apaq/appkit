@@ -14,22 +14,22 @@ export namespace Components {
         "bundleId": string;
     }
     interface AkAppList {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkContacts {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkDashboard {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkDocuments {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkMessages {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkOrders {
-        "onContextAvailable": (context: any) => Promise<void>;
+        "onContextAvailable": (context: Context) => Promise<void>;
     }
     interface AkSimulator {
     }
