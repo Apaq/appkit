@@ -1,4 +1,4 @@
-import { ContentProviderClient } from "./content-provider-client";
+import { CrudRepository } from "@apaq/leap-data-core";
 
 /**
  * Interface for a ContentResolver.
@@ -6,5 +6,5 @@ import { ContentProviderClient } from "./content-provider-client";
  * This interface will be avaiable through the app context.
  */
 export interface ContentResolver {
-    resolve<TYPE, ID>(uri: string, discriminator?: string): ContentProviderClient<TYPE, ID>;
+    resolve<TYPE, ID>(uri: string, discriminator?: string): CrudRepository<TYPE, ID>;
 }

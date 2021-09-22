@@ -1,7 +1,7 @@
 import { Page, PageRequest } from "@apaq/leap-data-core";
-import { ContentProvider } from "@appkitjs.com/types";
+import { CrudRepository } from "@apaq/leap-data-core";
 
-export class IdbContentProvider<TYPE> implements ContentProvider<TYPE, string> {
+export class IdbContentProvider<TYPE> implements CrudRepository<TYPE, string> {
 
     db: IDBDatabase;
 

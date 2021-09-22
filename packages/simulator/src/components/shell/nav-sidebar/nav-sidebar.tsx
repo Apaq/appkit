@@ -29,24 +29,21 @@ export class NavSidebar {
     }
   }
 
+  link(url: string) {
+    window.location.pathname = url;
+  }
+
   render() {
     return (
       <Host>
-         <div class="flex flex-shrink-0">
-          <div class="flex flex-col w-64">
-            <div class="flex flex-col h-0 flex-1">
-              <div class="flex items-center h-12 flex-shrink-0 px-4 bg-gray-900">
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Appkit"/>
-              </div>
-              <nav-menu>
+         <aside >
+              <sl-menu>
                 {this.favorites.map((app) =>
-                  <nav-menu-item link={'/' + app.id}>{app.name}</nav-menu-item>
+                  <sl-menu-item onClick={_ => this.link('/' + app.id)}>{app.name}</sl-menu-item>
                 )}
-              </nav-menu>
-            </div>
+              </sl-menu>
 
-          </div>
-          </div>
+          </aside>
       </Host>
     );
   }

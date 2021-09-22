@@ -31,11 +31,10 @@ export class AppRoot {
 
   render() {
     return (
-      <div class="h-screen flex overflow-hidden bg-gray-100">
+      <div>
         <nav-sidebar></nav-sidebar>
-        <div class="flex flex-col w-0 flex-1 overflow-hidden">
-          <ak-topbar></ak-topbar>
-          <main class="flex-1 relative overflow-y-auto focus:outline-none">
+        <div class="main-wrapper">
+          <main>
           
             <stencil-router>
               <stencil-route-switch scrollTopOffset={0}>

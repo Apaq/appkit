@@ -1,5 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
+.main-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 232px;
+    transition: left .1s ease-out;
+}

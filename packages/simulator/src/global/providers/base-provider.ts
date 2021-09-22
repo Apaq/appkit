@@ -1,12 +1,12 @@
 import { Logger } from "@appkitjs.com/core";
-import { ContentProvider } from "@appkitjs.com/types";
 import { Page, PageRequest } from "@apaq/leap-data-core";
+import { CrudRepository } from "@apaq/leap-data-core";
 
 export interface HasId {
     id: string;
 }
 
-export abstract class BaseProvider<T extends HasId> implements ContentProvider<T, string> {
+export abstract class BaseProvider<T extends HasId> implements CrudRepository<T, string> {
     
     constructor(private entities: T[]) {
 

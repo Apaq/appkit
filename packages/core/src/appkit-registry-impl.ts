@@ -1,9 +1,10 @@
 import { Config } from "./config";
 import { registry } from "./global";
-import { AppkitRegistry, Bundle, ContentProvider, Data, Widget, App } from "@appkitjs.com/types";
+import { AppkitRegistry, Bundle, Data, Widget, App } from "@appkitjs.com/types";
 import { BundleManagerImpl } from "./bundle";
 import { SettingsTable } from "../../types/dist/settings/settings-table";
 import { ComponentManager } from "./components/component-manager";
+import { CrudRepository } from "@apaq/leap-data-core";
 const PATTERN_URL = /(http|https):\/\/.*/;
 const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
@@ -48,7 +49,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         this.components.setHostBuilder(builder);
     }
 
-    public registerProvider(authority: string, contentProvider: ContentProvider<any, any>, discriminator?: string) {
+    public registerProvider(authority: string, contentProvider: CrudRepository<any, any>, discriminator?: string) {
         registry().contentProvider.register(authority, contentProvider, discriminator);
     }
 

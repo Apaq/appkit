@@ -1,7 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :host {
   display: flex;
+}
+
+aside {
+  display: flex;
+  height: 100%;
+  width: 232px;
+  padding-top: 24px;
+  padding-right: 16px;
+  padding-bottom: 12px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 103;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(217, 220, 229, 0.4) 1px 0px 2px;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-out;
+  transform: translateX(-232px);
+  will-change: transform;
+  transform: translateX(0px);
+  box-sizing: border-box;
+
 }

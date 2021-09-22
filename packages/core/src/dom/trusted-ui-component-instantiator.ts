@@ -1,7 +1,7 @@
 import { Language } from "../i18n/language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { registry } from "../global";
-import { Bundle, Context, ContextAvailable, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
+import { Bundle, Context, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
 
 /**
  * A trusted UiComponentInstantiator.
@@ -31,17 +31,12 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             el = document.createElement(tagName);;
         }
 
-
-
         return Promise.resolve(new TrustedUiElement(el));
     }
 
     async bootstrap(element: UiElement): Promise<void> {
         const context = await this.whenInitialized(element.nativeElement);
-        if(this.implementsContextAvailable(element)) {
-            // Hand context to component if possible.
-            element.onContextAvailable(context);
-        }
+        (element.nativeElement as any).context = context;
     }
 
     private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {
@@ -100,10 +95,6 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         } else {
             return Promise.resolve(registry().contexts.get(existingContextId));
         }
-    }
-    
-    private implementsContextAvailable(element: any): element is ContextAvailable {
-        return typeof(element.onContextAvailable) === 'function'; 
     }
 
 }

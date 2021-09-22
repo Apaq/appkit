@@ -1,18 +1,17 @@
-import { Context, ContextAvailable } from '@appkitjs.com/types';
-import { Component, Element, h, Method } from '@stencil/core';
+import { Context } from '@appkitjs.com/types';
+import { Component, Element, h, Prop, Watch } from '@stencil/core';
 
 @Component({
     tag: 'ak-messages',
     styleUrl: 'messages.css',
     shadow: true,
 })
-export class Messages implements ContextAvailable {
+export class Messages {
     @Element() hostElement: HTMLAkContactsElement;
-    context: Context;
+    @Prop() context: Context;
 
-    @Method()
-    async onContextAvailable(context: Context) {
-        this.context = context;
+    @Watch('context')
+    async onContextAvailable() {
         this.context.extensionHandler = (type, data) => {
             alert(type + '-' + data);
         }

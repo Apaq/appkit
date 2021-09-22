@@ -5,40 +5,33 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ComponentInformation, Context } from "@appkitjs.com/types";
-import { Contact } from "./global/providers/contact-provider";
-import { Order } from "./global/providers/orders-providers";
+import { Context } from "@appkitjs.com/types";
 export namespace Components {
     interface AkAppContainer {
         "appId": string;
         "bundleId": string;
     }
     interface AkAppList {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkContacts {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkDashboard {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkDocuments {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkMessages {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkOrders {
-        "onContextAvailable": (context: Context) => Promise<void>;
+        "context": Context;
     }
     interface AkSimulator {
     }
     interface AkTopbar {
-    }
-    interface NavMenu {
-    }
-    interface NavMenuItem {
-        "link": string;
     }
     interface NavSidebar {
     }
@@ -98,18 +91,6 @@ declare global {
         prototype: HTMLAkTopbarElement;
         new (): HTMLAkTopbarElement;
     };
-    interface HTMLNavMenuElement extends Components.NavMenu, HTMLStencilElement {
-    }
-    var HTMLNavMenuElement: {
-        prototype: HTMLNavMenuElement;
-        new (): HTMLNavMenuElement;
-    };
-    interface HTMLNavMenuItemElement extends Components.NavMenuItem, HTMLStencilElement {
-    }
-    var HTMLNavMenuItemElement: {
-        prototype: HTMLNavMenuItemElement;
-        new (): HTMLNavMenuItemElement;
-    };
     interface HTMLNavSidebarElement extends Components.NavSidebar, HTMLStencilElement {
     }
     var HTMLNavSidebarElement: {
@@ -126,8 +107,6 @@ declare global {
         "ak-orders": HTMLAkOrdersElement;
         "ak-simulator": HTMLAkSimulatorElement;
         "ak-topbar": HTMLAkTopbarElement;
-        "nav-menu": HTMLNavMenuElement;
-        "nav-menu-item": HTMLNavMenuItemElement;
         "nav-sidebar": HTMLNavSidebarElement;
     }
 }
@@ -137,25 +116,26 @@ declare namespace LocalJSX {
         "bundleId"?: string;
     }
     interface AkAppList {
+        "context"?: Context;
     }
     interface AkContacts {
+        "context"?: Context;
     }
     interface AkDashboard {
+        "context"?: Context;
     }
     interface AkDocuments {
+        "context"?: Context;
     }
     interface AkMessages {
+        "context"?: Context;
     }
     interface AkOrders {
+        "context"?: Context;
     }
     interface AkSimulator {
     }
     interface AkTopbar {
-    }
-    interface NavMenu {
-    }
-    interface NavMenuItem {
-        "link"?: string;
     }
     interface NavSidebar {
     }
@@ -169,8 +149,6 @@ declare namespace LocalJSX {
         "ak-orders": AkOrders;
         "ak-simulator": AkSimulator;
         "ak-topbar": AkTopbar;
-        "nav-menu": NavMenu;
-        "nav-menu-item": NavMenuItem;
         "nav-sidebar": NavSidebar;
     }
 }
@@ -187,8 +165,6 @@ declare module "@stencil/core" {
             "ak-orders": LocalJSX.AkOrders & JSXBase.HTMLAttributes<HTMLAkOrdersElement>;
             "ak-simulator": LocalJSX.AkSimulator & JSXBase.HTMLAttributes<HTMLAkSimulatorElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
-            "nav-menu": LocalJSX.NavMenu & JSXBase.HTMLAttributes<HTMLNavMenuElement>;
-            "nav-menu-item": LocalJSX.NavMenuItem & JSXBase.HTMLAttributes<HTMLNavMenuItemElement>;
             "nav-sidebar": LocalJSX.NavSidebar & JSXBase.HTMLAttributes<HTMLNavSidebarElement>;
         }
     }

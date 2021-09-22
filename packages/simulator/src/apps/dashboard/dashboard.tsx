@@ -1,19 +1,14 @@
-import { Context, ContextAvailable } from '@appkitjs.com/types';
-import { Component, Element, h, Method } from '@stencil/core';
+import { Context } from '@appkitjs.com/types';
+import { Component, Element, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ak-dashboard',
   styleUrl: 'dashboard.css',
   shadow: true,
 })
-export class Dashboard implements ContextAvailable {
+export class Dashboard {
   @Element() hostElement: HTMLAkContactsElement;
-  context: Context;
-
-  @Method()
-  async onContextAvailable(context: Context) {
-    this.context = context;
-  }
+  @Prop() context: Context;
 
   render() {
     return (

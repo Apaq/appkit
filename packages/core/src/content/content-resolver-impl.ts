@@ -1,6 +1,6 @@
+import { CrudRepository } from "@apaq/leap-data-core";
 import { ContentResolver } from "@appkitjs.com/types";
 import { registry } from "../global";
-import { ContentProviderClient } from "./content-provider-client-impl";
 
 interface Uri {
     href: string,
@@ -20,7 +20,7 @@ interface Uri {
     
     constructor() { }
 
-    resolve<TYPE, ID>(uri: string, discriminator?: string): ContentProviderClient<TYPE, ID> {
+    resolve<TYPE extends CrudRepository<any, any>>(uri: string, discriminator?: string): TYPE {
         if(uri == null || !uri.startsWith('content://')) return null;
         
         const uriObj = this.resolveUri(uri);
@@ -47,9 +47,11 @@ interface Uri {
                return null;
            }
         */
+
+        var handler: ProxyHandler<CrudRepository<any, any>> = {};
     
-        const provider = registry().contentProvider?.get(authority, discriminator);
-        return new ContentProviderClient<TYPE, ID>(provider);
+        const provider = registry().contentProvider?.get<TYPE>(authority, discriminator);
+        return new Proxy(provider, handler) as TYPE;
     }
 
     private resolveUri(uri: string): Uri {
