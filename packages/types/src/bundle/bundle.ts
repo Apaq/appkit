@@ -1,4 +1,4 @@
-import { Component } from "./component";
+import { ComponentDefinition } from "./component.definition";
 import { Dependency } from "./dependency";
 
 /**
@@ -18,7 +18,7 @@ export interface Bundle {
     type: 'application/javascript' | 'module',
     jsFile: string,
     cssFile: string,
-    components: Component[];
+    components: ComponentDefinition[];
     dependencies: Dependency[];
 }
 

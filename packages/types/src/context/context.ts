@@ -1,4 +1,4 @@
-import { ActionFilter } from "../bundle/actionfilter";
+import { Action } from "../components/action";
 import { ContentResolver } from "../content/content-resolver";
 import { Data } from "../data";
 import { SettingsTable } from "../settings/settings-table";
@@ -13,8 +13,8 @@ export interface Context {
     getContentResolver(): ContentResolver;
     extensionHandler: (type: string, data: Data) => void
 
-    getComponents(actionFilter?: ActionFilter): ComponentInformation[];
-    startApp(bundleId: string, appId: string): void;
+    getComponents(actionFilter?: Action): ComponentInformation[];
+    startApp(bundleId: string, appId: string, action?: Action): void;
 
     getDeviceSettings(): SettingsTable;
     getSessionSettings(): SettingsTable;

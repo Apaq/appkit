@@ -30,6 +30,7 @@ export class AppList {
 
   open(app: ComponentInformation) {
     this.context.startApp(app.bundleId, app.id);
+    
   }
 
   favorite(app: ComponentInformation) {
@@ -43,7 +44,7 @@ export class AppList {
       <div>
         <sl-page-header header="Apps" sticky="true" class="mb-4"></sl-page-header>
 
-        <div class="grid grid-cols-3 gap-6 mx-8">
+        <div class="grid grid-cols-4 gap-6 mx-8">
           {this.apps.map((app) =>
 
             <sl-card class="card-footer">

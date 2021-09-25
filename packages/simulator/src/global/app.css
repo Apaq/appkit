@@ -13,3 +13,17 @@ body {
   padding: 0px;
   font-family: var(--sl-font-sans);
 }
+
+sl-drawer.app-container::part(body) {
+  padding: 0px;
+}
+
+sl-drawer.app-container::part(header) {
+  position: absolute;
+  width: inherit;
+  z-index: var(--sl-z-index-drawer);
+}
+
+sl-drawer.app-container {
+  --size: 100vh;
+}

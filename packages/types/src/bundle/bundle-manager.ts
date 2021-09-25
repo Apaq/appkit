@@ -1,6 +1,6 @@
-import { ActionFilter } from "./actionfilter";
+import { Action } from "../components/action";
 import { Bundle } from "./bundle";
-import { Component } from "./component";
+import { ComponentDefinition } from "./component.definition";
 
 /**
  * Interface for a BundleManager.
@@ -8,5 +8,5 @@ import { Component } from "./component";
  * A BundleManager can resolve components that have actions that matches the type or/and the given ActionFilter.
  */
 export interface BundleManager {
-    resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?: ActionFilter}): { baseUrl: string, bundle: Bundle, component: Component }[];
+    resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?: Action}): { baseUrl: string, bundle: Bundle, component: ComponentDefinition }[];
 }

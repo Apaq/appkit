@@ -10,12 +10,7 @@ export default {
       { id: 'orders', name: 'Orders', type: "App", actions: [
         {
           type: 'Share',
-          accepts: [
-            {
-              types: ['application/appkit.contact']
-            }
-          ]
-
+          accepts: ['application/appkit.contact']
         }
       ] 
       },
@@ -24,12 +19,7 @@ export default {
         id: 'messages', name: 'Messages', type: "App", actions: [
           {
             type: 'Share',
-            accepts: [
-              {
-                types: ['application/appkit.contact']
-              }
-            ]
-
+            accepts: ['application/appkit.contact']
           }
         ]
       },

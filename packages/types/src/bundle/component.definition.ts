@@ -1,11 +1,11 @@
-import { Action } from "./action";
+import { ActionDefinition } from "./action.definition";
 
 /**
  * Defines a component in a bundle.
  */
-export interface Component {
+export interface ComponentDefinition {
     id:string;
     type: 'App' | 'Widget';
     name: string | {[key: string]: string;}
-    actions: Action[];
+    actions: ActionDefinition[];
 }

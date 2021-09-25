@@ -1,4 +1,4 @@
-import { Component as App, Context } from '@appkitjs.com/types';
+import { ComponentDefinition, Context } from '@appkitjs.com/types';
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { Contact } from '../../global/providers/contact-provider';
 import { Page } from "@apaq/leap-data-core";
@@ -12,7 +12,7 @@ export class Contacts {
   @Element() hostElement: HTMLAkContactsElement;
   @Prop() context: Context;
 
-  @State() apps: App[] = [];
+  @State() apps: ComponentDefinition[] = [];
   @State() contacts: Page<Contact>;
   @State() token: string;
 

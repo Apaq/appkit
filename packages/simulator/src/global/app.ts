@@ -11,6 +11,8 @@ export default async () => {
   const appkit = Appkit();
   const appDrawer = document.createElement('sl-drawer');
   appDrawer.setAttribute('placement', 'bottom');
+  appDrawer.classList.add('app-container');
+
   document.body.appendChild(appDrawer);
 
   if (navigator.storage && navigator.storage.persist)

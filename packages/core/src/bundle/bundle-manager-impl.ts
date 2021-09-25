@@ -1,4 +1,4 @@
-import { Action, Bundle, Component, ActionFilter } from "@appkitjs.com/types";
+import { Action, ActionDefinition, Bundle, ComponentDefinition } from "@appkitjs.com/types";
 
 
 /**
@@ -11,8 +11,8 @@ export class BundleManagerImpl {
         this.bundles.push({ baseUrl: baseUrl, bundle });
     }
 
-    public resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?:ActionFilter}): { baseUrl: string, bundle: Bundle, component: Component }[] {
-        const components: { baseUrl: string, bundle: Bundle, component: Component }[] = [];
+    public resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?:Action}): { baseUrl: string, bundle: Bundle, component: ComponentDefinition}[] {
+        const components: { baseUrl: string, bundle: Bundle, component: ComponentDefinition }[] = [];
         this.bundles.forEach(entry => {
             entry.bundle.components.forEach(component => {
                 if ((!filter.type || component.type === filter.type) &&
@@ -24,7 +24,7 @@ export class BundleManagerImpl {
         return components;
     }
 
-    private filterMatches(action: ActionFilter, ...actions: Action[]): boolean {
+    private filterMatches(action: Action, ...actions: ActionDefinition[]): boolean {
         if(!actions || !action) {
             return false;
         }
@@ -32,7 +32,7 @@ export class BundleManagerImpl {
         for(let current of actions) {
             if(action.type === current.type) {
                 for(let filter of current.accepts) {
-                    if(filter.types && filter.types.indexOf(action.data.type) >= 0) {
+                    if(filter === action.data.type) {
                         return true;
                     }
                 }

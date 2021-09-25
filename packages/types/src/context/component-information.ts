@@ -1,5 +1,5 @@
-import { Component } from "../bundle/component";
+import { ComponentDefinition } from "../bundle/component.definition";
 
-export interface ComponentInformation extends Component {
+export interface ComponentInformation extends ComponentDefinition {
     bundleId: string;
 }

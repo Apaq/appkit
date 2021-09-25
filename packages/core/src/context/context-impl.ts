@@ -1,4 +1,4 @@
-import { ActionFilter, ComponentInformation, ContentResolver, Context, Data } from "@appkitjs.com/types";
+import { Action, ComponentInformation, ContentResolver, Context, Data } from "@appkitjs.com/types";
 import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
 import { Registry } from "../registry";
 
@@ -23,16 +23,20 @@ import { Registry } from "../registry";
         return this._extensionHandler;
     }
 
-    public getComponents(actionFilter?: ActionFilter): ComponentInformation[] {
+    public getComponents(actionFilter?: Action): ComponentInformation[] {
         let components: ComponentInformation[] = [];
         this.registry.bundles.resolveComponents({actionFilter}).forEach(e => components.push({...e.component, bundleId: e.bundle.id}));
         return components;
     }
 
-    public startApp(bundleId: string, appId: string): void {
+    public startApp(bundleId: string, appId: string, action?: Action): void {
         const app = this.registry.components.resolveAppById(bundleId, appId);
         const host = this.registry.components.buildHost('App');
-        app.open(host);
+        app.open(host).then(el => {
+            if(action != null) {
+                el.callExtension(action);
+            }
+        });
     }
 
     getDeviceSettings(): SettingsTable {
