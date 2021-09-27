@@ -45,7 +45,11 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         return registry().components;
     }
 
-    public setHostBuilder(builder: (type: string) => HTMLElement) {
+    public get hostBuilder(): (type: string) => HTMLElement {
+        return this.components.getHostBuilder();
+    }
+
+    public set hostBuilder(builder: (type: string) => HTMLElement) {
         this.components.setHostBuilder(builder);
     }
 

@@ -32,7 +32,7 @@ export default async () => {
 
   appkit.getSessionSettings().setString('token', 'my-token-123123');
 
-  appkit.setHostBuilder(_ => {
+  appkit.hostBuilder = (_ => {
     while (appDrawer.firstChild) {
       appDrawer.removeChild(appDrawer.firstChild);
     }

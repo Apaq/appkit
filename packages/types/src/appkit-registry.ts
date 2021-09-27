@@ -13,7 +13,7 @@ export interface AppkitRegistry {
 
     load(...bundleIds: string[]): Promise<void[]>;
 
-    setHostBuilder(builder: (type: string) => HTMLElement): void;
+    hostBuilder: (type: string) => HTMLElement;
 
     resolveAppById(bundleId: string, appId: string): App;
 

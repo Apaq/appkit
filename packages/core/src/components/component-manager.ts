@@ -18,6 +18,11 @@ export class ComponentManager {
 
     }
 
+
+    getHostBuilder(): (type: string) => HTMLElement {
+        return this._hostBuilder;
+    }
+
     setHostBuilder(builder: (type: string) => HTMLElement) {
         this._hostBuilder = builder;
     }
