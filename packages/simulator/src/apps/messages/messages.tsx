@@ -12,8 +12,8 @@ export class Messages {
 
     @Watch('context')
     async onContextAvailable() {
-        this.context.extensionHandler = (type, data) => {
-            alert(type + '-' + data);
+        if(this.context.action != null) {
+            alert(this.context.action);
         }
     }
 

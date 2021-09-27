@@ -1,4 +1,4 @@
-import { Action, ComponentInformation, ContentResolver, Context, Data } from "@appkitjs.com/types";
+import { Action, ComponentInformation, ContentResolver, Context } from "@appkitjs.com/types";
 import { SettingsTable } from "@appkitjs.com/types/dist/settings/settings-table";
 import { Registry } from "../registry";
 
@@ -6,21 +6,14 @@ import { Registry } from "../registry";
  * Default implementation for the Contexts
  */
  export class ContextImpl implements Context {
-    private _extensionHandler: ((type: string, data: Data) => void | Data);
 
     constructor(public readonly id: string, 
         private registry: Registry) {}
 
+    public action: Action;
+    
     public getContentResolver(): ContentResolver {
         return this.registry.content;
-    }
-
-    public set extensionHandler(receiver: (type: string, data: Data) => void) {
-        this._extensionHandler = receiver;
-    }
-
-    public get extensionHandler(): (type: string, data: Data) => void {
-        return this._extensionHandler;
     }
 
     public getComponents(actionFilter?: Action): ComponentInformation[] {
@@ -32,11 +25,7 @@ import { Registry } from "../registry";
     public startApp(bundleId: string, appId: string, action?: Action): void {
         const app = this.registry.components.resolveAppById(bundleId, appId);
         const host = this.registry.components.buildHost('App');
-        app.open(host).then(el => {
-            if(action != null) {
-                el.callExtension(action);
-            }
-        });
+        app.open(host, action);
     }
 
     getDeviceSettings(): SettingsTable {

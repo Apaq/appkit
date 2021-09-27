@@ -1,3 +1,4 @@
+import { Action } from "..";
 import { UiElement } from "../dom/ui-element";
 import { UiComponent } from "./ui-component";
 
@@ -9,6 +10,6 @@ import { UiComponent } from "./ui-component";
  */
 export interface App extends UiComponent {
 
-   open(parentElement?: HTMLElement): Promise<UiElement>;
+   open(parentElement?: HTMLElement, action?: Action): Promise<UiElement>;
 
 }

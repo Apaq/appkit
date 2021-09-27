@@ -1,6 +1,6 @@
 {
   "name": "@appkitjs.com/types",
-  "version": "1.0.0-alpha.25",
+  "version": "1.0.0-alpha.27",
   "description": "Appkit - the types",
   "author": "Apaq",
   "license": "MIT",
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c"
+    "build": "rm -rf dist && rollup -c"
   },
   "devDependencies": {
     "eslint": "7.19.0",

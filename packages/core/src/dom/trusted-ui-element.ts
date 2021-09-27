@@ -1,5 +1,4 @@
-import { Action, Context, UiElement } from "@appkitjs.com/types";
-import { DataImpl } from "../data";
+import { Context, UiElement } from "@appkitjs.com/types";
 import { registry } from "../global";
 
 /**
@@ -18,15 +17,6 @@ export class TrustedUiElement implements UiElement {
         this._context = registry().contexts.get(existingContextId);
      }
 
-    async callExtension(action: Action): Promise<void> {
-
-        if (action && this._context.extensionHandler != null) {
-            // Call extensionshandle if registered by now.
-            const dataObj = DataImpl.of(action.data);
-            this._context.extensionHandler(action.type, dataObj);
-        }
-    }
-    
     get context() {
         return this._context;
     }

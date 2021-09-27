@@ -1,7 +1,7 @@
 import { Language } from "../i18n/language";
 import { TrustedUiElement } from "./trusted-ui-element";
 import { registry } from "../global";
-import { Bundle, Context, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
+import { Action, Bundle, Context, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
 
 /**
  * A trusted UiComponentInstantiator.
@@ -34,8 +34,9 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         return Promise.resolve(new TrustedUiElement(el));
     }
 
-    async bootstrap(element: UiElement): Promise<void> {
+    async bootstrap(element: UiElement, action?: Action): Promise<void> {
         const context = await this.whenInitialized(element.nativeElement);
+        context.action = action;
         (element.nativeElement as any).context = context;
     }
 

@@ -1,3 +1,4 @@
+import { Action } from "@appkitjs.com/types";
 import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
 
 /**
@@ -17,14 +18,14 @@ export class AppImpl implements App {
         public version: string) {
     }
 
-    public async open(parentElement?: HTMLElement): Promise<UiElement> {
+    public async open(parentElement?: HTMLElement, action?: Action): Promise<UiElement> {
         if(!parentElement) {
             parentElement = document.body;
         }
 
         const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
         parentElement.appendChild(uiElement.nativeElement)
-        this.instantiator.bootstrap(uiElement);
+        this.instantiator.bootstrap(uiElement, action);
 
         return Promise.resolve(uiElement);
     }
