@@ -1,4 +1,3 @@
-import { Logger } from "@appkitjs.com/core";
 import { Page, PageRequest } from "@apaq/leap-data-core";
 import { CrudRepository } from "@apaq/leap-data-core";
 
@@ -16,10 +15,7 @@ export abstract class BaseProvider<T extends HasId> implements CrudRepository<T,
         throw new Error(`Method not implemented. [method: ${method}, args: ${args}`);
     }
 
-    findAll(pageRequest: PageRequest, query: string): Promise<Page<T>> {
-        if(!!query) {
-            Logger.info('query defined, but is ignored');
-        }
+    findAll(pageRequest: PageRequest): Promise<Page<T>> {
         const elements = this.entities.slice(pageRequest.size * pageRequest.page, pageRequest.size);
         let page: Page<T> = {
             totalElements: this.entities.length,
