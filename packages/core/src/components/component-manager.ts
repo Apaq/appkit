@@ -1,4 +1,4 @@
-import { App, Bundle, BundleManager, Component, Data, UiComponentInstantiator, Widget } from "@appkitjs.com/types";
+import { App, Bundle, BundleManager, ComponentDefinition, Data, UiComponentInstantiator, Widget } from "@appkitjs.com/types";
 import { TrustedUiComponentInstantiator, UntrustedUiComponentInstantiator } from "../dom";
 import { Language } from "../i18n";
 import { AppImpl } from "./app-impl";
@@ -67,7 +67,7 @@ export class ComponentManager {
         return true;
     }
 
-    private buildApp(baseUrl: string, bundle: Bundle, component: Component): AppImpl {
+    private buildApp(baseUrl: string, bundle: Bundle, component: ComponentDefinition): AppImpl {
         const instantiator = this.resolveInstantiator(this.isTrusted(bundle));
         let name;
         if (typeof component.name === 'string') {
@@ -78,7 +78,7 @@ export class ComponentManager {
         return new AppImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
     }
 
-    private buildWidget(baseUrl: string, bundle: Bundle, component: Component): WidgetImpl {
+    private buildWidget(baseUrl: string, bundle: Bundle, component: ComponentDefinition): WidgetImpl {
         const instantiator = this.resolveInstantiator(this.isTrusted(bundle));
         const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
         return new WidgetImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
