@@ -2,6 +2,8 @@ import { CrudRepository } from "@apaq/leap-data-core";
 import { ContentResolver } from "@appkitjs.com/types";
 import { registry } from "../global";
 
+const REGEX_URI = /^([a-zA-Z]*\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/;
+
 interface Uri {
     href: string,
     protocol: string,
@@ -21,11 +23,11 @@ interface Uri {
     constructor() { }
 
     resolve<TYPE extends CrudRepository<any, any>>(uri: string, discriminator?: string): TYPE {
-        if(uri == null || !uri.startsWith('content://')) return null;
+        if(uri == null) return null;
         
         const uriObj = this.resolveUri(uri);
-        const authority = uriObj.hostname; // uri.substring(10, uri.indexOf('/', 10));
-
+        const authority = uriObj.hostname; 
+        
         // TODO: Should detect whether user has granted access to this 
         // authority for this contextId
         
@@ -50,12 +52,16 @@ interface Uri {
 
         var handler: ProxyHandler<CrudRepository<any, any>> = {};
     
-        const provider = registry().contentProvider?.get<TYPE>(authority, discriminator);
+        const provider = registry().contentProviders?.get<TYPE>(authority, discriminator);
         return new Proxy(provider, handler) as TYPE;
     }
 
     private resolveUri(uri: string): Uri {
-        var match = uri.match(/^([a-zA-Z]*\:)\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/);
+        var match = uri.match(REGEX_URI);
+        if(match == null) {
+            uri = `content://${uri}`;
+            match = uri.match(REGEX_URI);
+        }
         return match && {
             href: uri,
             protocol: match[1].toLocaleLowerCase(),

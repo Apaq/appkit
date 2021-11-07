@@ -17,24 +17,28 @@ export class Contacts {
   @State() token: string;
 
   @Watch('context')
-  async onContextAvailable(){
+  onContextAvailable(){
     this.token = this.context.getSessionSettings().getString('token');
 
     // List apps
     this.apps = this.context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});
 
     // Get contacts
-    const contactResolver = this.context.getContentResolver().resolve<Contact, string>('content://contacts');
+    const contactResolver = this.context.getContentResolver().resolve<Contact, string>('contacts');
     contactResolver.findAll().then(page => {
       this.contacts = page;
     });
+  }
+
+  componentWillLoad() {
+    if(this.context != null) this.onContextAvailable();
   }
 
   render() {
     return (
       <div>
         <sl-page-header header="Contacts" sticky="true" class="mb-2">
-          <sl-button slot="actions" type="primary" size="small">Create</sl-button>
+          <sl-button slot="actions" type="primary" size="small" onClick={ev => alert(ev)}>Create</sl-button>
           <sl-button slot="actions" size="small" class="ml-2">
             <sl-icon name="three-dots"></sl-icon>
           </sl-button>

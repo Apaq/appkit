@@ -12,7 +12,7 @@ import { SessionSettings } from "./settings/session-settings";
 export interface Registry {
     contexts: ContextManager;
     content: ContentResolver;
-    contentProvider: ContentProviderRegistry;
+    contentProviders: ContentProviderRegistry;
     bundles: BundleManager;
     components: ComponentManager;
     settings: {
@@ -23,7 +23,7 @@ export interface Registry {
 
 const instance = registry();
 instance.contexts = new ContextManager();
-instance.contentProvider = new ContentProviderRegistry();
+instance.contentProviders = new ContentProviderRegistry();
 instance.content = new ContentResolverImpl();
 instance.bundles = new BundleManagerImpl();
 instance.settings.device = new DeviceSettings();

@@ -54,7 +54,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
     }
 
     public registerProvider(authority: string, contentProvider: CrudRepository<any, any>, discriminator?: string) {
-        registry().contentProvider.register(authority, contentProvider, discriminator);
+        registry().contentProviders.register(authority, contentProvider, discriminator);
     }
 
     public registerBundle(bundle: Bundle) {

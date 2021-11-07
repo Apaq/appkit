@@ -9,7 +9,7 @@ if (typeof window.__appkit__ === 'undefined') {
     window.__appkit__ = {
         contexts: null,
         content: null,
-        contentProvider: null,
+        contentProviders: null,
         bundles: null,
         components: null,
         settings: {

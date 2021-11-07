@@ -11,19 +11,18 @@ export abstract class BaseProvider<T extends HasId> implements CrudRepository<T,
 
     }
 
-    call<T>(method: string, ...args: any[]): Promise<T> {
-        throw new Error(`Method not implemented. [method: ${method}, args: ${args}`);
-    }
-
     findAll(pageRequest: PageRequest): Promise<Page<T>> {
-        const elements = this.entities.slice(pageRequest.size * pageRequest.page, pageRequest.size);
-        let page: Page<T> = {
+        const page = pageRequest?.page ?? 0;
+        const size = pageRequest?.size ?? 20;
+        
+        const elements = this.entities.slice(size * page, size);
+        let result: Page<T> = {
             totalElements: this.entities.length,
-            totalPages: Math.ceil(this.entities.length / pageRequest.size),
-            size: pageRequest.size,
+            totalPages: Math.ceil(this.entities.length / size),
+            size: size,
             content: elements
         }
-        return Promise.resolve(page);
+        return Promise.resolve(result);
     }
     findById(id: string): Promise<T> {
         for(let e of this.entities) {
