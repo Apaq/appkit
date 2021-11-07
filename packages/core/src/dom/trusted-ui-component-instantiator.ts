@@ -44,7 +44,10 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         return new Promise((resolve, reject) => {
             // Do not insert if already inserted
             const scriptId = `bundle-${bundle.id}`;
-            if (document.getElementById(scriptId) != null) resolve(null);
+            if (document.getElementById(scriptId) != null) {
+                resolve(null);
+                return;
+            }
 
             const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
             const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
@@ -72,8 +75,6 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
                 document.head.appendChild(styleEl);
             }
         });
-
-
     }
 
     async whenInitialized(el: HTMLElement): Promise<Context> {
