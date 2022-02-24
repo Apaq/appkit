@@ -1,7 +1,9 @@
-import { ComponentDefinition, Context } from '@appkitjs.com/types';
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import {AppkitRegistry, ComponentDefinition} from '@appkitjs.com/types';
+import { Component, Element, h, State } from '@stencil/core';
 import { Contact } from '../../global/providers/contact-provider';
 import { Page } from "@apaq/leap-data-core";
+
+declare var appkit: AppkitRegistry;
 
 @Component({
   tag: 'ak-contacts',
@@ -10,28 +12,23 @@ import { Page } from "@apaq/leap-data-core";
 })
 export class Contacts {
   @Element() hostElement: HTMLAkContactsElement;
-  @Prop() context: Context;
 
   @State() apps: ComponentDefinition[] = [];
   @State() contacts: Page<Contact>;
   @State() token: string;
 
-  @Watch('context')
-  onContextAvailable(){
-    this.token = this.context.getSessionSettings().getString('token');
+  componentWillLoad() {
+    const context = appkit.globalContext;
+    this.token = context.getSessionSettings().getString('token');
 
     // List apps
-    this.apps = this.context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});
+    this.apps = context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});
 
     // Get contacts
-    const contactResolver = this.context.getContentResolver().resolve<Contact, string>('contacts');
+    const contactResolver = context.getContentResolver().resolve<Contact, string>('contacts');
     contactResolver.findAll().then(page => {
       this.contacts = page;
     });
-  }
-
-  componentWillLoad() {
-    if(this.context != null) this.onContextAvailable();
   }
 
   render() {
@@ -55,7 +52,7 @@ export class Contacts {
           </sl-row>
         )}
         </sl-table>
-        
+
       </div>
     )
   }
