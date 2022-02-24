@@ -19,11 +19,6 @@ export interface Context {
     getContentResolver(): ContentResolver;
 
     /**
-     * The optional action that may be the target for opening the app.
-     */
-    action: Action;
-
-    /**
      * Lists installed components that cen be opened.
      * @param actionFilter Optional filter that the returned components must be able to handle.
      */

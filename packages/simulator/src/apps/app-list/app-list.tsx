@@ -1,5 +1,7 @@
-import { ComponentInformation, Context } from '@appkitjs.com/types';
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import {AppkitRegistry, ComponentInformation} from '@appkitjs.com/types';
+import { Component, Element, h, State } from '@stencil/core';
+
+declare var appkit: AppkitRegistry;
 
 @Component({
   tag: 'ak-app-list',
@@ -8,35 +10,29 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 })
 export class AppList {
   @Element() hostElement: HTMLAkAppListElement;
-  @Prop() context: Context;
 
   @State() apps: ComponentInformation[] = [];
   @State() favoriteApps: ComponentInformation[] = [];
 
-  @Watch('context')
-  async onContextAvailable() {
-    if(this.context != null) {
-      // List all apps
-      this.apps = this.context.getComponents();
-
-      const favorites = this.context.getDeviceSettings().getObject<ComponentInformation[]>('favorites');
-      this.favoriteApps = favorites ?? [];
-    }
-  }
-
   componentWillLoad() {
-    this.onContextAvailable();
+    // List all apps
+    const context = appkit.globalContext;
+    this.apps = context.getComponents();
+
+    const favorites = context.getDeviceSettings().getObject<ComponentInformation[]>('favorites');
+    this.favoriteApps = favorites ?? [];
   }
 
   open(app: ComponentInformation) {
-    this.context.startApp(app.bundleId, app.id);
-    
+    const context = appkit.globalContext;
+    context.startApp(app.bundleId, app.id);
   }
 
   favorite(app: ComponentInformation) {
     console.log(app);
     this.favoriteApps.push(app);
-    this.context.getDeviceSettings().setObject('favorites', this.favoriteApps);
+    const context = appkit.globalContext;
+    context.getDeviceSettings().setObject('favorites', this.favoriteApps);
   }
 
   render() {
