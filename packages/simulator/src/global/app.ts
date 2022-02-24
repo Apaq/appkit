@@ -1,8 +1,6 @@
 import { Appkit, IdbContentProvider } from '@appkitjs.com/core';
 import { AppkitRegistry } from '@appkitjs.com/types';
 import CoreBundle from './core-bundle';
-import { ContactProvider } from './providers/contact-provider';
-import { OrderProvider } from './providers/orders-providers';
 
 declare var window: { appkit: AppkitRegistry };
 
@@ -11,6 +9,7 @@ export default async () => {
   const appkit = Appkit();
   const appDrawer = document.createElement('sl-drawer');
   appDrawer.setAttribute('placement', 'bottom');
+  appDrawer.setAttribute('no-header', 'true');
   appDrawer.classList.add('app-container');
 
   document.body.appendChild(appDrawer);
@@ -27,10 +26,6 @@ export default async () => {
 
 
   appkit.registerBundle(CoreBundle);
-  appkit.registerProvider('contacts', new ContactProvider());
-  appkit.registerProvider('orders', new OrderProvider());
-
-  appkit.getSessionSettings().setString('token', 'my-token-123123');
 
   appkit.hostBuilder = (_ => {
     while (appDrawer.firstChild) {
