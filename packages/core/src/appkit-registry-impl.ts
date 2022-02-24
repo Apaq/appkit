@@ -1,6 +1,6 @@
 import { Config } from "./config";
 import { registry } from "./global";
-import { AppkitRegistry, Bundle, Data, Widget, App } from "@appkitjs.com/types";
+import {AppkitRegistry, Bundle, Data, Widget, App, Context} from "@appkitjs.com/types";
 import { BundleManagerImpl } from "./bundle";
 import { SettingsTable } from "../../types/dist/settings/settings-table";
 import { ComponentManager } from "./components/component-manager";
@@ -10,11 +10,11 @@ const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
 /**
  * An appkit registry.
- * 
+ *
  * This holds details about all bundles loaded and available for use in the system.
  * It allows for resolving specific Components via bundleid and app id or by listing
  * all components that can open a specific datatype.
- * 
+ *
  * A simple sample usage could be like this:
  * const appkit = Appkit();
  * appkit.load('https://my.app.store/super-app-bundle').then(async() => {
@@ -23,7 +23,7 @@ const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
  *     const el = await app.open(parent);
  *     el.transmit({uri: 'content://contact/123'});
  * });
- * 
+ *
  */
 export class AppkitRegistryImpl implements AppkitRegistry {
 
@@ -32,8 +32,14 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         trustedRepositories: []
     };
 
+    private _globalContext: Context;
+
+    public constructor() {
+      this._globalContext = registry().contexts.create('global');
+    }
+
     private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
-        return bundleId.match(PATTERN_URL) != null || bundleId.match(PATTERN_RELATIVE_URL) ? 
+        return bundleId.match(PATTERN_URL) != null || bundleId.match(PATTERN_RELATIVE_URL) ?
             bundleId : `${defaultServer}/${bundleId}`;
     }
 
@@ -43,6 +49,10 @@ export class AppkitRegistryImpl implements AppkitRegistry {
 
     private get components(): ComponentManager {
         return registry().components;
+    }
+
+    public get globalContext(): Context {
+      return this._globalContext;
     }
 
     public get hostBuilder(): (type: string) => HTMLElement {
@@ -96,7 +106,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         return this.components.resolveWidgetsByData(data, actionType);
     }
 
-    
+
     public getDeviceSettings(): SettingsTable {
         return registry().settings.device;
     }

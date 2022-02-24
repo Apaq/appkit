@@ -5,29 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Context } from "@appkitjs.com/types";
 export namespace Components {
     interface AkAppContainer {
         "appId": string;
         "bundleId": string;
     }
     interface AkAppList {
-        "context": Context;
     }
     interface AkContacts {
-        "context": Context;
-    }
-    interface AkDashboard {
-        "context": Context;
-    }
-    interface AkDocuments {
-        "context": Context;
-    }
-    interface AkMessages {
-        "context": Context;
-    }
-    interface AkOrders {
-        "context": Context;
     }
     interface AkSimulator {
     }
@@ -55,30 +40,6 @@ declare global {
         prototype: HTMLAkContactsElement;
         new (): HTMLAkContactsElement;
     };
-    interface HTMLAkDashboardElement extends Components.AkDashboard, HTMLStencilElement {
-    }
-    var HTMLAkDashboardElement: {
-        prototype: HTMLAkDashboardElement;
-        new (): HTMLAkDashboardElement;
-    };
-    interface HTMLAkDocumentsElement extends Components.AkDocuments, HTMLStencilElement {
-    }
-    var HTMLAkDocumentsElement: {
-        prototype: HTMLAkDocumentsElement;
-        new (): HTMLAkDocumentsElement;
-    };
-    interface HTMLAkMessagesElement extends Components.AkMessages, HTMLStencilElement {
-    }
-    var HTMLAkMessagesElement: {
-        prototype: HTMLAkMessagesElement;
-        new (): HTMLAkMessagesElement;
-    };
-    interface HTMLAkOrdersElement extends Components.AkOrders, HTMLStencilElement {
-    }
-    var HTMLAkOrdersElement: {
-        prototype: HTMLAkOrdersElement;
-        new (): HTMLAkOrdersElement;
-    };
     interface HTMLAkSimulatorElement extends Components.AkSimulator, HTMLStencilElement {
     }
     var HTMLAkSimulatorElement: {
@@ -101,10 +62,6 @@ declare global {
         "ak-app-container": HTMLAkAppContainerElement;
         "ak-app-list": HTMLAkAppListElement;
         "ak-contacts": HTMLAkContactsElement;
-        "ak-dashboard": HTMLAkDashboardElement;
-        "ak-documents": HTMLAkDocumentsElement;
-        "ak-messages": HTMLAkMessagesElement;
-        "ak-orders": HTMLAkOrdersElement;
         "ak-simulator": HTMLAkSimulatorElement;
         "ak-topbar": HTMLAkTopbarElement;
         "nav-sidebar": HTMLNavSidebarElement;
@@ -116,22 +73,8 @@ declare namespace LocalJSX {
         "bundleId"?: string;
     }
     interface AkAppList {
-        "context"?: Context;
     }
     interface AkContacts {
-        "context"?: Context;
-    }
-    interface AkDashboard {
-        "context"?: Context;
-    }
-    interface AkDocuments {
-        "context"?: Context;
-    }
-    interface AkMessages {
-        "context"?: Context;
-    }
-    interface AkOrders {
-        "context"?: Context;
     }
     interface AkSimulator {
     }
@@ -143,10 +86,6 @@ declare namespace LocalJSX {
         "ak-app-container": AkAppContainer;
         "ak-app-list": AkAppList;
         "ak-contacts": AkContacts;
-        "ak-dashboard": AkDashboard;
-        "ak-documents": AkDocuments;
-        "ak-messages": AkMessages;
-        "ak-orders": AkOrders;
         "ak-simulator": AkSimulator;
         "ak-topbar": AkTopbar;
         "nav-sidebar": NavSidebar;
@@ -159,10 +98,6 @@ declare module "@stencil/core" {
             "ak-app-container": LocalJSX.AkAppContainer & JSXBase.HTMLAttributes<HTMLAkAppContainerElement>;
             "ak-app-list": LocalJSX.AkAppList & JSXBase.HTMLAttributes<HTMLAkAppListElement>;
             "ak-contacts": LocalJSX.AkContacts & JSXBase.HTMLAttributes<HTMLAkContactsElement>;
-            "ak-dashboard": LocalJSX.AkDashboard & JSXBase.HTMLAttributes<HTMLAkDashboardElement>;
-            "ak-documents": LocalJSX.AkDocuments & JSXBase.HTMLAttributes<HTMLAkDocumentsElement>;
-            "ak-messages": LocalJSX.AkMessages & JSXBase.HTMLAttributes<HTMLAkMessagesElement>;
-            "ak-orders": LocalJSX.AkOrders & JSXBase.HTMLAttributes<HTMLAkOrdersElement>;
             "ak-simulator": LocalJSX.AkSimulator & JSXBase.HTMLAttributes<HTMLAkSimulatorElement>;
             "ak-topbar": LocalJSX.AkTopbar & JSXBase.HTMLAttributes<HTMLAkTopbarElement>;
             "nav-sidebar": LocalJSX.NavSidebar & JSXBase.HTMLAttributes<HTMLNavSidebarElement>;

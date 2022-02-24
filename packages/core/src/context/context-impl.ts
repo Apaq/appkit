@@ -7,11 +7,9 @@ import { Registry } from "../registry";
  */
  export class ContextImpl implements Context {
 
-    constructor(public readonly id: string, 
+    constructor(public readonly id: string,
         private registry: Registry) {}
 
-    public action: Action;
-    
     public getContentResolver(): ContentResolver {
         return this.registry.content;
     }

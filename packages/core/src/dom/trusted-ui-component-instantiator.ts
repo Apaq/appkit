@@ -1,16 +1,15 @@
-import { Language } from "../i18n/language";
+import { Language } from "../i18n";
 import { TrustedUiElement } from "./trusted-ui-element";
-import { registry } from "../global";
-import { Action, Bundle, Context, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
+import { Action, Bundle, UiComponentInstantiator, UiElement } from "@appkitjs.com/types";
 
 /**
  * A trusted UiComponentInstantiator.
- * 
- * This instantiator handles trusted instantiation of UiComponents (Apps and Widgets, 
- * but not extensions). It does so by adding the script to the app bundle to the 
+ *
+ * This instantiator handles trusted instantiation of UiComponents (Apps and Widgets,
+ * but not extensions). It does so by adding the script to the app bundle to the
  * <head> of the current page. The script for a bundle will only be added once even
  * if the same app is instantiated multiple times.
- * 
+ *
  * If specified, styles for the app is also added to the header.
  */
 export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
@@ -20,7 +19,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
 
     async instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
         if(baseUrl != null) {
-            await this.insertScript(baseUrl, bundle);    
+            await this.insertScript(baseUrl, bundle);
         }
         const tagName = `${bundle.id}-${id}`;
         const existingTags = document.getElementsByTagName(tagName);
@@ -28,16 +27,15 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
         if(singleElement && existingTags.length > 0) {
             el = existingTags[0] as HTMLElement;
         } else {
-            el = document.createElement(tagName);;
+            el = document.createElement(tagName);
         }
 
         return Promise.resolve(new TrustedUiElement(el));
     }
 
     async bootstrap(element: UiElement, action?: Action): Promise<void> {
-        const context = await this.whenInitialized(element.nativeElement);
-        context.action = action;
-        (element.nativeElement as any).context = context;
+        await customElements.whenDefined(element.nativeElement.tagName.toLowerCase());
+        (element.nativeElement as any).action = action;
     }
 
     private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {
@@ -52,7 +50,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
             const jsFile = bundle.jsFile != null ? bundle.jsFile : 'main.js';
             const cssFile = bundle.cssFile != null ? bundle.cssFile : null;
             const lang = Language.resolveLanguage();
-        
+
             // Adds script
             let scriptUrl = !bundle.localize ? `${baseUrl}/${jsFile}` : `${baseUrl}/${lang}/${jsFile}`;
             const scriptEl = document.createElement('script');
@@ -75,28 +73,6 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
                 document.head.appendChild(styleEl);
             }
         });
-    }
-
-    async whenInitialized(el: HTMLElement): Promise<Context> {
-        await customElements.whenDefined(el.tagName.toLowerCase());
-        
-        const existingContextId = el.getAttribute('context-id');
-        if(existingContextId == null) {
-            let contextId = null;
-            if(customElements.get(el.tagName.toLowerCase()) != null) {
-                contextId = el.tagName;
-            } else if(customElements.get(el.parentElement?.tagName.toLowerCase()) != null) {
-                // Some frameworks has the parent element registered instead.
-                contextId = el.parentElement.tagName;
-            } else {
-                throw 'Element is not defined as a custom element.';
-            }
-            contextId += '-' + Date.now();
-            el.setAttribute('context-id', contextId);
-            return Promise.resolve(registry().contexts.create(contextId));
-        } else {
-            return Promise.resolve(registry().contexts.get(existingContextId));
-        }
     }
 
 }
