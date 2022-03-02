@@ -14,10 +14,7 @@ export class ComponentManager {
         return el;
     }
 
-    constructor(private bundleManager: BundleManager) {
-
-    }
-
+    constructor(private bundleManager: BundleManager) { }
 
     getHostBuilder(): (type: string) => HTMLElement {
         return this._hostBuilder;
@@ -80,7 +77,7 @@ export class ComponentManager {
         } else if (typeof component.name === 'object') {
             name = component.name[Language.resolveLanguage()];
         }
-        return new AppImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+        return new AppImpl(instantiator, this._hostBuilder, baseUrl, bundle, component.id, name, bundle.version);
     }
 
     private buildWidget(baseUrl: string, bundle: Bundle, component: ComponentDefinition): WidgetImpl {

@@ -1,7 +1,7 @@
 import {AppkitRegistry, ComponentInformation} from '@appkitjs.com/types';
 import { Component, Element, h, State } from '@stencil/core';
 
-declare var appkit: AppkitRegistry;
+declare var Appkit: AppkitRegistry;
 
 @Component({
   tag: 'ak-app-list',
@@ -16,7 +16,7 @@ export class AppList {
 
   componentWillLoad() {
     // List all apps
-    const context = appkit.globalContext;
+    const context = Appkit.globalContext;
     this.apps = context.getComponents();
 
     const favorites = context.getDeviceSettings().getObject<ComponentInformation[]>('favorites');
@@ -24,14 +24,14 @@ export class AppList {
   }
 
   open(app: ComponentInformation) {
-    const context = appkit.globalContext;
+    const context = Appkit.globalContext;
     context.startApp(app.bundleId, app.id);
   }
 
   favorite(app: ComponentInformation) {
     console.log(app);
     this.favoriteApps.push(app);
-    const context = appkit.globalContext;
+    const context = Appkit.globalContext;
     context.getDeviceSettings().setObject('favorites', this.favoriteApps);
   }
 

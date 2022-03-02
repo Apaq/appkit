@@ -1,4 +1,4 @@
-import { Action } from "@appkitjs.com/types";
+import { Action, ActionResult } from "@appkitjs.com/types";
 import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
 
 /**
@@ -11,6 +11,7 @@ export class AppImpl implements App {
 
     constructor(
         private instantiator: UiComponentInstantiator,
+        private hostBuilder: (type: string) => HTMLElement,
         private baseUrl: string,
         public bundle: Bundle,
         public id: string,
@@ -20,14 +21,35 @@ export class AppImpl implements App {
 
     public async open(parentElement?: HTMLElement, action?: Action): Promise<UiElement> {
         if(!parentElement) {
-            parentElement = document.body;
+            parentElement = this.hostBuilder('App');
         }
 
+        action = this.wrapAction(action);
         const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
         parentElement.appendChild(uiElement.nativeElement)
         this.instantiator.bootstrap(uiElement, action);
 
         return Promise.resolve(uiElement);
+    }
+
+    private wrapAction(action: Action): Action {
+        if(action == null) {
+            return action
+        }
+        
+        const finish = (result: ActionResult) => {
+            if(action.finish != null) {
+                action.finish(result);
+            }
+        }
+        return {
+            type: action.type,
+            data: {
+                uri: action.data?.uri,
+                type: action.data?.type
+            },
+            finish
+        }
     }
 
 }

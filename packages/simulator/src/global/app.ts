@@ -1,8 +1,5 @@
 import { Appkit, IdbContentProvider } from '@appkitjs.com/core';
-import { AppkitRegistry } from '@appkitjs.com/types';
 import CoreBundle from './core-bundle';
-
-declare var window: { appkit: AppkitRegistry };
 
 export default async () => {
 
@@ -32,10 +29,8 @@ export default async () => {
       appDrawer.removeChild(appDrawer.firstChild);
     }
     appDrawer.setAttribute('open', 'true');
+    appDrawer.style.cssText = '--size:90vh';
     return appDrawer;
   });
-
-  window.appkit = appkit;
 };
 
-export var test = 123;

@@ -3,7 +3,7 @@ import { Component, Element, h, State } from '@stencil/core';
 import { Contact } from '../../global/providers/contact-provider';
 import { Page } from "@apaq/leap-data-core";
 
-declare var appkit: AppkitRegistry;
+declare var Appkit: AppkitRegistry;
 
 @Component({
   tag: 'ak-contacts',
@@ -18,7 +18,7 @@ export class Contacts {
   @State() token: string;
 
   componentWillLoad() {
-    const context = appkit.globalContext;
+    const context = Appkit.globalContext;
     this.token = context.getSessionSettings().getString('token');
 
     // List apps
