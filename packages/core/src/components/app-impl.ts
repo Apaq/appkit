@@ -1,5 +1,6 @@
 import { Action, ActionResult } from "@appkitjs.com/types";
 import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
+import { HostBuilder } from "../../../types/dist/dom/host-builder";
 
 /**
  * A Manager for a specific app.
@@ -9,9 +10,12 @@ import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/t
  */
 export class AppImpl implements App {
 
+    private uiElement: UiElement;
+    private host: HTMLElement;
+
     constructor(
         private instantiator: UiComponentInstantiator,
-        private hostBuilder: (type: string) => HTMLElement,
+        private hostBuilder: HostBuilder,
         private baseUrl: string,
         public bundle: Bundle,
         public id: string,
@@ -19,17 +23,26 @@ export class AppImpl implements App {
         public version: string) {
     }
 
-    public async open(parentElement?: HTMLElement, action?: Action): Promise<UiElement> {
-        if(!parentElement) {
-            parentElement = this.hostBuilder('App');
+    public async open(host?: HTMLElement, action?: Action): Promise<UiElement> {
+        if(this.uiElement != null) return;
+
+        this.host = host;
+        if(!this.host) {
+            this.host = await this.hostBuilder.construct('App');
         }
 
         action = this.wrapAction(action);
-        const uiElement = await this.instantiator.instantiate(this.baseUrl, this.bundle, this.id, true);
-        parentElement.appendChild(uiElement.nativeElement)
-        this.instantiator.bootstrap(uiElement, action);
+        this.uiElement = await this.instantiator.construct(this.baseUrl, this.bundle, this.id, true);
+        this.host.appendChild(this.uiElement.nativeElement)
+        this.instantiator.bootstrap(this.uiElement, action);
 
-        return Promise.resolve(uiElement);
+        return Promise.resolve(this.uiElement);
+    }
+
+    public async close() {
+        this.instantiator.destruct(this.uiElement);
+        this.hostBuilder.destruct(this.host);
+        this.uiElement = null;
     }
 
     private wrapAction(action: Action): Action {
@@ -41,6 +54,7 @@ export class AppImpl implements App {
             if(action.finish != null) {
                 action.finish(result);
             }
+            this.close();
         }
         return {
             type: action.type,

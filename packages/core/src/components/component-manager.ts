@@ -1,31 +1,41 @@
 import { App, Bundle, BundleManager, ComponentDefinition, Data, UiComponentInstantiator, Widget } from "@appkitjs.com/types";
+import { HostBuilder } from "../../../types/dist/dom/host-builder";
 import { TrustedUiComponentInstantiator, UntrustedUiComponentInstantiator } from "../dom";
 import { Language } from "../i18n";
 import { AppImpl } from "./app-impl";
 import { WidgetImpl } from "./widget-impl";
 
-export class ComponentManager {
-    private trustedInstantiator = new TrustedUiComponentInstantiator();
-    private untrustedInstantiator = new UntrustedUiComponentInstantiator()
-    private _hostBuilder: (type: string) => HTMLElement = type => {
+class DefaultHostBuilder implements HostBuilder {
+    async construct(type: string): Promise<HTMLElement> {
         console.log(type);
         const el = document.createElement('div');
         document.body.appendChild(el);
         return el;
     }
 
+    async destruct(element: HTMLElement): Promise<void> {
+        console.log('Destructing: ', element);
+    }
+
+}
+
+export class ComponentManager {
+    private trustedInstantiator = new TrustedUiComponentInstantiator();
+    private untrustedInstantiator = new UntrustedUiComponentInstantiator()
+    private _hostBuilder = new DefaultHostBuilder();
+
     constructor(private bundleManager: BundleManager) { }
 
-    getHostBuilder(): (type: string) => HTMLElement {
+    getHostBuilder(): HostBuilder {
         return this._hostBuilder;
     }
 
-    setHostBuilder(builder: (type: string) => HTMLElement) {
+    setHostBuilder(builder: HostBuilder) {
         this._hostBuilder = builder;
     }
     
-    public buildHost(type: string): HTMLElement {
-        return this._hostBuilder(type);
+    public async buildHost(type: string): Promise<HTMLElement> {
+        return await this._hostBuilder.construct(type);
     }
 
     public resolveAppById(bundleId: string, appId: string): App {

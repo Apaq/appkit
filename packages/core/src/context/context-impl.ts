@@ -20,9 +20,9 @@ import { Registry } from "../registry";
         return components;
     }
 
-    public startApp(bundleId: string, appId: string, action?: Action): void {
+    public async startApp(bundleId: string, appId: string, action?: Action): Promise<void> {
         const app = this.registry.components.resolveAppById(bundleId, appId);
-        const host = this.registry.components.buildHost('App');
+        const host = await this.registry.components.buildHost('App');
         app.open(host, action);
     }
 

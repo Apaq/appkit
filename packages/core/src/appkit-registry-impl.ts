@@ -5,6 +5,7 @@ import { BundleManagerImpl } from "./bundle";
 import { SettingsTable } from "../../types/dist/settings/settings-table";
 import { ComponentManager } from "./components/component-manager";
 import { CrudRepository } from "@apaq/leap-data-core";
+import { HostBuilder } from "../../types/dist/dom/host-builder";
 const PATTERN_URL = /(http|https):\/\/.*/;
 const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
@@ -55,11 +56,11 @@ export class AppkitRegistryImpl implements AppkitRegistry {
       return this._globalContext;
     }
 
-    public get hostBuilder(): (type: string) => HTMLElement {
+    public get hostBuilder(): HostBuilder {
         return this.components.getHostBuilder();
     }
 
-    public set hostBuilder(builder: (type: string) => HTMLElement) {
+    public set hostBuilder(builder: HostBuilder) {
         this.components.setHostBuilder(builder);
     }
 

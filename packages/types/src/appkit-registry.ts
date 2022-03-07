@@ -5,6 +5,7 @@ import { Widget } from "./components/widget";
 import { SettingsTable } from "./settings/settings-table";
 import { CrudRepository } from "@apaq/leap-data-core";
 import {Context} from "./context";
+import { HostBuilder } from "./dom/host-builder";
 
 export interface AppkitRegistry {
 
@@ -14,7 +15,7 @@ export interface AppkitRegistry {
 
     load(...bundleIds: string[]): Promise<void[]>;
 
-    hostBuilder: (type: string) => HTMLElement;
+    hostBuilder: HostBuilder;
 
     readonly globalContext: Context;
 

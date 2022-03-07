@@ -17,8 +17,12 @@ export class UntrustedUiComponentInstantiator implements UiComponentInstantiator
     bootstrap(element: UiElement): Promise<void> {
         throw new Error("Method not implemented." + element);
     }
-    instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
+    construct(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
         throw new Error("Method not implemented." + baseUrl +  bundle + id + singleElement);
+    }
+
+    async destruct(element: UiElement) {
+        throw new Error("Method not implemented." + element);
     }
 
 }

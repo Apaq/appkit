@@ -17,7 +17,7 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
     constructor() {
     }
 
-    async instantiate(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
+    async construct(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement> {
         if(baseUrl != null) {
             await this.insertScript(baseUrl, bundle);
         }
@@ -36,6 +36,10 @@ export class TrustedUiComponentInstantiator implements UiComponentInstantiator {
     async bootstrap(element: UiElement, action?: Action): Promise<void> {
         await customElements.whenDefined(element.nativeElement.tagName.toLowerCase());
         (element.nativeElement as any).action = action;
+    }
+
+    async destruct(element: UiElement) {
+        element.nativeElement.parentElement.removeChild(element.nativeElement);
     }
 
     private insertScript(baseUrl: string, bundle: Bundle): Promise<void> {

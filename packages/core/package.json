@@ -1,6 +1,6 @@
 {
   "name": "@appkitjs.com/core",
-  "version": "1.0.0-alpha.36",
+  "version": "1.0.0-alpha.41",
   "description": "Appkit - the core framework",
   "author": "Apaq",
   "license": "MIT",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@apaq/leap-data-core": "^1.0.0",
-    "@appkitjs.com/types": "1.0.0-alpha.36"
+    "@appkitjs.com/types": "1.0.0-alpha.41"
   },
   "devDependencies": {
     "eslint": "7.19.0",
