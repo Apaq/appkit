@@ -10,7 +10,7 @@ export interface ActionDefinition {
     /**
      * The type of action.
      */
-    type: 'Open' | 'Share';
+    type?: 'Open' | 'Share';
 
     /**
      * The display name of the action given either as a string in English or as an object of supported languages. (English will be fallback).
@@ -20,5 +20,5 @@ export interface ActionDefinition {
     /**
      * The type of data that it accepts specified as a mimetype, fx. image/jpeg or video/mp4.
      */
-    accepts: string[];
+    accepts?: string[];
 }
