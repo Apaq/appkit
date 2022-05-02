@@ -2,18 +2,16 @@
 import { AppkitRegistry } from '@appkitjs.com/types';
 import { AppkitRegistryImpl } from './appkit-registry-impl';
 
-export * from './bundle/index';
-export * from './content/index';
-export * from './context/index';
-export * from './dom/index';
-export * from './i18n/index';
-export * from './components/index'
+export * from './bundle';
+export * from './dom';
+export * from './i18n';
+export * from './components'
 export * from './appkit-registry-impl';
-export * from './config';
-export * from './data';
+export * from './components/data';
 export * from './logger';
 export * from './registry';
 export * from './global';
+export * from './decorators';
 
 declare var window: {Appkit: AppkitRegistry};
 

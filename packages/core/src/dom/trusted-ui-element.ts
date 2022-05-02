@@ -1,5 +1,4 @@
-import { Context, UiElement } from "@appkitjs.com/types";
-import { registry } from "../global";
+import { UiElement } from "@appkitjs.com/types";
 
 /**
  * A trusted UiElement.
@@ -10,16 +9,6 @@ import { registry } from "../global";
  */
 export class TrustedUiElement implements UiElement {
 
-    private _context: Context;
-    
     constructor(public nativeElement: HTMLElement) {
-        const existingContextId = this.nativeElement.getAttribute('context-id');
-        this._context = registry().contexts.get(existingContextId);
-     }
-
-    get context() {
-        return this._context;
     }
-
-
 }

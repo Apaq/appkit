@@ -1,4 +1,4 @@
-import { App, ComponentInformation } from '@appkitjs.com/types';
+import { App } from '@appkitjs.com/types';
 import { Component, h } from '@stencil/core';
 import { Appkit } from '@appkitjs.com/core';
 
@@ -13,7 +13,7 @@ export class AppRoot {
   favorites: App[] = [];
 
   componentWillLoad() {
-    const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
+    const favs = [];
     for(let info of favs) {
 
       this.tryAddApp(info.bundleId, info.id);
@@ -42,7 +42,7 @@ export class AppRoot {
                   <stencil-route-redirect url="/app-list" />
                 </stencil-route>
                 {this.favorites.map((app) =>
-                  <stencil-route url={'/' + app.id} component="ak-app-container" componentProps={{ 'bundleId': app.bundle.id, 'appId': app.id }}  />
+                  <stencil-route url={'/' + app.id} component="ak-app-container" componentProps={{ 'bundleId': app.bundle.prefix, 'appId': app.id }}  />
                 )}
 
               </stencil-route-switch>

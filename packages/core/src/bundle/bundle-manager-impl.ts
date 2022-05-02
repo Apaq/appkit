@@ -5,19 +5,19 @@ import { Action, ActionDefinition, Bundle, ComponentDefinition } from "@appkitjs
  * BundleMAnager implementation.
  */
 export class BundleManagerImpl {
-    private bundles: { baseUrl: string, bundle: Bundle }[] = [];
+    private bundles: Bundle[] = [];
 
-    public addBundle(bundle: Bundle, baseUrl?: string) {
-        this.bundles.push({ baseUrl: baseUrl, bundle });
+    public addBundle(bundle: Bundle) {
+        this.bundles.push(bundle);
     }
 
-    public resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?:Action}): { baseUrl: string, bundle: Bundle, component: ComponentDefinition}[] {
-        const components: { baseUrl: string, bundle: Bundle, component: ComponentDefinition }[] = [];
-        this.bundles.forEach(entry => {
-            entry.bundle.components.forEach(component => {
+    public resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?:Action}): { bundle: Bundle, component: ComponentDefinition}[] {
+        const components: { bundle: Bundle, component: ComponentDefinition }[] = [];
+        this.bundles.forEach(bundle => {
+            bundle.components.forEach(component => {
                 if ((!filter.type || component.type === filter.type) &&
                     (!filter.actionFilter || (component.actions && this.filterMatches(filter.actionFilter, ...component.actions)))) {
-                    components.push({ baseUrl: entry.baseUrl, bundle: entry.bundle, component });
+                    components.push({ bundle: bundle, component });
                 }
             })
         });

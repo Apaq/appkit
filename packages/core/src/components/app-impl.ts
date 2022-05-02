@@ -1,6 +1,4 @@
-import { Action, ActionResult } from "@appkitjs.com/types";
-import { Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
-import { HostBuilder } from "../../../types/dist/dom/host-builder";
+import { Action, ActionResult, HostBuilder, Bundle, UiComponentInstantiator, App, UiElement } from "@appkitjs.com/types";
 
 /**
  * A Manager for a specific app.
@@ -16,11 +14,9 @@ export class AppImpl implements App {
     constructor(
         private instantiator: UiComponentInstantiator,
         private hostBuilder: HostBuilder,
-        private baseUrl: string,
         public bundle: Bundle,
         public id: string,
-        public name: string,
-        public version: string) {
+        public name: string) {
     }
 
     public async open(host?: HTMLElement, action?: Action): Promise<UiElement> {
@@ -32,7 +28,7 @@ export class AppImpl implements App {
         }
 
         action = this.wrapAction(action);
-        this.uiElement = await this.instantiator.construct(this.baseUrl, this.bundle, this.id, true);
+        this.uiElement = await this.instantiator.construct(this.bundle, this.id, true);
         this.host.appendChild(this.uiElement.nativeElement)
         this.instantiator.bootstrap(this.uiElement, action);
 

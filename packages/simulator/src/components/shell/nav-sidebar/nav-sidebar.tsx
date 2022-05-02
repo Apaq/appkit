@@ -1,5 +1,5 @@
 import { Appkit } from '@appkitjs.com/core';
-import { App, ComponentInformation } from '@appkitjs.com/types';
+import { App } from '@appkitjs.com/types';
 import { Component, Host, h } from '@stencil/core';
 
 @Component({
@@ -13,7 +13,7 @@ export class NavSidebar {
   favorites: App[] = [];
 
   componentWillLoad() {
-    const favs = this.appkit.getDeviceSettings().getObject<ComponentInformation[]>('favorites') ?? [];
+    const favs = []
     for(let info of favs) {
 
       this.tryAddApp(info.bundleId, info.id);

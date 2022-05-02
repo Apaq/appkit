@@ -1,6 +1,6 @@
 {
   "name": "@appkitjs.com/simulator",
-  "version": "1.0.0-alpha.41",
+  "version": "1.0.0-alpha.100",
   "description": "Appkit Simulator",
   "publishConfig": {
     "access": "public"
@@ -21,9 +21,12 @@
   "dependencies": {
     "@apaq/leap-data-core": "^1.0.2",
     "@apaq/stallion": "^1.0.0-alpha.17",
-    "@appkitjs.com/core": "1.0.0-alpha.41",
-    "@appkitjs.com/types": "1.0.0-alpha.41",
-    "@stencil/sass": "^1.4.1"
+    "@appkitjs.com/core": "1.0.0-alpha.100",
+    "@appkitjs.com/types": "1.0.0-alpha.100",
+    "@stencil/sass": "^1.4.1",
+    "import": "^0.0.6",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.6.0"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",

@@ -1,6 +1,5 @@
-import { App, Bundle, BundleManager, ComponentDefinition, Data, UiComponentInstantiator, Widget } from "@appkitjs.com/types";
-import { HostBuilder } from "../../../types/dist/dom/host-builder";
-import { TrustedUiComponentInstantiator, UntrustedUiComponentInstantiator } from "../dom";
+import { App, Bundle, BundleManager, ComponentDefinition, Data, UiComponentInstantiator, Widget, HostBuilder } from "@appkitjs.com/types";
+import { TrustedUiComponentInstantiator } from "../dom";
 import { Language } from "../i18n";
 import { AppImpl } from "./app-impl";
 import { WidgetImpl } from "./widget-impl";
@@ -21,7 +20,6 @@ class DefaultHostBuilder implements HostBuilder {
 
 export class ComponentManager {
     private trustedInstantiator = new TrustedUiComponentInstantiator();
-    private untrustedInstantiator = new UntrustedUiComponentInstantiator()
     private _hostBuilder = new DefaultHostBuilder();
 
     constructor(private bundleManager: BundleManager) { }
@@ -38,38 +36,54 @@ export class ComponentManager {
         return await this._hostBuilder.construct(type);
     }
 
-    public resolveAppById(bundleId: string, appId: string): App {
+    public resolveApp(prefix: string, appId: string): App {
         let app: AppImpl = null;
         this.bundleManager.resolveComponents({type: 'App'}).forEach(e => {
-            if (e.bundle.id === bundleId && e.component.id === appId) {
-                app = this.buildApp(e.baseUrl, e.bundle, e.component);
+            if (e.bundle.prefix === prefix && e.component.id === appId) {
+                app = this.buildApp(e.bundle, e.component);
             }
         });
         return app;
     }
 
-    public resolveAppsByData(data: Data, actionType: string = 'Share'): App[] {
+    public resolveApps(): App[] {
         let apps: AppImpl[] = [];
-        this.bundleManager.resolveComponents({type: 'App', actionFilter: {type: actionType, data}}).forEach(e => {
-            apps.push(this.buildApp(e.baseUrl, e.bundle, e.component));
+        this.bundleManager.resolveComponents({type: 'App'}).forEach(e => {
+            apps.push(this.buildApp(e.bundle, e.component));
         });
         return apps;
     }
 
-    public resolveWidgetById(bundleId: string, widgetId: string): Widget {
+    public resolveAppsByData(data: Data, actionType: string = 'Share'): App[] {
+        let apps: AppImpl[] = [];
+        this.bundleManager.resolveComponents({type: 'App', actionFilter: {type: actionType, data}}).forEach(e => {
+            apps.push(this.buildApp(e.bundle, e.component));
+        });
+        return apps;
+    }
+
+    public resolveWidgetById(prefix: string, widgetId: string): Widget {
         let widget: WidgetImpl = null;
         this.bundleManager.resolveComponents({type: 'Widget'}).forEach(e => {
-            if (e.bundle.id === bundleId && e.component.id === widgetId) {
-                widget = this.buildWidget(e.baseUrl, e.bundle, e.component);
+            if (e.bundle.prefix === prefix && e.component.id === widgetId) {
+                widget = this.buildWidget(e.bundle, e.component);
             }
         });
         return widget;
     }
 
+    public resolveWidgets(): Widget[] {
+        let widgets: WidgetImpl[] = [];
+        this.bundleManager.resolveComponents({type: 'Widget'}).forEach(e => {
+            widgets.push(this.buildWidget(e.bundle, e.component));
+        });
+        return widgets;
+    }
+
     public resolveWidgetsByData(data: Data, actionType: string = 'Share'): Widget[] {
         let widgets: WidgetImpl[] = [];
         this.bundleManager.resolveComponents({type: 'Widget', actionFilter: {type: actionType, data}}).forEach(e => {
-            widgets.push(this.buildWidget(e.baseUrl, e.bundle, e.component));
+            widgets.push(this.buildWidget(e.bundle, e.component));
         });
         return widgets;
     }
@@ -79,7 +93,7 @@ export class ComponentManager {
         return true;
     }
 
-    private buildApp(baseUrl: string, bundle: Bundle, component: ComponentDefinition): AppImpl {
+    private buildApp(bundle: Bundle, component: ComponentDefinition): AppImpl {
         const instantiator = this.resolveInstantiator(this.isTrusted(bundle));
         let name;
         if (typeof component.name === 'string') {
@@ -87,16 +101,17 @@ export class ComponentManager {
         } else if (typeof component.name === 'object') {
             name = component.name[Language.resolveLanguage()];
         }
-        return new AppImpl(instantiator, this._hostBuilder, baseUrl, bundle, component.id, name, bundle.version);
+        return new AppImpl(instantiator, this._hostBuilder, bundle, component.id, name);
     }
 
-    private buildWidget(baseUrl: string, bundle: Bundle, component: ComponentDefinition): WidgetImpl {
+    private buildWidget(bundle: Bundle, component: ComponentDefinition): WidgetImpl {
         const instantiator = this.resolveInstantiator(this.isTrusted(bundle));
         const name = typeof component.name === 'string' ? component.name as string : component.name[Language.resolveLanguage()];
-        return new WidgetImpl(instantiator, baseUrl, bundle, component.id, name, bundle.version);
+        return new WidgetImpl(instantiator, bundle, component.id, name);
     }
 
     private resolveInstantiator(trusted: boolean): UiComponentInstantiator {
-        return trusted ? this.trustedInstantiator : this.untrustedInstantiator;
+        if(!trusted) throw new Error('Only trusted apps supported.');
+        return this.trustedInstantiator;
     }
 }
