@@ -8,5 +8,5 @@ import { ComponentDefinition } from "./component.definition";
  * A BundleManager can resolve components that have actions that matches the type or/and the given ActionFilter.
  */
 export interface BundleManager {
-    resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?: Action}): { baseUrl: string, bundle: Bundle, component: ComponentDefinition }[];
+    resolveComponents(filter: {type?: 'App' | 'Widget', actionFilter?: Action}): { bundle: Bundle, component: ComponentDefinition }[];
 }

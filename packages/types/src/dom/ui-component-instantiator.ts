@@ -13,7 +13,7 @@ export interface UiComponentInstantiator {
      * @param id The id of the UiComponent in the app bundle to instantiate.
      * @param singleElement 
      */
-    construct(baseUrl: string, bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement>;
+    construct(bundle: Bundle, id: string, singleElement: boolean): Promise<UiElement>;
 
     bootstrap(uiElement: UiElement, action?: Action): Promise<void>;
 

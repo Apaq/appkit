@@ -1,6 +1,14 @@
-import { Appkit, IdbContentProvider } from '@appkitjs.com/core';
+import 'reflect-metadata';
+import { Appkit } from '@appkitjs.com/core';
 import { HostBuilder } from '@appkitjs.com/types/dist/dom/host-builder';
 import CoreBundle from './core-bundle';
+//import { container, singleton } from 'tsyringe';
+
+export class SuperService {
+  public strings(): string[] {
+    return ['my', 'heart', 'is', 'hurting'];
+  }
+}
 
 class SimulatorHostBuilder implements HostBuilder {
 
@@ -40,7 +48,7 @@ export default async () => {
 
   const appkit = Appkit();
     
-  if (navigator.storage && navigator.storage.persist)
+  /*if (navigator.storage && navigator.storage.persist)
     navigator.storage.persist().then(granted => {
       if (granted) {
         var idb = new IdbContentProvider('trunte', 'id');
@@ -48,7 +56,8 @@ export default async () => {
         appkit.registerProvider('test', idb);
       }
 
-    });
+    });*/
+
 
 
   appkit.registerBundle(CoreBundle);

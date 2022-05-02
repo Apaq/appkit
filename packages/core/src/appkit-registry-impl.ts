@@ -1,13 +1,7 @@
-import { Config } from "./config";
 import { registry } from "./global";
-import {AppkitRegistry, Bundle, Data, Widget, App, Context} from "@appkitjs.com/types";
+import {AppkitRegistry, Bundle, Data, Widget, App, HostBuilder} from "@appkitjs.com/types";
 import { BundleManagerImpl } from "./bundle";
-import { SettingsTable } from "../../types/dist/settings/settings-table";
 import { ComponentManager } from "./components/component-manager";
-import { CrudRepository } from "@apaq/leap-data-core";
-import { HostBuilder } from "../../types/dist/dom/host-builder";
-const PATTERN_URL = /(http|https):\/\/.*/;
-const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
 
 /**
  * An appkit registry.
@@ -17,32 +11,23 @@ const PATTERN_RELATIVE_URL = /(\.\/|\.\.\/|\/).*/
  * all components that can open a specific datatype.
  *
  * A simple sample usage could be like this:
+ * 
  * const appkit = Appkit();
- * appkit.load('https://my.app.store/super-app-bundle').then(async() => {
- *     const parent = document.body;
- *     const app = appkit.resolveAppManagerById('my', 'app');
- *     const el = await app.open(parent);
- *     el.transmit({uri: 'content://contact/123'});
+ * 
+ * appkit.registerBundle({ // Register app
+ *  prefix:'my', 
+ *  components: [
+ *    id: 'app',
+ *    type: 'App'
+ *  ]
  * });
+ * 
+ * const parent = document.body;
+ * const app = appkit.resolveAppManagerById('my', 'app');
+ * const el = await app.open(parent); // Open app
  *
  */
 export class AppkitRegistryImpl implements AppkitRegistry {
-
-    public config: Config = {
-        defaultRepository: 'https://apaq.github.io/appkit',
-        trustedRepositories: []
-    };
-
-    private _globalContext: Context;
-
-    public constructor() {
-      this._globalContext = registry().contexts.create('global');
-    }
-
-    private static resolveBundleBaseUrl(defaultServer: string, bundleId: string) {
-        return bundleId.match(PATTERN_URL) != null || bundleId.match(PATTERN_RELATIVE_URL) ?
-            bundleId : `${defaultServer}/${bundleId}`;
-    }
 
     private get bundles(): BundleManagerImpl {
         return registry().bundles as BundleManagerImpl;
@@ -51,11 +36,7 @@ export class AppkitRegistryImpl implements AppkitRegistry {
     private get components(): ComponentManager {
         return registry().components;
     }
-
-    public get globalContext(): Context {
-      return this._globalContext;
-    }
-
+    
     public get hostBuilder(): HostBuilder {
         return this.components.getHostBuilder();
     }
@@ -64,72 +45,33 @@ export class AppkitRegistryImpl implements AppkitRegistry {
         this.components.setHostBuilder(builder);
     }
 
-    public registerProvider(authority: string, contentProvider: CrudRepository<any, any>, discriminator?: string) {
-        registry().contentProviders.register(authority, contentProvider, discriminator);
-    }
-
     public registerBundle(bundle: Bundle) {
         this.bundles.addBundle(bundle);
     }
 
-    public async load(...bundleIds: string[]): Promise<void[]> {
-        console.log('loading: ', bundleIds);
-        const promises: Promise<void>[] = [];
-        for (const bundleId of bundleIds) {
-            const baseUrl = AppkitRegistryImpl.resolveBundleBaseUrl(this.config.defaultRepository, bundleId)
-            const url = `${baseUrl}/manifest.json`
-            const p = fetch(url).then(response => {
-                if (response.status === 200) {
-                    return response.json().then((bundle: Bundle) => {
-                        this.bundles.addBundle(bundle, baseUrl);
-                    });
-                }
-            });
-            promises.push(p);
-        }
-
-        return Promise.all(promises);
+    public resolveAppById(prefix: string, appId: string): App {
+        return this.components.resolveApp(prefix, appId);
     }
 
-    public resolveAppById(bundleId: string, appId: string): App {
-        return this.components.resolveAppById(bundleId, appId);
+    public resolveApps(): App[] {
+        return this.components.resolveApps();
     }
 
     public resolveAppsByData(data: Data, actionType: string = 'Share'): App[] {
         return this.components.resolveAppsByData(data, actionType);
     }
 
-    public resolveWidgetById(bundleId: string, widgetId: string): Widget {
-        return this.components.resolveWidgetById(bundleId, widgetId);
+    public resolveWidgetById(prefix: string, widgetId: string): Widget {
+        return this.components.resolveWidgetById(prefix, widgetId);
+    }
+
+    public resolveWidgets(): Widget[] {
+        return this.components.resolveWidgets();
     }
 
     public resolveWidgetsByData(data: Data, actionType: string = 'Share'): Widget[] {
         return this.components.resolveWidgetsByData(data, actionType);
     }
-
-
-    public getDeviceSettings(): SettingsTable {
-        return registry().settings.device;
-    }
-
-    public getSessionSettings(): SettingsTable {
-        return registry().settings.session;
-    }
-
-    /*private isTrusted(bundle: Bundle) {
-        if (bundle.id.match(PATTERN_URL) == null) {
-            // If loaded from default, then it is trusted.
-            return true;
-        }
-
-        for (let repo of this.config.trustedRepositories) {
-            // If bundle points to a trusted repo, then it is trusted.
-            if (bundle.id.startsWith(repo)) {
-                return true;
-            }
-        }
-        return false;
-    }*/
 
 }
 

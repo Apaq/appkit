@@ -1,21 +1,13 @@
-import { Context } from "../../types/dist";
 import { Registry } from "./registry";
 
 /**
  * This sets up the global appkit variable
  */
-declare var window: { __appkit__: Registry, createAppContext: (el: HTMLElement) => Context };
+declare var window: { __appkit__: Registry };
 if (typeof window.__appkit__ === 'undefined') {
     window.__appkit__ = {
-        contexts: null,
-        content: null,
-        contentProviders: null,
         bundles: null,
-        components: null,
-        settings: {
-            device: null,
-            session: null
-        }
+        components: null
     }
 }
 

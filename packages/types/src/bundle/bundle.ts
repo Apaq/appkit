@@ -1,5 +1,4 @@
 import { ComponentDefinition } from "./component.definition";
-import { Dependency } from "./dependency";
 
 /**
  * Defines an app bundle. 
@@ -7,18 +6,7 @@ import { Dependency } from "./dependency";
  * The contents of manifest.json of an app bundle is read as a Bundle.
  */
 export interface Bundle {
-    id: string;
-    name: string | {[key: string]: string;};
-    version: string;
-    description: string;
-    keywords: string[];
-    homepage: string;
-    bugs: {url: string, email?: string},
-    localize: boolean | string[],
-    type: 'application/javascript' | 'module',
-    jsFile: string,
-    cssFile: string,
+    prefix: string;
     components: ComponentDefinition[];
-    dependencies: Dependency[];
 }
 

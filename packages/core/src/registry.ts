@@ -1,31 +1,13 @@
-import { BundleManager, ContentResolver } from "@appkitjs.com/types";
-import { SettingsTable } from "../../types/dist/settings/settings-table";
+import { BundleManager } from "@appkitjs.com/types";
 import { BundleManagerImpl } from "./bundle/bundle-manager-impl";
 import { ComponentManager } from "./components/component-manager";
-import { ContentProviderRegistry } from "./content/content-provider-registry";
-import { ContentResolverImpl } from "./content/content-resolver-impl";
-import { ContextManager } from "./context/context-manager";
 import { registry } from "./global";
-import { DeviceSettings } from "./settings/device-settings";
-import { SessionSettings } from "./settings/session-settings";
 
 export interface Registry {
-    contexts: ContextManager;
-    content: ContentResolver;
-    contentProviders: ContentProviderRegistry;
     bundles: BundleManager;
     components: ComponentManager;
-    settings: {
-        device: SettingsTable,
-        session: SettingsTable
-    }
 }
 
 const instance = registry();
-instance.contexts = new ContextManager();
-instance.contentProviders = new ContentProviderRegistry();
-instance.content = new ContentResolverImpl();
 instance.bundles = new BundleManagerImpl();
-instance.settings.device = new DeviceSettings();
-instance.settings.session = new SessionSettings();
 instance.components = new ComponentManager(instance.bundles);

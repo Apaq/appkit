@@ -9,7 +9,4 @@ export interface UiComponent {
     
         // The localized app name
         name: string;
-    
-        // The app version
-        version: string;
 }

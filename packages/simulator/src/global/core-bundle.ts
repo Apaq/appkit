@@ -1,8 +1,7 @@
 import { Bundle } from '@appkitjs.com/types';
 
 export default {
-    id: 'ak',
-    name: 'Appkit Essentials',
+    prefix: 'ak',
     components: [
       { id: 'contacts', name: 'Contacts', type: "App"},
       { id: 'app-list', name: 'Apps', type: "App" }

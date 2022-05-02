@@ -1,4 +1,4 @@
-import { Data } from "../data";
+import { Data } from "./data";
 import { UiComponent } from "./ui-component";
 
 export interface Widget extends UiComponent {

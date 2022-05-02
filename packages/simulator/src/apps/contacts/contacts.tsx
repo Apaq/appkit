@@ -1,9 +1,11 @@
-import {AppkitRegistry, ComponentDefinition} from '@appkitjs.com/types';
+import 'reflect-metadata';
+import { App, AppkitRegistry } from '@appkitjs.com/types';
 import { Component, Element, h, State } from '@stencil/core';
-import { Contact } from '../../global/providers/contact-provider';
-import { Page } from "@apaq/leap-data-core";
+import { SuperService } from '../../global/app';
+import {container} from "tsyringe";
 
 declare var Appkit: AppkitRegistry;
+
 
 @Component({
   tag: 'ak-contacts',
@@ -13,23 +15,10 @@ declare var Appkit: AppkitRegistry;
 export class Contacts {
   @Element() hostElement: HTMLAkContactsElement;
 
-  @State() apps: ComponentDefinition[] = [];
-  @State() contacts: Page<Contact>;
+  @State() apps: App[] = [];
   @State() token: string;
 
-  componentWillLoad() {
-    const context = Appkit.globalContext;
-    this.token = context.getSessionSettings().getString('token');
-
-    // List apps
-    this.apps = context.getComponents({type: 'Share', data: { uri: 'content://contacts/1221312', type: 'application/appkit.contact' }});
-
-    // Get contacts
-    const contactResolver = context.getContentResolver().resolve<Contact, string>('contacts');
-    contactResolver.findAll().then(page => {
-      this.contacts = page;
-    });
-  }
+  service: SuperService = container.resolve("SuperDuperService");
 
   render() {
     return (
@@ -41,16 +30,13 @@ export class Contacts {
           </sl-button>
         </sl-page-header>
         token: {this.token}
+        {this.service.strings().map(e => <p>{e}</p>)}
         <sl-table>
         <sl-column>Name</sl-column>
         <sl-column>Title</sl-column>
         <sl-column>Email</sl-column>
         <sl-column>Role</sl-column>
-        {this.contacts?.content.map((c) =>
-        <sl-row>
-          <sl-cell>{c.name}</sl-cell>
-          </sl-row>
-        )}
+        
         </sl-table>
 
       </div>

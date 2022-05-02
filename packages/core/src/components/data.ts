@@ -1,4 +1,4 @@
-import { Data } from "../../types/dist";
+import { Data } from "@appkitjs.com/types";
 
 
 /**
